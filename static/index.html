@@ -1,47 +1,44 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Procesador de Datos</title>
+    <title>Upload File</title>
 </head>
 <body>
-    <h1>Procesar Datos</h1>
-    <form id="dataForm" enctype="multipart/form-data">
-        <label for="text">Texto:</label>
-        <textarea id="text" name="text" rows="10" cols="50" required></textarea>
-        <br><br>
-        <label for="excelFile">Archivo Excel:</label>
-        <input type="file" id="excelFile" name="file" accept=".xlsx" required>
-        <br><br>
-        <button type="button" onclick="processData()">Procesar</button>
+    <h1>Upload File</h1>
+    <form id="uploadForm">
+        <textarea id="textInput" placeholder="Enter text here"></textarea>
+        <input type="file" id="fileInput" name="file" />
+        <button type="button" onclick="processData()">Upload</button>
     </form>
-
     <script>
-        async function processData() {
-            const form = document.getElementById('dataForm');
-            const formData = new FormData(form);
+        function processData() {
+            var formData = new FormData();
+            var text = document.getElementById('textInput').value;
+            var file = document.getElementById('fileInput').files[0];
+            formData.append('text', text);
+            formData.append('file', file);
 
-            try {
-                const response = await fetch('/upload', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (!response.ok) {
-                    throw new Error('Error en la solicitud');
-                }
-
-                // Crear un enlace para descargar el archivo
-                const blob = await response.blob();
-                const link = document.createElement('a');
-                link.href = window.URL.createObjectURL(blob);
-                link.download = 'updated.xlsx'; // Nombre del archivo descargado
-                link.click();
-            } catch (error) {
+            fetch('https://pee-beta-jet.vercel.app/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                // Handle the file response
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'updated_file.xlsx'; // Adjust the filename as needed
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            })
+            .catch(error => {
                 console.error('Error al procesar el archivo:', error);
-                alert('Error al procesar el archivo.');
-            }
+                alert('Error al procesar el archivo: ' + error.message);
+            });
         }
     </script>
 </body>
