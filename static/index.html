@@ -189,6 +189,7 @@
 
             var xhr = new XMLHttpRequest();
             xhr.open('POST', 'https://pee-beta-jet.vercel.app/upload', true);
+            xhr.open('POST', 'https://datos-excel-pee.vercel.app/upload', true);
 
             xhr.upload.onprogress = function(e) {
                 if (e.lengthComputable) {
