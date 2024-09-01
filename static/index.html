@@ -86,6 +86,41 @@
             text-align: center;
             color: #333;
         }
+        #fileInfo {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        .progress {
+            width: 0%;
+            height: 100%;
+            background-color: #4CAF50;
+            transition: width 0.3s ease;
+        }
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            border-radius: 4px;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .toast.success {
+            background-color: #4CAF50;
+        }
+        .toast.error {
+            background-color: #f44336;
+        }
     </style>
 </head>
 <body>
@@ -97,25 +132,54 @@
                 <span class="file-input-button" id="fileInputLabel">Choose File</span>
                 <input type="file" id="fileInput" name="file" />
             </div>
+            <div id="fileInfo"></div>
             <button type="button" onclick="processData()" id="uploadButton">Upload</button>
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
         </form>
     </div>
+    <div id="toast" class="toast"></div>
     <script>
         const fileInput = document.getElementById('fileInput');
         const fileInputLabel = document.getElementById('fileInputLabel');
         const uploadButton = document.getElementById('uploadButton');
+        const fileInfo = document.getElementById('fileInfo');
+        const progressBar = document.getElementById('progressBar');
+        const toast = document.getElementById('toast');
 
         fileInput.addEventListener('change', function(e) {
             if (e.target.files.length > 0) {
-                fileInputLabel.textContent = e.target.files[0].name;
+                const file = e.target.files[0];
+                fileInputLabel.textContent = file.name;
+                fileInfo.textContent = `File: ${file.name} (${formatFileSize(file.size)})`;
             } else {
                 fileInputLabel.textContent = 'Choose File';
+                fileInfo.textContent = '';
             }
         });
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function showToast(message, type) {
+            toast.textContent = message;
+            toast.className = `toast ${type}`;
+            toast.style.opacity = 1;
+            setTimeout(() => {
+                toast.style.opacity = 0;
+            }, 3000);
+        }
 
         function processData() {
             uploadButton.disabled = true;
             uploadButton.textContent = 'Uploading...';
+            progressBar.style.width = '0%';
 
             var formData = new FormData();
             var text = document.getElementById('textInput').value;
@@ -123,28 +187,46 @@
             formData.append('text', text);
             formData.append('file', file);
 
-            fetch('https://pee-beta-jet.vercel.app/upload', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.blob())
-            .then(blob => {
-                var url = URL.createObjectURL(blob);
-                var a = document.createElement('a');
-                a.href = url;
-                a.download = 'updated_file.xlsx';
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
-            })
-            .catch(error => {
-                console.error('Error al procesar el archivo:', error);
-                alert('Error al procesar el archivo: ' + error.message);
-            })
-            .finally(() => {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'https://pee-beta-jet.vercel.app/upload', true);
+
+            xhr.upload.onprogress = function(e) {
+                if (e.lengthComputable) {
+                    var percentComplete = (e.loaded / e.total) * 100;
+                    progressBar.style.width = percentComplete + '%';
+                }
+            };
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var blob = new Blob([xhr.response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                    var url = URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'updated_file.xlsx';
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    showToast('File uploaded and processed successfully!', 'success');
+                } else {
+                    console.error('Error al procesar el archivo:', xhr.statusText);
+                    showToast('Error processing file: ' + xhr.statusText, 'error');
+                }
+            };
+
+            xhr.onerror = function() {
+                console.error('Error al procesar el archivo:', xhr.statusText);
+                showToast('Error processing file: ' + xhr.statusText, 'error');
+            };
+
+            xhr.onloadend = function() {
                 uploadButton.disabled = false;
                 uploadButton.textContent = 'Upload';
-            });
+                progressBar.style.width = '0%';
+            };
+
+            xhr.responseType = 'blob';
+            xhr.send(formData);
         }
     </script>
 </body>
