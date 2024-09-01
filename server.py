@@ -65,11 +65,13 @@ def upload_file():
     if file.filename == '':
         return 'No seleccionó ningún archivo.', 400
 
-    file_path = os.path.join('uploads', file.filename)
-    file.save(file_path)
+    # Guardar en la carpeta temporal
+    temp_file_path = '/tmp/' + file.filename
+    file.save(temp_file_path)
 
+    # Procesar y actualizar el archivo
     patterns = {
-        'Fecha de Radicación': r'Fecha de Radicación:\s*(\d{2}/\d{2}/\d{4})',  # Solo la fecha
+        'Fecha de Radicación': r'Fecha de Radicación:\s*(\d{2}/\d{2}/\d{4})',
         'Hora de Radicación': r'Fecha de Radicación:\s*\d{2}/\d{2}/\d{4} (\d{1,2}:\d{2} [ap]m)',
         'Fecha de Petición': r'Date:\s*\w{3}, (\d{2} \w{3} \d{4})',
         'Hora de Petición': r'Date:\s*\w{3}, \d{2} \w{3} \d{4} a las (\d{1,2}:\d{2})',
@@ -81,17 +83,20 @@ def upload_file():
         'Asunto': r'Asunto:\s*([^\n]+)'
     }
 
-    # Extraer datos del texto
     extracted_data = {}
     for key, pattern in patterns.items():
         extracted_data[key] = extract_data_with_regex(text, pattern)
-        print(f"{key}: {extracted_data[key]}")
 
-    # Actualizar el archivo Excel
-    updated_file_path = update_excel_with_data(file_path, extracted_data)
+    updated_file_path = update_excel_with_data(temp_file_path, extracted_data)
 
     # Enviar el archivo actualizado como respuesta
-    return send_file(updated_file_path, as_attachment=True)
+    response = send_file(updated_file_path, as_attachment=True)
+
+    # Eliminar los archivos temporales
+    os.remove(temp_file_path)
+    os.remove(updated_file_path)
+
+    return response
 
 @app.route('/')
 def index():
