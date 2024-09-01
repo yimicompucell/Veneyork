@@ -42,7 +42,11 @@ def update_excel_with_data(file_path, extracted_data):
             'Asunto': 11
         }
 
+        # Encuentra la primera fila vacía
         row = 2
+        while any(ws.cell(row=row, column=col).value for col in headers.values()):
+            row += 1
+
         for key, col in headers.items():
             ws.cell(row=row, column=col, value=extracted_data.get(key, 'No encontrado'))
 
