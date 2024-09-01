@@ -152,9 +152,9 @@
             if (e.target.files.length > 0) {
                 const file = e.target.files[0];
                 fileInputLabel.textContent = file.name;
-                fileInfo.textContent = `File: ${file.name} (${formatFileSize(file.size)})`;
+                fileInfo.textContent = `Archivo: ${file.name} (${formatFileSize(file.size)})`;
             } else {
-                fileInputLabel.textContent = 'Choose File';
+                fileInputLabel.textContent = 'Subir Archivo';
                 fileInfo.textContent = '';
             }
         });
@@ -178,7 +178,7 @@
 
         function processData() {
             uploadButton.disabled = true;
-            uploadButton.textContent = 'Uploading...';
+            uploadButton.textContent = 'Subiendo...';
             progressBar.style.width = '0%';
 
             var formData = new FormData();
@@ -221,7 +221,7 @@
 
             xhr.onloadend = function() {
                 uploadButton.disabled = false;
-                uploadButton.textContent = 'Upload';
+                uploadButton.textContent = 'Subir Archivo';
                 progressBar.style.width = '0%';
             };
 
