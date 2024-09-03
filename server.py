@@ -8,35 +8,25 @@ app = Flask(__name__)
 # Ruta del archivo Excel temporal
 TEMP_FILE_PATH = '/tmp/temp_excel.xlsx'
 
-# Función para crear o cargar el archivo Excel temporal
-def get_or_create_temp_excel(file_path):
-    if not os.path.exists(file_path):
-        wb = openpyxl.Workbook()
-        ws = wb.active
-        ws.append(['Fecha de Radicación', 'Hora de Radicación', 'Fecha de Petición',
-                   'Hora de Petición', '# de Petición', 'Solicitante',
-                   'Correo de Solicitante', 'Entidad', 'Cargo', 'Asunto'])
-        wb.save(file_path)
-    else:
-        wb = openpyxl.load_workbook(file_path)
-    return wb
+# Función para crear el archivo Excel temporal a partir de un modelo subido
+def create_temp_excel_from_model(model_file):
+    model_file.save(TEMP_FILE_PATH)
+
+# Función para cargar el archivo Excel temporal
+def load_temp_excel():
+    if not os.path.exists(TEMP_FILE_PATH):
+        raise FileNotFoundError('El archivo temporal no existe. Por favor, sube un modelo primero.')
+    return openpyxl.load_workbook(TEMP_FILE_PATH)
 
 # Función para extraer datos usando expresiones regulares
 def extract_data_with_regex(text, pattern):
     match = re.search(pattern, text, re.DOTALL)
     return match.group(1).strip() if match else 'No encontrado'
 
-# Función para limpiar texto específico de un campo
-def clean_text(text, field_name):
-    cleaned_text = text.strip()
-    if field_name in ['Cargo', 'Asunto', 'Entidad']:
-        cleaned_text = cleaned_text.split('\n')[0].strip()
-    return cleaned_text
-
 # Función para actualizar el archivo Excel temporal con datos extraídos
 def update_excel_with_data(extracted_data):
     try:
-        wb = get_or_create_temp_excel(TEMP_FILE_PATH)
+        wb = load_temp_excel()
         ws = wb.active
 
         headers = {
@@ -68,6 +58,20 @@ def update_excel_with_data(extracted_data):
     except Exception as e:
         print(f'Error al actualizar el archivo Excel: {e}')
         raise
+
+@app.route('/upload_model', methods=['POST'])
+def upload_model():
+    if 'file' not in request.files:
+        return 'No se proporcionó ningún archivo Excel.', 400
+
+    file = request.files['file']
+    if file.filename == '':
+        return 'No seleccionó ningún archivo.', 400
+
+    # Crear el archivo Excel temporal a partir del modelo subido
+    create_temp_excel_from_model(file)
+
+    return jsonify({'message': 'Modelo subido y archivo temporal creado con éxito.'})
 
 @app.route('/update', methods=['POST'])
 def update_file():
