@@ -2,7 +2,6 @@ from flask import Flask, request, send_file
 import openpyxl
 import re
 import os
-from datetime import datetime
 
 app = Flask(__name__)
 
@@ -53,11 +52,6 @@ def update_excel_with_data(file_path, extracted_data):
 
         updated_file_path = file_path.replace('.xlsx', '_updated.xlsx')
         wb.save(updated_file_path)
-
-                # Registrar la última actualización
-        with open('update_log.txt', 'w') as log_file:
-            log_file.write(f"Última actualización: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-
 
         return updated_file_path
 
@@ -150,15 +144,6 @@ def update_file():
     os.remove(updated_file_path)
 
     return response
-
-@app.route('/last-update')
-def last_update():
-    try:
-        with open('update_log.txt', 'r') as log_file:
-            last_update = log_file.read()
-        return last_update
-    except FileNotFoundError:
-        return 'No se ha realizado ninguna actualización aún.'
 
 @app.route('/')
 def index():
