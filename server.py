@@ -47,6 +47,7 @@ def update_excel_with_data(file_path, extracted_data):
         while any(ws.cell(row=row, column=col).value for col in headers.values()):
             row += 1
 
+        # Añadir los datos en la fila vacía
         for key, col in headers.items():
             ws.cell(row=row, column=col, value=extracted_data.get(key, 'No encontrado'))
 
