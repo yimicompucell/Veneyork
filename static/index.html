@@ -140,11 +140,6 @@
         <!-- Formulario para actualizar el archivo Excel -->
         <form id="updateForm">
             <textarea id="textInput" placeholder="Introduzca su texto aquí..."></textarea>
-            <div class="file-input-wrapper">
-                <span class="file-input-button" id="fileInputLabel">Seleccione el Archivo</span>
-                <input type="file" id="fileInput" name="file" />
-            </div>
-            <div id="fileInfo"></div>
             <button type="button" id="updateButton">Actualizar Archivo</button>
             <button type="button" id="downloadButton">Descargar Archivo</button>
             <div class="progress-bar">
@@ -161,11 +156,8 @@
         const uploadModelButton = document.getElementById('uploadModelButton');
         const modelFileInfo = document.getElementById('modelFileInfo');
 
-        const fileInput = document.getElementById('fileInput');
-        const fileInputLabel = document.getElementById('fileInputLabel');
         const updateButton = document.getElementById('updateButton');
         const downloadButton = document.getElementById('downloadButton');
-        const fileInfo = document.getElementById('fileInfo');
         const progressBar = document.getElementById('progressBar');
         const toast = document.getElementById('toast');
 
@@ -178,18 +170,6 @@
             } else {
                 modelFileLabel.textContent = 'Seleccione el Modelo';
                 modelFileInfo.textContent = '';
-            }
-        });
-
-        // Manejar la selección del archivo
-        fileInput.addEventListener('change', function(e) {
-            if (e.target.files.length > 0) {
-                const file = e.target.files[0];
-                fileInputLabel.textContent = file.name;
-                fileInfo.textContent = `Archivo: ${file.name} (${formatFileSize(file.size)})`;
-            } else {
-                fileInputLabel.textContent = 'Seleccione el Archivo';
-                fileInfo.textContent = '';
             }
         });
 
@@ -219,11 +199,7 @@
 
             const formData = new FormData();
             const text = document.getElementById('textInput').value;
-            const file = document.getElementById('fileInput').files[0];
             formData.append('text', text);
-            if (file) {
-                formData.append('file', file);
-            }
 
             const xhr = new XMLHttpRequest();
             xhr.open('POST', url, true);
