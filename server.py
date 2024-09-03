@@ -102,6 +102,49 @@ def upload_file():
 
     return response
 
+@app.route('/update', methods=['POST'])
+def update_file():
+    if 'file' not in request.files or 'text' not in request.form:
+        return 'Texto o archivo Excel no proporcionado.', 400
+
+    file = request.files['file']
+    text = request.form['text']
+    if file.filename == '':
+        return 'No seleccionó ningún archivo.', 400
+
+    # Guardar en la carpeta temporal
+    temp_file_path = '/tmp/' + file.filename
+    file.save(temp_file_path)
+
+    # Procesar y actualizar el archivo
+    patterns = {
+        'Fecha de Radicación': r'Fecha de Radicación:\s*(\d{2}/\d{2}/\d{4})',
+        'Hora de Radicación': r'Fecha de Radicación:\s*\d{2}/\d{2}/\d{4} (\d{1,2}:\d{2} [ap]m)',
+        'Fecha de Petición': r'Date:\s*\w{3}, (\d{2} \w{3} \d{4})',
+        'Hora de Petición': r'Date:\s*\w{3}, \d{2} \w{3} \d{4} a las (\d{1,2}:\d{2})',
+        '# de Petición': r'radicado/consecutivo ([^\s]+)',
+        'Solicitante': r'Nombres:\s*([\w\s]+)',
+        'Correo de Solicitante': r'Email:\s*([\w\.-]+@[\w\.-]+)',
+        'Entidad': r'Empresa:\s*([^\n]+)',
+        'Cargo': r'Cargo:\s*([^\n]+)',
+        'Asunto': r'Asunto:\s*([^\n]+)'
+    }
+
+    extracted_data = {}
+    for key, pattern in patterns.items():
+        extracted_data[key] = extract_data_with_regex(text, pattern)
+
+    updated_file_path = update_excel_with_data(temp_file_path, extracted_data)
+
+    # Enviar el archivo actualizado como respuesta
+    response = send_file(updated_file_path, as_attachment=True)
+
+    # Eliminar los archivos temporales
+    os.remove(temp_file_path)
+    os.remove(updated_file_path)
+
+    return response
+
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
