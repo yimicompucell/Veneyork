@@ -5,6 +5,22 @@ import os
 
 app = Flask(__name__)
 
+# Ruta del archivo Excel temporal
+TEMP_FILE_PATH = '/tmp/temp_excel.xlsx'
+
+# Función para crear o cargar el archivo Excel temporal
+def get_or_create_temp_excel(file_path):
+    if not os.path.exists(file_path):
+        wb = openpyxl.Workbook()
+        ws = wb.active
+        ws.append(['Fecha de Radicación', 'Hora de Radicación', 'Fecha de Petición',
+                   'Hora de Petición', '# de Petición', 'Solicitante',
+                   'Correo de Solicitante', 'Entidad', 'Cargo', 'Asunto'])
+        wb.save(file_path)
+    else:
+        wb = openpyxl.load_workbook(file_path)
+    return wb
+
 # Función para extraer datos usando expresiones regulares
 def extract_data_with_regex(text, pattern):
     match = re.search(pattern, text, re.DOTALL)
@@ -17,45 +33,37 @@ def clean_text(text, field_name):
         cleaned_text = cleaned_text.split('\n')[0].strip()
     return cleaned_text
 
-# Función para actualizar un archivo Excel con datos extraídos
-def update_excel_with_data(file_path, extracted_data):
+# Función para actualizar el archivo Excel temporal con datos extraídos
+def update_excel_with_data(extracted_data):
     try:
-        # Cargar el archivo temporal y verificar las filas llenas
-        wb_temp = openpyxl.load_workbook(file_path)
-        ws_temp = wb_temp.active
-        
-        # Encontrar la primera fila vacía en el archivo temporal
-        row = 2
-        while any(ws_temp.cell(row=row, column=col).value for col in range(2, 12)):
-            row += 1
-        
-        wb_temp.close()  # Cerrar el libro temporal
-        
-        # Cargar el archivo real y actualizarlo
-        wb = openpyxl.load_workbook(file_path)
+        wb = get_or_create_temp_excel(TEMP_FILE_PATH)
         ws = wb.active
 
         headers = {
-            'Fecha de Radicación': 2,
-            'Hora de Radicación': 3,
-            'Fecha de Petición': 4,
-            'Hora de Petición': 5,
-            '# de Petición': 6,
-            'Solicitante': 7,
-            'Correo de Solicitante': 8,
-            'Entidad': 9,
-            'Cargo': 10,
-            'Asunto': 11
+            'Fecha de Radicación': 1,
+            'Hora de Radicación': 2,
+            'Fecha de Petición': 3,
+            'Hora de Petición': 4,
+            '# de Petición': 5,
+            'Solicitante': 6,
+            'Correo de Solicitante': 7,
+            'Entidad': 8,
+            'Cargo': 9,
+            'Asunto': 10
         }
 
-        # Añadir los datos en la primera fila vacía identificada
+        # Encuentra la primera fila vacía
+        row = 2
+        while any(ws.cell(row=row, column=col).value for col in headers.values()):
+            row += 1
+
+        # Añadir los datos en la fila vacía
         for key, col in headers.items():
             ws.cell(row=row, column=col, value=extracted_data.get(key, 'No encontrado'))
 
-        updated_file_path = file_path.replace('.xlsx', '_updated.xlsx')
-        wb.save(updated_file_path)
+        wb.save(TEMP_FILE_PATH)
 
-        return updated_file_path
+        return TEMP_FILE_PATH
 
     except Exception as e:
         print(f'Error al actualizar el archivo Excel: {e}')
@@ -63,19 +71,11 @@ def update_excel_with_data(file_path, extracted_data):
 
 @app.route('/update', methods=['POST'])
 def update_file():
-    if 'file' not in request.files or 'text' not in request.form:
-        return 'Texto o archivo Excel no proporcionado.', 400
+    if 'text' not in request.form:
+        return 'Texto no proporcionado.', 400
 
-    file = request.files['file']
     text = request.form['text']
-    if file.filename == '':
-        return 'No seleccionó ningún archivo.', 400
 
-    # Guardar en la carpeta temporal
-    temp_file_path = '/tmp/' + file.filename
-    file.save(temp_file_path)
-
-    # Procesar y actualizar el archivo
     patterns = {
         'Fecha de Radicación': r'Fecha de Radicación:\s*(\d{2}/\d{2}/\d{4})',
         'Hora de Radicación': r'Fecha de Radicación:\s*\d{2}/\d{2}/\d{4} (\d{1,2}:\d{2} [ap]m)',
@@ -93,32 +93,19 @@ def update_file():
     for key, pattern in patterns.items():
         extracted_data[key] = extract_data_with_regex(text, pattern)
 
-    updated_file_path = update_excel_with_data(temp_file_path, extracted_data)
+    updated_file_path = update_excel_with_data(extracted_data)
 
-    # Guardar la ruta del archivo actualizado en algún lugar (en la memoria, en una base de datos, etc.)
-    # Aquí guardamos el nombre del archivo en un archivo simple para referencia
-    with open('/tmp/last_update.txt', 'w') as f:
-        f.write(updated_file_path)
-
-    # Enviar respuesta de éxito
     return jsonify({'message': 'Archivo actualizado con éxito', 'file_path': updated_file_path})
 
 @app.route('/download', methods=['GET'])
 def download_file():
-    try:
-        with open('/tmp/last_update.txt', 'r') as f:
-            updated_file_path = f.read().strip()
-        if not os.path.exists(updated_file_path):
-            return 'Archivo no encontrado.', 404
-        return send_file(updated_file_path, as_attachment=True)
-    except Exception as e:
-        return str(e), 500
+    if not os.path.exists(TEMP_FILE_PATH):
+        return 'Archivo no encontrado.', 404
+    return send_file(TEMP_FILE_PATH, as_attachment=True)
 
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
 
 if __name__ == '__main__':
-    if not os.path.exists('uploads'):
-        os.makedirs('uploads')
     app.run(host='0.0.0.0', port=8080)
