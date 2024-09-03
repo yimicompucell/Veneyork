@@ -3,53 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Archivos</title>
+    <title>Gestión de Archivos Excel</title>
     <style>
+        /* Estilos básicos */
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
+            padding: 0;
         }
-        .button {
-            padding: 10px 20px;
-            margin: 5px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
         }
-        .button:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
-        }
-        #progressBarContainer {
-            width: 100%;
-            background-color: #f3f3f3;
-            border-radius: 5px;
-            margin: 10px 0;
-        }
-        #progressBar {
-            width: 0%;
-            height: 20px;
-            background-color: #4caf50;
-            border-radius: 5px;
+        .hidden {
+            display: none;
         }
         .toast {
             visibility: hidden;
-            max-width: 50%;
-            margin: 0 auto;
+            min-width: 250px;
+            margin-left: -125px;
             background-color: #333;
             color: #fff;
             text-align: center;
             border-radius: 2px;
-            padding: 10px;
             position: fixed;
             z-index: 1;
             left: 50%;
             bottom: 30px;
-            transform: translateX(-50%);
             font-size: 17px;
-            opacity: 0;
-            transition: opacity 0.5s, visibility 0.5s;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+            transition: opacity 0.6s, visibility 0.6s;
         }
         .toast.show {
             visibility: visible;
@@ -61,62 +45,44 @@
         .toast.error {
             background-color: #f44336;
         }
+        /* Otros estilos */
+        #interface1, #interface2 {
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
+    <div class="container">
+        <div id="interface1">
+            <h2>Cargar Modelo</h2>
+            <input type="file" id="modelFileInput" />
+            <button id="uploadModelButton">Cargar Modelo</button>
+            <div id="modelFileInfo"></div>
+        </div>
 
-    <h1>Gestión de Archivos</h1>
+        <div id="interface2" class="hidden">
+            <h2>Actualizar Archivo</h2>
+            <textarea id="textInput" rows="10" cols="50" placeholder="Introduce el texto aquí..."></textarea><br><br>
+            <button id="updateButton">Actualizar Archivo</button>
+            <button id="downloadButton">Descargar Archivo</button>
+            <div id="progressContainer">
+                <div id="progressBar" style="width: 0%; height: 20px; background-color: #4CAF50;"></div>
+            </div>
+        </div>
 
-    <div>
-        <label for="modelFileInput" id="modelFileLabel" class="button">Seleccione el Modelo</label>
-        <input type="file" id="modelFileInput" style="display: none;">
-        <button id="uploadModelButton" class="button">Cargar Modelo</button>
+        <div id="toast" class="toast"></div>
     </div>
-    <p id="modelFileInfo"></p>
-
-    <div>
-        <textarea id="textInput" rows="5" cols="50" placeholder="Ingrese el texto aquí..."></textarea>
-        <br>
-        <button id="updateButton" class="button">Actualizar Archivo</button>
-        <button id="downloadButton" class="button">Descargar Archivo</button>
-    </div>
-
-    <div id="progressBarContainer">
-        <div id="progressBar"></div>
-    </div>
-
-    <div id="toast" class="toast"></div>
 
     <script>
         const modelFileInput = document.getElementById('modelFileInput');
-        const modelFileLabel = document.getElementById('modelFileLabel');
         const uploadModelButton = document.getElementById('uploadModelButton');
         const modelFileInfo = document.getElementById('modelFileInfo');
-    
+        const textInput = document.getElementById('textInput');
         const updateButton = document.getElementById('updateButton');
         const downloadButton = document.getElementById('downloadButton');
         const progressBar = document.getElementById('progressBar');
         const toast = document.getElementById('toast');
-    
-        const SERVER_URLS = {
-            'pee-beta-jet.vercel.app': 'https://pee-beta-jet.vercel.app',
-            'datos-excel-pee.vercel.app': 'https://datos-excel-pee.vercel.app',
-            '127.0.0.1:8080': 'http://127.0.0.1:8080'
-        };
-    
-        function getServerUrl(endpoint) {
-            const currentUrl = window.location.hostname;
-            return SERVER_URLS[currentUrl] ? `${SERVER_URLS[currentUrl]}/${endpoint}` : null;
-        }
-    
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-        }
-    
+
         function showToast(message, type) {
             toast.textContent = message;
             toast.className = `toast show ${type}`;
@@ -124,7 +90,7 @@
                 toast.className = 'toast';
             }, 3000);
         }
-    
+
         function parseTextToData(text) {
             const data = {};
             const lines = text.split('\n');
@@ -149,31 +115,66 @@
             
             return data;
         }
-    
+
+        function handleModelUpload(url) {
+            if (uploadModelButton.disabled) return;
+
+            uploadModelButton.disabled = true;
+            uploadModelButton.textContent = 'Cargando...';
+
+            const formData = new FormData();
+            const modelFile = modelFileInput.files[0];
+            formData.append('file', modelFile);
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', url, true);
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    showToast('Modelo subido con éxito!', 'success');
+                    document.getElementById('interface1').classList.add('hidden');
+                    document.getElementById('interface2').classList.remove('hidden');
+                } else {
+                    showToast('Error al subir el modelo: ' + xhr.statusText, 'error');
+                }
+            };
+
+            xhr.onerror = function() {
+                showToast('Error al subir el modelo: ' + xhr.statusText, 'error');
+            };
+
+            xhr.onloadend = function() {
+                uploadModelButton.disabled = false;
+                uploadModelButton.textContent = 'Cargar Modelo';
+            };
+
+            xhr.send(formData);
+        }
+
         function handleFormSubmit(url, isUpdate) {
             if (updateButton.disabled) return;
-    
+
             updateButton.disabled = true;
             updateButton.textContent = isUpdate ? 'Actualizando...' : 'Procesando...';
             progressBar.style.width = '0%';
-    
+
             const formData = new FormData();
             if (isUpdate) {
-                const text = document.getElementById('textInput').value;
+                const text = textInput.value;
                 const data = parseTextToData(text);
                 formData.append('text', JSON.stringify(data));
             }
-    
+
             const xhr = new XMLHttpRequest();
             xhr.open(isUpdate ? 'POST' : 'GET', url, true);
-    
+
             xhr.upload.onprogress = function(e) {
                 if (e.lengthComputable) {
                     const percentComplete = (e.loaded / e.total) * 100;
                     progressBar.style.width = percentComplete + '%';
                 }
             };
-    
+
             xhr.onload = function() {
                 if (xhr.status === 200) {
                     if (isUpdate) {
@@ -193,17 +194,17 @@
                     showToast('Error al procesar el archivo: ' + xhr.statusText, 'error');
                 }
             };
-    
+
             xhr.onerror = function() {
                 showToast('Error al procesar el archivo: ' + xhr.statusText, 'error');
             };
-    
+
             xhr.onloadend = function() {
                 updateButton.disabled = false;
                 updateButton.textContent = isUpdate ? 'Actualizar Archivo' : 'Descargar Archivo';
                 progressBar.style.width = '0%';
             };
-    
+
             xhr.responseType = 'blob';
             if (isUpdate) {
                 xhr.send(formData);
@@ -211,58 +212,35 @@
                 xhr.send(); // No se envían datos en la solicitud GET
             }
         }
-    
-        function handleModelUpload(url) {
-            if (uploadModelButton.disabled) return;
-    
-            uploadModelButton.disabled = true;
-            uploadModelButton.textContent = 'Cargando...';
-    
-            const formData = new FormData();
-            const modelFile = document.getElementById('modelFileInput').files[0];
-            formData.append('file', modelFile);
-    
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', url, true);
-    
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    showToast('Modelo subido con éxito!', 'success');
-                } else {
-                    showToast('Error al subir el modelo: ' + xhr.statusText, 'error');
-                }
-            };
-    
-            xhr.onerror = function() {
-                showToast('Error al subir el modelo: ' + xhr.statusText, 'error');
-            };
-    
-            xhr.onloadend = function() {
-                uploadModelButton.disabled = false;
-                uploadModelButton.textContent = 'Cargar Modelo';
-            };
-    
-            xhr.send(formData);
-        }
-    
+
         uploadModelButton.addEventListener('click', () => {
             const url = getServerUrl('upload_model');
             if (url) handleModelUpload(url);
             else showToast('URL no reconocida', 'error');
         });
-    
+
         updateButton.addEventListener('click', () => {
             const url = getServerUrl('update');
             if (url) handleFormSubmit(url, true);
             else showToast('URL no reconocida', 'error');
         });
-    
+
         downloadButton.addEventListener('click', () => {
             const url = getServerUrl('download');
             if (url) handleFormSubmit(url, false);
             else showToast('URL no reconocida', 'error');
         });
+
+        function getServerUrl(endpoint) {
+            const currentUrl = window.location.hostname;
+            return SERVER_URLS[currentUrl] ? `${SERVER_URLS[currentUrl]}/${endpoint}` : null;
+        }
+
+        const SERVER_URLS = {
+            'pee-beta-jet.vercel.app': 'https://pee-beta-jet.vercel.app',
+            'datos-excel-pee.vercel.app': 'https://datos-excel-pee.vercel.app',
+            '127.0.0.1:8080': 'http://127.0.0.1:8080'
+        };
     </script>
-    
 </body>
 </html>
