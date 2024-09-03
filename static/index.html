@@ -179,6 +179,8 @@
         }
 
         function handleFormSubmit(url) {
+            if (uploadButton.disabled || updateButton.disabled) return; // Prevenir múltiples envíos
+
             uploadButton.disabled = true;
             updateButton.disabled = true;
             uploadButton.textContent = 'Subiendo...';
