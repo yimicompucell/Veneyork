@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, jsonify
 import openpyxl
 import re
 import os
@@ -59,49 +59,6 @@ def update_excel_with_data(file_path, extracted_data):
         print(f'Error al actualizar el archivo Excel: {e}')
         raise
 
-@app.route('/upload', methods=['POST'])
-def upload_file():
-    if 'file' not in request.files or 'text' not in request.form:
-        return 'Texto o archivo Excel no proporcionado.', 400
-
-    file = request.files['file']
-    text = request.form['text']
-    if file.filename == '':
-        return 'No seleccionó ningún archivo.', 400
-
-    # Guardar en la carpeta temporal
-    temp_file_path = '/tmp/' + file.filename
-    file.save(temp_file_path)
-
-    # Procesar y actualizar el archivo
-    patterns = {
-        'Fecha de Radicación': r'Fecha de Radicación:\s*(\d{2}/\d{2}/\d{4})',
-        'Hora de Radicación': r'Fecha de Radicación:\s*\d{2}/\d{2}/\d{4} (\d{1,2}:\d{2} [ap]m)',
-        'Fecha de Petición': r'Date:\s*\w{3}, (\d{2} \w{3} \d{4})',
-        'Hora de Petición': r'Date:\s*\w{3}, \d{2} \w{3} \d{4} a las (\d{1,2}:\d{2})',
-        '# de Petición': r'radicado/consecutivo ([^\s]+)',
-        'Solicitante': r'Nombres:\s*([\w\s]+)',
-        'Correo de Solicitante': r'Email:\s*([\w\.-]+@[\w\.-]+)',
-        'Entidad': r'Empresa:\s*([^\n]+)',
-        'Cargo': r'Cargo:\s*([^\n]+)',
-        'Asunto': r'Asunto:\s*([^\n]+)'
-    }
-
-    extracted_data = {}
-    for key, pattern in patterns.items():
-        extracted_data[key] = extract_data_with_regex(text, pattern)
-
-    updated_file_path = update_excel_with_data(temp_file_path, extracted_data)
-
-    # Enviar el archivo actualizado como respuesta
-    response = send_file(updated_file_path, as_attachment=True)
-
-    # Eliminar los archivos temporales
-    os.remove(temp_file_path)
-    os.remove(updated_file_path)
-
-    return response
-
 @app.route('/update', methods=['POST'])
 def update_file():
     if 'file' not in request.files or 'text' not in request.form:
@@ -136,14 +93,24 @@ def update_file():
 
     updated_file_path = update_excel_with_data(temp_file_path, extracted_data)
 
-    # Enviar el archivo actualizado como respuesta
-    response = send_file(updated_file_path, as_attachment=True)
+    # Guardar la ruta del archivo actualizado en algún lugar (en la memoria, en una base de datos, etc.)
+    # Aquí guardamos el nombre del archivo en un archivo simple para referencia
+    with open('/tmp/last_update.txt', 'w') as f:
+        f.write(updated_file_path)
 
-    # Eliminar los archivos temporales
-    os.remove(temp_file_path)
-    os.remove(updated_file_path)
+    # Enviar respuesta de éxito
+    return jsonify({'message': 'Archivo actualizado con éxito', 'file_path': updated_file_path})
 
-    return response
+@app.route('/download', methods=['GET'])
+def download_file():
+    try:
+        with open('/tmp/last_update.txt', 'r') as f:
+            updated_file_path = f.read().strip()
+        if not os.path.exists(updated_file_path):
+            return 'Archivo no encontrado.', 404
+        return send_file(updated_file_path, as_attachment=True)
+    except Exception as e:
+        return str(e), 500
 
 @app.route('/')
 def index():

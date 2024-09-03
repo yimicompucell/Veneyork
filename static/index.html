@@ -137,153 +137,140 @@
             <button type="button" id="updateButton">Actualizar Archivo</button>
             <div class="progress-bar">
                 <div class="progress" id="progressBar"></div>
+                <div id="lastUpdate"></div>
             </div>
-            <div id="lastUpdate"></div>
         </form>
     </div>
     <div id="toast" class="toast"></div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            function updateLastUpdate() {
-                fetch('/last-update')
-                    .then(response => response.text())
-                    .then(data => {
-                        document.getElementById('lastUpdate').textContent = 'Última actualización: ' + data;
-                    })
-                    .catch(error => console.error('Error al obtener la última actualización:', error));
+
+        const fileInput = document.getElementById('fileInput');
+        const fileInputLabel = document.getElementById('fileInputLabel');
+        const uploadButton = document.getElementById('uploadButton');
+        const updateButton = document.getElementById('updateButton');
+        const fileInfo = document.getElementById('fileInfo');
+        const progressBar = document.getElementById('progressBar');
+        const toast = document.getElementById('toast');
+
+        fileInput.addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                const file = e.target.files[0];
+                fileInputLabel.textContent = file.name;
+                fileInfo.textContent = `Archivo: ${file.name} (${formatFileSize(file.size)})`;
+            } else {
+                fileInputLabel.textContent = 'Seleccione el Archivo';
+                fileInfo.textContent = '';
             }
+        });
 
-            updateLastUpdate(); // Llamar para cargar la última actualización al cargar la página
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
 
-            const fileInput = document.getElementById('fileInput');
-            const fileInputLabel = document.getElementById('fileInputLabel');
-            const uploadButton = document.getElementById('uploadButton');
-            const updateButton = document.getElementById('updateButton');
-            const fileInfo = document.getElementById('fileInfo');
-            const progressBar = document.getElementById('progressBar');
-            const toast = document.getElementById('toast');
+        function showToast(message, type) {
+            toast.textContent = message;
+            toast.className = `toast ${type}`;
+            toast.style.opacity = 1;
+            setTimeout(() => {
+                toast.style.opacity = 0;
+            }, 3000);
+        }
 
-            fileInput.addEventListener('change', function(e) {
-                if (e.target.files.length > 0) {
-                    const file = e.target.files[0];
-                    fileInputLabel.textContent = file.name;
-                    fileInfo.textContent = `Archivo: ${file.name} (${formatFileSize(file.size)})`;
-                } else {
-                    fileInputLabel.textContent = 'Seleccione el Archivo';
-                    fileInfo.textContent = '';
+        function handleFormSubmit(url) {
+            if (uploadButton.disabled || updateButton.disabled) return; // Prevenir múltiples envíos
+
+            uploadButton.disabled = true;
+            updateButton.disabled = true;
+            uploadButton.textContent = 'Subiendo...';
+            updateButton.textContent = 'Actualizando...';
+            progressBar.style.width = '0%';
+
+            var formData = new FormData();
+            var text = document.getElementById('textInput').value;
+            var file = document.getElementById('fileInput').files[0];
+            formData.append('text', text);
+            formData.append('file', file);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', url, true);
+
+            xhr.upload.onprogress = function(e) {
+                if (e.lengthComputable) {
+                    var percentComplete = (e.loaded / e.total) * 100;
+                    progressBar.style.width = percentComplete + '%';
                 }
-            });
+            };
 
-            function formatFileSize(bytes) {
-                if (bytes === 0) return '0 Bytes';
-                const k = 1024;
-                const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-                const i = Math.floor(Math.log(bytes) / Math.log(k));
-                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-            }
-
-            function showToast(message, type) {
-                toast.textContent = message;
-                toast.className = `toast ${type}`;
-                toast.style.opacity = 1;
-                setTimeout(() => {
-                    toast.style.opacity = 0;
-                }, 3000);
-            }
-
-            function handleFormSubmit(url) {
-                if (uploadButton.disabled || updateButton.disabled) return; // Prevenir múltiples envíos
-
-                uploadButton.disabled = true;
-                updateButton.disabled = true;
-                uploadButton.textContent = 'Subiendo...';
-                updateButton.textContent = 'Actualizando...';
-                progressBar.style.width = '0%';
-
-                var formData = new FormData();
-                var text = document.getElementById('textInput').value;
-                var file = document.getElementById('fileInput').files[0];
-                formData.append('text', text);
-                formData.append('file', file);
-
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', url, true);
-
-                xhr.upload.onprogress = function(e) {
-                    if (e.lengthComputable) {
-                        var percentComplete = (e.loaded / e.total) * 100;
-                        progressBar.style.width = percentComplete + '%';
-                    }
-                };
-
-                xhr.onload = function() {
-                    if (xhr.status === 200) {
-                        var blob = new Blob([xhr.response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-                        var url = URL.createObjectURL(blob);
-                        var a = document.createElement('a');
-                        a.href = url;
-                        a.download = 'updated_file.xlsx';
-                        document.body.appendChild(a);
-                        a.click();
-                        a.remove();
-                        showToast('Archivo procesado con éxito!', 'success');
-                    } else {
-                        console.error('Error al procesar el archivo:', xhr.statusText);
-                        showToast('Error al procesar el archivo: ' + xhr.statusText, 'error');
-                    }
-                    updateLastUpdate(); // Actualizar la última actualización después de procesar
-                };
-
-                xhr.onerror = function() {
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var blob = new Blob([xhr.response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                    var url = URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'updated_file.xlsx';
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    showToast('Archivo procesado con éxito!', 'success');
+                } else {
                     console.error('Error al procesar el archivo:', xhr.statusText);
                     showToast('Error al procesar el archivo: ' + xhr.statusText, 'error');
-                };
+                }
+            };
 
-                xhr.onloadend = function() {
-                    uploadButton.disabled = false;
-                    updateButton.disabled = false;
-                    uploadButton.textContent = 'Subir Archivo';
-                    updateButton.textContent = 'Actualizar Archivo';
-                    progressBar.style.width = '0%';
-                };
+            xhr.onerror = function() {
+                console.error('Error al procesar el archivo:', xhr.statusText);
+                showToast('Error al procesar el archivo: ' + xhr.statusText, 'error');
+            };
 
-                xhr.responseType = 'blob';
-                xhr.send(formData);
+            xhr.onloadend = function() {
+                uploadButton.disabled = false;
+                updateButton.disabled = false;
+                uploadButton.textContent = 'Subir Archivo';
+                updateButton.textContent = 'Actualizar Archivo';
+                progressBar.style.width = '0%';
+            };
+
+            xhr.responseType = 'blob';
+            xhr.send(formData);
+        }
+
+        uploadButton.addEventListener('click', () => {
+            const currentUrl = window.location.hostname;
+            let serverUrl;
+            if (currentUrl === 'pee-beta-jet.vercel.app') {
+                serverUrl = 'https://pee-beta-jet.vercel.app/upload';
+            } else if (currentUrl === 'datos-excel-pee.vercel.app') {
+                serverUrl = 'https://datos-excel-pee.vercel.app/upload';
+            } else if (currentUrl === '127.0.0.1:8080') {
+                serverUrl = 'http://127.0.0.1:8080/upload';
+            } else {
+                console.error('URL no reconocida:', currentUrl);
+                showToast('URL no reconocida', 'error');
+                return;
             }
+            handleFormSubmit(serverUrl);
+        });
 
-            uploadButton.addEventListener('click', () => {
-                const currentUrl = window.location.hostname;
-                let serverUrl;
-                if (currentUrl === 'pee-beta-jet.vercel.app') {
-                    serverUrl = 'https://pee-beta-jet.vercel.app/upload';
-                } else if (currentUrl === 'datos-excel-pee.vercel.app') {
-                    serverUrl = 'https://datos-excel-pee.vercel.app/upload';
-                } else if (currentUrl === '127.0.0.1:8080') {
-                    serverUrl = 'http://127.0.0.1:8080/upload';
-                } else {
-                    console.error('URL no reconocida:', currentUrl);
-                    showToast('URL no reconocida', 'error');
-                    return;
-                }
-                handleFormSubmit(serverUrl);
-            });
-
-            updateButton.addEventListener('click', () => {
-                const currentUrl = window.location.hostname;
-                let serverUrl;
-                if (currentUrl === 'pee-beta-jet.vercel.app') {
-                    serverUrl = 'https://pee-beta-jet.vercel.app/update';
-                } else if (currentUrl === 'datos-excel-pee.vercel.app') {
-                    serverUrl = 'https://datos-excel-pee.vercel.app/update';
-                } else if (currentUrl === '127.0.0.1:8080') {
-                    serverUrl = 'http://127.0.0.1:8080/update';
-                } else {
-                    console.error('URL no reconocida:', currentUrl);
-                    showToast('URL no reconocida', 'error');
-                    return;
-                }
-                handleFormSubmit(serverUrl);
-            });
+        updateButton.addEventListener('click', () => {
+            const currentUrl = window.location.hostname;
+            let serverUrl;
+            if (currentUrl === 'pee-beta-jet.vercel.app') {
+                serverUrl = 'https://pee-beta-jet.vercel.app/update';
+            } else if (currentUrl === 'datos-excel-pee.vercel.app') {
+                serverUrl = 'https://datos-excel-pee.vercel.app/update';
+            } else if (currentUrl === '127.0.0.1:8080') {
+                serverUrl = 'http://127.0.0.1:8080/update';
+            } else {
+                console.error('URL no reconocida:', currentUrl);
+                showToast('URL no reconocida', 'error');
+                return;
+            }
+            handleFormSubmit(serverUrl);
         });
     </script>
 </body>
