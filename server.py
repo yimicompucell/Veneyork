@@ -105,7 +105,10 @@ def update_file():
 def download_file():
     if not os.path.exists(TEMP_FILE_PATH):
         return 'Archivo no encontrado.', 404
-    return send_file(TEMP_FILE_PATH, as_attachment=True)
+    try:
+        return send_file(TEMP_FILE_PATH, as_attachment=True)
+    except Exception as e:
+        return f'No se pudo procesar el archivo: {e}', 500
 
 @app.route('/')
 def index():
