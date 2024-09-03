@@ -133,7 +133,8 @@
                 <input type="file" id="fileInput" name="file" />
             </div>
             <div id="fileInfo"></div>
-            <button type="button" onclick="processData()" id="uploadButton">Subir Archivo</button>
+            <button type="button" id="uploadButton">Subir Archivo</button>
+            <button type="button" id="updateButton">Actualizar Archivo</button>
             <div class="progress-bar">
                 <div class="progress" id="progressBar"></div>
             </div>
@@ -144,6 +145,7 @@
         const fileInput = document.getElementById('fileInput');
         const fileInputLabel = document.getElementById('fileInputLabel');
         const uploadButton = document.getElementById('uploadButton');
+        const updateButton = document.getElementById('updateButton');
         const fileInfo = document.getElementById('fileInfo');
         const progressBar = document.getElementById('progressBar');
         const toast = document.getElementById('toast');
@@ -154,7 +156,7 @@
                 fileInputLabel.textContent = file.name;
                 fileInfo.textContent = `Archivo: ${file.name} (${formatFileSize(file.size)})`;
             } else {
-                fileInputLabel.textContent = 'Subir Archivo';
+                fileInputLabel.textContent = 'Seleccione el Archivo';
                 fileInfo.textContent = '';
             }
         });
@@ -176,76 +178,92 @@
             }, 3000);
         }
 
-        function processData() {
-    uploadButton.disabled = true;
-    uploadButton.textContent = 'Subiendo...';
-    progressBar.style.width = '0%';
+        function handleFormSubmit(url) {
+            uploadButton.disabled = true;
+            updateButton.disabled = true;
+            uploadButton.textContent = 'Subiendo...';
+            updateButton.textContent = 'Actualizando...';
+            progressBar.style.width = '0%';
 
-    var formData = new FormData();
-    var text = document.getElementById('textInput').value;
-    var file = document.getElementById('fileInput').files[0];
-    formData.append('text', text);
-    formData.append('file', file);
+            var formData = new FormData();
+            var text = document.getElementById('textInput').value;
+            var file = document.getElementById('fileInput').files[0];
+            formData.append('text', text);
+            formData.append('file', file);
 
-    // Obtener la URL actual
-    var currentUrl = window.location.hostname;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', url, true);
 
-    // Establecer la URL del servidor según la URL actual
-    var serverUrl;
-    if (currentUrl === 'pee-beta-jet.vercel.app') {
-        serverUrl = 'https://pee-beta-jet.vercel.app/upload';
-    } else if (currentUrl === 'datos-excel-pee.vercel.app') {
-        serverUrl = 'https://datos-excel-pee.vercel.app/upload';
-    } else {
-        console.error('URL no reconocida:', currentUrl);
-        showToast('URL no reconocida', 'error');
-        uploadButton.disabled = false;
-        uploadButton.textContent = 'Subir Archivo';
-        progressBar.style.width = '0%';
-        return;
-    }
+            xhr.upload.onprogress = function(e) {
+                if (e.lengthComputable) {
+                    var percentComplete = (e.loaded / e.total) * 100;
+                    progressBar.style.width = percentComplete + '%';
+                }
+            };
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', serverUrl, true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var blob = new Blob([xhr.response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                    var url = URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'updated_file.xlsx';
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    showToast('Archivo procesado con éxito!', 'success');
+                } else {
+                    console.error('Error al procesar el archivo:', xhr.statusText);
+                    showToast('Error al procesar el archivo: ' + xhr.statusText, 'error');
+                }
+            };
 
-    xhr.upload.onprogress = function(e) {
-        if (e.lengthComputable) {
-            var percentComplete = (e.loaded / e.total) * 100;
-            progressBar.style.width = percentComplete + '%';
+            xhr.onerror = function() {
+                console.error('Error al procesar el archivo:', xhr.statusText);
+                showToast('Error al procesar el archivo: ' + xhr.statusText, 'error');
+            };
+
+            xhr.onloadend = function() {
+                uploadButton.disabled = false;
+                updateButton.disabled = false;
+                uploadButton.textContent = 'Subir Archivo';
+                updateButton.textContent = 'Actualizar Archivo';
+                progressBar.style.width = '0%';
+            };
+
+            xhr.responseType = 'blob';
+            xhr.send(formData);
         }
-    };
 
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            var blob = new Blob([xhr.response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-            var url = URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = 'updated_file.xlsx';
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-            showToast('File uploaded and processed successfully!', 'success');
-        } else {
-            console.error('Error al procesar el archivo:', xhr.statusText);
-            showToast('Error processing file: ' + xhr.statusText, 'error');
-        }
-    };
+        uploadButton.addEventListener('click', () => {
+            const currentUrl = window.location.hostname;
+            let serverUrl;
+            if (currentUrl === 'pee-beta-jet.vercel.app') {
+                serverUrl = 'https://pee-beta-jet.vercel.app/upload';
+            } else if (currentUrl === 'datos-excel-pee.vercel.app') {
+                serverUrl = 'https://datos-excel-pee.vercel.app/upload';
+            } else {
+                console.error('URL no reconocida:', currentUrl);
+                showToast('URL no reconocida', 'error');
+                return;
+            }
+            handleFormSubmit(serverUrl);
+        });
 
-    xhr.onerror = function() {
-        console.error('Error al procesar el archivo:', xhr.statusText);
-        showToast('Error processing file: ' + xhr.statusText, 'error');
-    };
-
-    xhr.onloadend = function() {
-        uploadButton.disabled = false;
-        uploadButton.textContent = 'Subir Archivo';
-        progressBar.style.width = '0%';
-    };
-
-    xhr.responseType = 'blob';
-    xhr.send(formData);
-}
+        updateButton.addEventListener('click', () => {
+            const currentUrl = window.location.hostname;
+            let serverUrl;
+            if (currentUrl === 'pee-beta-jet.vercel.app') {
+                serverUrl = 'https://pee-beta-jet.vercel.app/update';
+            } else if (currentUrl === 'datos-excel-pee.vercel.app') {
+                serverUrl = 'https://datos-excel-pee.vercel.app/update';
+            } else {
+                console.error('URL no reconocida:', currentUrl);
+                showToast('URL no reconocida', 'error');
+                return;
+            }
+            handleFormSubmit(serverUrl);
+        });
     </script>
 </body>
 </html>
