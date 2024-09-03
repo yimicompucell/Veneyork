@@ -20,14 +20,20 @@ def clean_text(text, field_name):
 # Función para actualizar un archivo Excel con datos extraídos
 def update_excel_with_data(file_path, extracted_data):
     try:
+        # Cargar el archivo temporal y verificar las filas llenas
+        wb_temp = openpyxl.load_workbook(file_path)
+        ws_temp = wb_temp.active
+        
+        # Encontrar la primera fila vacía en el archivo temporal
+        row = 2
+        while any(ws_temp.cell(row=row, column=col).value for col in range(2, 12)):
+            row += 1
+        
+        wb_temp.close()  # Cerrar el libro temporal
+        
+        # Cargar el archivo real y actualizarlo
         wb = openpyxl.load_workbook(file_path)
-        sheet_names = wb.sheetnames
-        print(f"Hoja encontrada: {sheet_names}")
-
-        if not sheet_names:
-            raise ValueError('El archivo Excel no contiene hojas.')
-
-        ws = wb[sheet_names[0]]
+        ws = wb.active
 
         headers = {
             'Fecha de Radicación': 2,
@@ -42,12 +48,7 @@ def update_excel_with_data(file_path, extracted_data):
             'Asunto': 11
         }
 
-        # Encuentra la primera fila vacía
-        row = 2
-        while all(ws.cell(row=row, column=col).value is not None for col in headers.values()):
-            row += 1
-
-        # Añadir los datos en la fila vacía
+        # Añadir los datos en la primera fila vacía identificada
         for key, col in headers.items():
             ws.cell(row=row, column=col, value=extracted_data.get(key, 'No encontrado'))
 
