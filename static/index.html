@@ -133,8 +133,8 @@
                 <input type="file" id="fileInput" name="file" />
             </div>
             <div id="fileInfo"></div>
-            <button type="button" id="uploadButton">Subir Archivo</button>
             <button type="button" id="updateButton">Actualizar Archivo</button>
+            <button type="button" id="downloadButton">Descargar Archivo</button>
             <div class="progress-bar">
                 <div class="progress" id="progressBar"></div>
                 <div id="lastUpdate"></div>
@@ -143,11 +143,10 @@
     </div>
     <div id="toast" class="toast"></div>
     <script>
-
         const fileInput = document.getElementById('fileInput');
         const fileInputLabel = document.getElementById('fileInputLabel');
-        const uploadButton = document.getElementById('uploadButton');
         const updateButton = document.getElementById('updateButton');
+        const downloadButton = document.getElementById('downloadButton');
         const fileInfo = document.getElementById('fileInfo');
         const progressBar = document.getElementById('progressBar');
         const toast = document.getElementById('toast');
@@ -180,13 +179,11 @@
             }, 3000);
         }
 
-        function handleFormSubmit(url) {
-            if (uploadButton.disabled || updateButton.disabled) return; // Prevenir múltiples envíos
+        function handleFormSubmit(url, isUpdate) {
+            if (updateButton.disabled) return; // Prevenir múltiples envíos
 
-            uploadButton.disabled = true;
             updateButton.disabled = true;
-            uploadButton.textContent = 'Subiendo...';
-            updateButton.textContent = 'Actualizando...';
+            updateButton.textContent = isUpdate ? 'Actualizando...' : 'Procesando...';
             progressBar.style.width = '0%';
 
             var formData = new FormData();
@@ -207,15 +204,19 @@
 
             xhr.onload = function() {
                 if (xhr.status === 200) {
-                    var blob = new Blob([xhr.response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-                    var url = URL.createObjectURL(blob);
-                    var a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'updated_file.xlsx';
-                    document.body.appendChild(a);
-                    a.click();
-                    a.remove();
-                    showToast('Archivo procesado con éxito!', 'success');
+                    if (isUpdate) {
+                        showToast('Archivo actualizado con éxito!', 'success');
+                    } else {
+                        var blob = new Blob([xhr.response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                        var url = URL.createObjectURL(blob);
+                        var a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'updated_file.xlsx';
+                        document.body.appendChild(a);
+                        a.click();
+                        a.remove();
+                        showToast('Archivo descargado con éxito!', 'success');
+                    }
                 } else {
                     console.error('Error al procesar el archivo:', xhr.statusText);
                     showToast('Error al procesar el archivo: ' + xhr.statusText, 'error');
@@ -228,10 +229,8 @@
             };
 
             xhr.onloadend = function() {
-                uploadButton.disabled = false;
                 updateButton.disabled = false;
-                uploadButton.textContent = 'Subir Archivo';
-                updateButton.textContent = 'Actualizar Archivo';
+                updateButton.textContent = isUpdate ? 'Actualizar Archivo' : 'Descargar Archivo';
                 progressBar.style.width = '0%';
             };
 
@@ -239,38 +238,39 @@
             xhr.send(formData);
         }
 
-        uploadButton.addEventListener('click', () => {
-            const currentUrl = window.location.hostname;
-            let serverUrl;
-            if (currentUrl === 'pee-beta-jet.vercel.app') {
-                serverUrl = 'https://pee-beta-jet.vercel.app/upload';
-            } else if (currentUrl === 'datos-excel-pee.vercel.app') {
-                serverUrl = 'https://datos-excel-pee.vercel.app/upload';
-            } else if (currentUrl === '127.0.0.1:8080') {
-                serverUrl = 'http://127.0.0.1:8080/upload';
-            } else {
-                console.error('URL no reconocida:', currentUrl);
-                showToast('URL no reconocida', 'error');
-                return;
-            }
-            handleFormSubmit(serverUrl);
-        });
-
         updateButton.addEventListener('click', () => {
             const currentUrl = window.location.hostname;
             let serverUrl;
             if (currentUrl === 'pee-beta-jet.vercel.app') {
                 serverUrl = 'https://pee-beta-jet.vercel.app/update';
+                handleFormSubmit(serverUrl, true);
             } else if (currentUrl === 'datos-excel-pee.vercel.app') {
                 serverUrl = 'https://datos-excel-pee.vercel.app/update';
+                handleFormSubmit(serverUrl, true);
             } else if (currentUrl === '127.0.0.1:8080') {
                 serverUrl = 'http://127.0.0.1:8080/update';
+                handleFormSubmit(serverUrl, true);
+            } else {
+                console.error('URL no reconocida:', currentUrl);
+                showToast('URL no reconocida', 'error');
+            }
+        });
+
+        downloadButton.addEventListener('click', () => {
+            const currentUrl = window.location.hostname;
+            let downloadUrl;
+            if (currentUrl === 'pee-beta-jet.vercel.app') {
+                downloadUrl = 'https://pee-beta-jet.vercel.app/download';
+            } else if (currentUrl === 'datos-excel-pee.vercel.app') {
+                downloadUrl = 'https://datos-excel-pee.vercel.app/download';
+            } else if (currentUrl === '127.0.0.1:8080') {
+                downloadUrl = 'http://127.0.0.1:8080/download';
             } else {
                 console.error('URL no reconocida:', currentUrl);
                 showToast('URL no reconocida', 'error');
                 return;
             }
-            handleFormSubmit(serverUrl);
+            window.location.href = downloadUrl; // Descargar el archivo
         });
     </script>
 </body>
