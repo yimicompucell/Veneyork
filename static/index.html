@@ -91,31 +91,6 @@
             }, 3000);
         }
 
-        function parseTextToData(text) {
-            const data = {};
-            const lines = text.split('\n');
-            
-            lines.forEach(line => {
-                if (line.includes('Trámite:')) {
-                    data['Asunto'] = line.split('Trámite:')[1].trim();
-                } else if (line.includes('Asunto:')) {
-                    data['Asunto'] = line.split('Asunto:')[1].trim();
-                } else if (line.includes('Fecha de Radicación:')) {
-                    data['Fecha de Radicación'] = line.split('Fecha de Radicación:')[1].trim();
-                } else if (line.includes('Nombres:')) {
-                    data['Solicitante'] = line.split('Nombres:')[1].trim();
-                } else if (line.includes('Email:')) {
-                    data['Correo de Solicitante'] = line.split('Email:')[1].trim();
-                } else if (line.includes('Empresa:')) {
-                    data['Entidad'] = line.split('Empresa:')[1].trim();
-                } else if (line.includes('Cargo:')) {
-                    data['Cargo'] = line.split('Cargo:')[1].trim();
-                }
-            });
-            
-            return data;
-        }
-
         function handleModelUpload(url) {
             if (uploadModelButton.disabled) return;
 
@@ -126,29 +101,23 @@
             const modelFile = modelFileInput.files[0];
             formData.append('file', modelFile);
 
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', url, true);
-
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    showToast('Modelo subido con éxito!', 'success');
-                    document.getElementById('interface1').classList.add('hidden');
-                    document.getElementById('interface2').classList.remove('hidden');
-                } else {
-                    showToast('Error al subir el modelo: ' + xhr.statusText, 'error');
-                }
-            };
-
-            xhr.onerror = function() {
-                showToast('Error al subir el modelo: ' + xhr.statusText, 'error');
-            };
-
-            xhr.onloadend = function() {
+            fetch(url, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                showToast(data.message, 'success');
+                document.getElementById('interface1').classList.add('hidden');
+                document.getElementById('interface2').classList.remove('hidden');
+            })
+            .catch(error => {
+                showToast('Error al subir el modelo: ' + error, 'error');
+            })
+            .finally(() => {
                 uploadModelButton.disabled = false;
                 uploadModelButton.textContent = 'Cargar Modelo';
-            };
-
-            xhr.send(formData);
+            });
         }
 
         function handleFormSubmit(url, isUpdate) {
@@ -161,26 +130,18 @@
             const formData = new FormData();
             if (isUpdate) {
                 const text = textInput.value;
-                const data = parseTextToData(text);
-                formData.append('text', JSON.stringify(data));
+                formData.append('text', text);
             }
 
-            const xhr = new XMLHttpRequest();
-            xhr.open(isUpdate ? 'POST' : 'GET', url, true);
-
-            xhr.upload.onprogress = function(e) {
-                if (e.lengthComputable) {
-                    const percentComplete = (e.loaded / e.total) * 100;
-                    progressBar.style.width = percentComplete + '%';
-                }
-            };
-
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    if (isUpdate) {
-                        showToast('Archivo actualizado con éxito!', 'success');
-                    } else {
-                        const blob = new Blob([xhr.response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            fetch(url, {
+                method: isUpdate ? 'POST' : 'GET',
+                body: isUpdate ? formData : null
+            })
+            .then(response => {
+                if (isUpdate) {
+                    return response.json();
+                } else {
+                    return response.blob().then(blob => {
                         const url = URL.createObjectURL(blob);
                         const a = document.createElement('a');
                         a.href = url;
@@ -189,58 +150,38 @@
                         a.click();
                         a.remove();
                         showToast('Archivo descargado con éxito!', 'success');
-                    }
-                } else {
-                    showToast('Error al procesar el archivo: ' + xhr.statusText, 'error');
+                    });
                 }
-            };
-
-            xhr.onerror = function() {
-                showToast('Error al procesar el archivo: ' + xhr.statusText, 'error');
-            };
-
-            xhr.onloadend = function() {
+            })
+            .then(data => {
+                if (isUpdate && data.file_path) {
+                    showToast('Archivo actualizado con éxito!', 'success');
+                }
+            })
+            .catch(error => {
+                showToast('Error al procesar el archivo: ' + error, 'error');
+            })
+            .finally(() => {
                 updateButton.disabled = false;
                 updateButton.textContent = isUpdate ? 'Actualizar Archivo' : 'Descargar Archivo';
                 progressBar.style.width = '0%';
-            };
-
-            xhr.responseType = 'blob';
-            if (isUpdate) {
-                xhr.send(formData);
-            } else {
-                xhr.send(); // No se envían datos en la solicitud GET
-            }
+            });
         }
 
         uploadModelButton.addEventListener('click', () => {
-            const url = getServerUrl('upload_model');
-            if (url) handleModelUpload(url);
-            else showToast('URL no reconocida', 'error');
+            const url = '/upload_model';
+            handleModelUpload(url);
         });
 
         updateButton.addEventListener('click', () => {
-            const url = getServerUrl('update');
-            if (url) handleFormSubmit(url, true);
-            else showToast('URL no reconocida', 'error');
+            const url = '/update';
+            handleFormSubmit(url, true);
         });
 
         downloadButton.addEventListener('click', () => {
-            const url = getServerUrl('download');
-            if (url) handleFormSubmit(url, false);
-            else showToast('URL no reconocida', 'error');
+            const url = '/download';
+            handleFormSubmit(url, false);
         });
-
-        function getServerUrl(endpoint) {
-            const currentUrl = window.location.hostname;
-            return SERVER_URLS[currentUrl] ? `${SERVER_URLS[currentUrl]}/${endpoint}` : null;
-        }
-
-        const SERVER_URLS = {
-            'pee-beta-jet.vercel.app': 'https://pee-beta-jet.vercel.app',
-            'datos-excel-pee.vercel.app': 'https://datos-excel-pee.vercel.app',
-            '127.0.0.1:8080': 'http://127.0.0.1:8080'
-        };
     </script>
 </body>
 </html>
