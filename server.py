@@ -44,7 +44,7 @@ def update_excel_with_data(file_path, extracted_data):
 
         # Encuentra la primera fila vacía
         row = 2
-        while any(ws.cell(row=row, column=col).value for col in headers.values()):
+        while all(ws.cell(row=row, column=col).value is not None for col in headers.values()):
             row += 1
 
         # Añadir los datos en la fila vacía
