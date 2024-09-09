@@ -6,6 +6,10 @@
   <title>Video Detection</title>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
+      const videoContainer = document.getElementById('video-container');
+      const videoIframe = document.getElementById('video-iframe');
+      const videoSrc = 'https://player.vimeo.com/video/1007650091?autoplay=1&loop=1&muted=1&background=1';
+
       // Detectar si el usuario está en un dispositivo móvil
       const isMobile = /Mobi|Android/i.test(navigator.userAgent);
 
@@ -21,11 +25,15 @@
 
             if (!userConfirmed) {
               // Si el usuario no confirma, oculta el video
-              document.getElementById('video-container').style.display = 'none';
+              videoContainer.style.display = 'none';
+              return; // Salir de la función para evitar la reproducción automática
             }
           }
         }
       }
+
+      // Configurar el src del iframe si se confirma la reproducción
+      videoIframe.src = videoSrc;
     });
   </script>
 </head>
@@ -44,7 +52,8 @@
       <!-- Contenedor del Video -->
       <div id="video-container" class="relative">
         <iframe 
-          src="https://player.vimeo.com/video/1007650091?autoplay=1&loop=1&muted=1&background=1" 
+          id="video-iframe"
+          src="" 
           width="100%" 
           height="auto" 
           frameborder="0" 
