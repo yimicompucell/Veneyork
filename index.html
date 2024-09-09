@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Detection</title>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Detectar si el usuario está en un dispositivo móvil
+      const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+
+      if (isMobile) {
+        // Verificar si el navegador soporta Network Information API
+        if ('connection' in navigator) {
+          const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+          const isMobileData = connection.effectiveType.includes('cellular');
+
+          if (isMobileData) {
+            // Mostrar un mensaje de confirmación si se está usando datos móviles
+            const userConfirmed = confirm('Estás usando datos móviles. ¿Deseas reproducir el video? La reproducción puede consumir tus datos.');
+
+            if (!userConfirmed) {
+              // Si el usuario no confirma, oculta el video
+              document.getElementById('video-container').style.display = 'none';
+            }
+          }
+        }
+      }
+    });
+  </script>
+</head>
+<body>
+  <section class="bg-gray-600 text-white py-12 md:py-24 lg:py-32 transition-all duration-500 hover:bg-gray-650">
+    <div class="container mx-auto px-4 md:px-6 grid gap-6 lg:grid-cols-2 lg:items-center">
+      <!-- Contenedor de Texto -->
+      <div class="space-y-4">
+        <h1 class="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">¿Qué Es CERONConnect?</h1>
+        <p class="max-w-[600px] text-lg md:text-xl">CERONConnect es una plataforma educativa en línea que estamos desarrollando como parte de nuestro proyecto de emprendimiento. Está diseñada para proporcionar recursos educativos accesibles y efectivos para estudiantes de diversos niveles educativos. La plataforma cuenta con contenido teórico de alta calidad, tutoriales en video, ejercicios prácticos, guías de estudio, actividades interactivas, evaluaciones automáticas y foros de discusión. El objetivo es facilitar el aprendizaje autodidacta y promover la educación accesible para todos.</p>   
+        <div class="flex flex-col gap-2 min-[400px]:flex-row">
+          <a href="#" class="transition duration-300 ease-in-out transform hover:scale-105 inline-flex h-10 items-center justify-center rounded-md bg-gray-500 px-8 text-sm font-medium text-white shadow-lg transition-colors hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-white">Registrarse</a>
+          <a href="sobrenosotros.html" class="transition duration-300 ease-in-out transform hover:scale-105 inline-flex h-10 items-center justify-center rounded-md bg-gray-500 border-gray-300 px-8 text-sm font-medium shadow-sm transition-colors hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500">Volver al Inicio</a>
+        </div>
+      </div>
+      <!-- Contenedor del Video -->
+      <div id="video-container" class="relative">
+        <iframe 
+          src="https://player.vimeo.com/video/1007650091?autoplay=1&loop=1&muted=1&background=1" 
+          width="100%" 
+          height="auto" 
+          frameborder="0" 
+          allow="autoplay; fullscreen" 
+          allowfullscreen 
+          class="w-full h-auto aspect-video overflow-hidden rounded-xl object-cover object-center">
+        </iframe>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
