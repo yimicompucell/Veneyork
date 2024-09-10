@@ -1,68 +1,152 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video Detection</title>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const videoContainer = document.getElementById('video-container');
-      const videoIframe = document.getElementById('video-iframe');
-      const videoSrc = 'https://player.vimeo.com/video/1007650091?autoplay=1&loop=1&muted=1&background=1';
-
-      // Detectar si el usuario está en un dispositivo móvil
-      const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-
-      if (isMobile) {
-        // Verificar si el navegador soporta Network Information API
-        if ('connection' in navigator) {
-          const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-          const isMobileData = connection.effectiveType.includes('cellular');
-
-          if (isMobileData) {
-            // Mostrar un mensaje de confirmación si se está usando datos móviles
-            const userConfirmed = confirm('Estás usando datos móviles. ¿Deseas reproducir el video? La reproducción puede consumir tus datos.');
-
-            if (!userConfirmed) {
-              // Si el usuario no confirma, oculta el video
-              videoContainer.style.display = 'none';
-              return; // Salir de la función para evitar la reproducción automática
-            }
-          }
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuaderno de Campo - FENCYT - EUREKA 2024</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+      .section {
+          margin-top: 2rem;
+          padding: 1rem;
       }
-
-      // Configurar el src del iframe si se confirma la reproducción
-      videoIframe.src = videoSrc;
-    });
-  </script>
+      .section-title {
+          font-size: 1.5rem;
+          font-weight: bold;
+      }
+      .dropdown-content {
+          display: none;
+          padding: 1rem;
+          background-color: #f9f9f9;
+          border: 1px solid #ddd;
+          border-radius: 0.5rem;
+      }
+      .dropdown-button {
+          cursor: pointer;
+      }
+  </style>
 </head>
-<body>
-  <section class="bg-gray-600 text-white py-12 md:py-24 lg:py-32 transition-all duration-500 hover:bg-gray-650">
-    <div class="container mx-auto px-4 md:px-6 grid gap-6 lg:grid-cols-2 lg:items-center">
-      <!-- Contenedor de Texto -->
-      <div class="space-y-4">
-        <h1 class="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">¿Qué Es CERONConnect?</h1>
-        <p class="max-w-[600px] text-lg md:text-xl">CERONConnect es una plataforma educativa en línea que estamos desarrollando como parte de nuestro proyecto de emprendimiento. Está diseñada para proporcionar recursos educativos accesibles y efectivos para estudiantes de diversos niveles educativos. La plataforma cuenta con contenido teórico de alta calidad, tutoriales en video, ejercicios prácticos, guías de estudio, actividades interactivas, evaluaciones automáticas y foros de discusión. El objetivo es facilitar el aprendizaje autodidacta y promover la educación accesible para todos.</p>   
-        <div class="flex flex-col gap-2 min-[400px]:flex-row">
-          <a href="#" class="transition duration-300 ease-in-out transform hover:scale-105 inline-flex h-10 items-center justify-center rounded-md bg-gray-500 px-8 text-sm font-medium text-white shadow-lg transition-colors hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-white">Registrarse</a>
-          <a href="sobrenosotros.html" class="transition duration-300 ease-in-out transform hover:scale-105 inline-flex h-10 items-center justify-center rounded-md bg-gray-500 border-gray-300 px-8 text-sm font-medium shadow-sm transition-colors hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500">Volver al Inicio</a>
+<body class="bg-gray-100 text-gray-900">
+    <div class="container mx-auto p-4">
+        <!-- Portada -->
+        <div class="section bg-white shadow-lg rounded-lg p-6">
+            <h1 class="text-4xl font-bold text-center">Título del Proyecto</h1>
+            <p class="text-center text-lg mt-2">Nombre del Autor</p>
+            <p class="text-center text-lg">Institución Educativa</p>
+            <p class="text-center text-lg">Fecha</p>
         </div>
-      </div>
-      <!-- Contenedor del Video -->
-      <div id="video-container" class="relative">
-        <iframe 
-          id="video-iframe"
-          src="" 
-          width="100%" 
-          height="auto" 
-          frameborder="0" 
-          allow="autoplay; fullscreen" 
-          allowfullscreen 
-          class="w-full h-auto aspect-video overflow-hidden rounded-xl object-cover object-center">
-        </iframe>
-      </div>
+
+        <!-- Índice -->
+        <div class="section bg-white shadow-lg rounded-lg p-6">
+            <h2 class="section-title">Índice</h2>
+            <ul class="list-disc ml-6">
+                <li><a href="#introduccion" class="text-blue-600 hover:underline">Introducción</a></li>
+                <li><a href="#revision-bibliografica" class="text-blue-600 hover:underline">Revisión Bibliográfica</a></li>
+                <li><a href="#metodologia" class="text-blue-600 hover:underline">Metodología</a></li>
+                <li><a href="#resultados" class="text-blue-600 hover:underline">Resultados</a></li>
+                <li><a href="#discusion" class="text-blue-600 hover:underline">Discusión</a></li>
+                <li><a href="#conclusiones" class="text-blue-600 hover:underline">Conclusiones</a></li>
+                <li><a href="#bibliografia" class="text-blue-600 hover:underline">Bibliografía</a></li>
+                <li><a href="#apendices" class="text-blue-600 hover:underline">Apéndices</a></li>
+                <li><a href="#anexos" class="text-blue-600 hover:underline">Anexos</a></li>
+            </ul>
+        </div>
+
+        <!-- Introducción -->
+        <div id="introduccion" class="section bg-white shadow-lg rounded-lg p-6">
+            <h2 class="section-title">Introducción</h2>
+            <p><strong>Contexto:</strong> Breve descripción del problema o la pregunta de investigación.</p>
+            <p><strong>Objetivo:</strong> Qué esperas lograr con tu proyecto.</p>
+        </div>
+
+        <!-- Revisión Bibliográfica -->
+        <div id="revision-bibliografica" class="section bg-white shadow-lg rounded-lg p-6">
+            <h2 class="section-title">Revisión Bibliográfica</h2>
+            <p><strong>Fuentes:</strong> Resumen de las investigaciones y literatura relevante relacionada con tu proyecto.</p>
+            <p><strong>Teoría:</strong> Explicación de los conceptos científicos y tecnológicos relevantes.</p>
+        </div>
+
+        <!-- Metodología -->
+        <div id="metodologia" class="section bg-white shadow-lg rounded-lg p-6">
+            <h2 class="section-title">Metodología</h2>
+            <p><strong>Diseño del Experimento:</strong> Describe el diseño experimental o la metodología de tu investigación.</p>
+            <p><strong>Materiales y Equipos:</strong> Lista de los materiales, equipos y recursos utilizados.</p>
+            <p><strong>Procedimiento:</strong> Pasos detallados que seguiste durante la investigación o el desarrollo del proyecto.</p>
+        </div>
+
+        <!-- Resultados -->
+        <div id="resultados" class="section bg-white shadow-lg rounded-lg p-6">
+            <h2 class="section-title">Resultados</h2>
+            <p><strong>Datos:</strong> Presentación de los datos obtenidos (gráficos, tablas, y descripciones).</p>
+            <p><strong>Observaciones:</strong> Cualquier observación importante durante el proceso.</p>
+        </div>
+
+        <!-- Discusión -->
+        <div id="discusion" class="section bg-white shadow-lg rounded-lg p-6">
+            <h2 class="section-title">Discusión</h2>
+            <p><strong>Interpretación de Resultados:</strong> Explica lo que los resultados significan en relación con tus hipótesis o preguntas de investigación.</p>
+            <p><strong>Errores y Limitaciones:</strong> Discute cualquier error o limitación que haya afectado tu proyecto.</p>
+        </div>
+
+        <!-- Conclusiones -->
+        <div id="conclusiones" class="section bg-white shadow-lg rounded-lg p-6">
+            <h2 class="section-title">Conclusiones</h2>
+            <p><strong>Hallazgos Clave:</strong> Resumen de los principales hallazgos y cómo responden a tus objetivos.</p>
+            <p><strong>Recomendaciones:</strong> Sugerencias para futuras investigaciones o aplicaciones.</p>
+        </div>
+
+        <!-- Bibliografía -->
+        <div id="bibliografia" class="section bg-white shadow-lg rounded-lg p-6">
+            <h2 class="section-title">Bibliografía</h2>
+            <p><strong>Referencias:</strong> Lista de todas las fuentes de información que utilizaste en tu proyecto.</p>
+        </div>
+
+        <!-- Apéndices -->
+        <div id="apendices" class="section bg-white shadow-lg rounded-lg p-6">
+            <h2 class="section-title">Apéndices</h2>
+            <p><strong>Documentos Adicionales:</strong> Cualquier material adicional relevante, como copias de cuestionarios, datos crudos, o fotografías.</p>
+        </div>
+
+        <!-- Anexos -->
+        <div id="anexos" class="section bg-white shadow-lg rounded-lg p-6">
+            <h2 class="section-title">Anexos</h2>
+            <p><strong>Fotografías y Diagramas:</strong> Imágenes del proceso, diagramas del diseño experimental, etc.</p>
+        </div>
+
+                <!-- Avances -->
+                <div id="avances" class="section bg-white shadow-lg rounded-lg p-6">
+                  <h2 class="section-title">Avances</h2>
+                  <div class="dropdown mt-4">
+                      <button class="dropdown-button text-blue-600 hover:underline">Avance 1: Introducción</button>
+                      <div class="dropdown-content">
+                          <p>El cáncer es una enfermedad compleja y multifacética que afecta a millones de personas en todo el mundo. A pesar de los avances en el tratamiento y la detección temprana, el cáncer sigue siendo una de las principales causas de muerte en muchos países. En este contexto, es fundamental explorar todas las opciones disponibles para tratar y prevenir esta enfermedad.</p>
+                          <p>Una de las áreas que ha generado gran interés en los últimos años es el uso de tratamientos naturales y complementarios para el cáncer. Dentro de este grupo, el té de hoja de guanábana (Annona muricata) ha surgido como una opción prometedora. La guanábana es un árbol tropical que se encuentra en muchas partes del mundo y cuyas hojas se han utilizado tradicionalmente en la medicina popular para tratar diversas enfermedades, incluyendo el cáncer.</p>
+                          <p>El té de hoja de guanábana se elabora a partir de las hojas secas y trituradas del árbol y se ha reportado que contiene varios compuestos bioactivos con propiedades anticancerígenas. Aunque la investigación científica sobre el té de guanábana aún es limitada, algunos estudios han sugerido que puede tener efectos beneficiosos en la prevención y tratamiento del cáncer.</p>
+                          <p>En este cuaderno de campo, nos enfocaremos en evaluar el uso del té de hoja de guanábana en pacientes con cáncer, con el fin de determinar su efectividad y seguridad. A través de la recopilación de datos y observaciones sistemáticas, buscamos contribuir a la comprensión de este tratamiento natural y su potencial papel en la lucha contra el cáncer.</p>
+                      </div>
+                  </div>
+                  <div class="dropdown mt-4">
+                      <button class="dropdown-button text-blue-600 hover:underline">Avance 2: Recolección de Datos</button>
+                      <div class="dropdown-content">
+                          <p>Descripción del segundo avance en la recolección de datos.</p>
+                      </div>
+                  </div>
+                  <div class="dropdown mt-4">
+                      <button class="dropdown-button text-blue-600 hover:underline">Avance 3: Análisis de Datos</button>
+                      <div class="dropdown-content">
+                          <p>Descripción del tercer avance en el análisis de datos.</p>
+                      </div>
+                  </div>
+              </div>
     </div>
-  </section>
+
+    <script>
+      document.querySelectorAll('.dropdown-button').forEach(button => {
+          button.addEventListener('click', () => {
+              const content = button.nextElementSibling;
+              content.style.display = content.style.display === 'block' ? 'none' : 'block';
+          });
+      });
+  </script>
 </body>
 </html>
