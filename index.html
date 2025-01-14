@@ -12,8 +12,109 @@
 </head>
 <body class="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-blue-900 text-white overflow-x-hidden">
 
-  <!-- Aquí se insertará el footer -->
-  <div id="nav-placeholder"></div>
+<!-- Navbar -->
+<nav class="fixed top-0 w-full bg-gradient-to-r from-black/40 to-black/30 backdrop-blur-lg z-50 border-b border-white/5">
+    <div class="container mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+            <!-- Logo con efecto de brillo -->
+            <div class="text-xl font-bold relative group">
+                <span class="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                    Todo en Uno Digital
+                </span>
+                <div class="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-blue-400/20 blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+
+            <!-- Diseño Desktop - NAV -->
+
+          <div id="nav-placeholder"></div>
+
+            <!-- Botón de menú móvil -->
+            <button id="mobile-menu-button" 
+                    class="md:hidden relative group px-3 py-2 rounded-lg 
+                           bg-gradient-to-r from-purple-500/10 to-blue-500/10
+                           hover:from-purple-500/20 hover:to-blue-500/20 
+                           transition-all duration-300">
+                <i class="fas fa-bars text-white/90 group-hover:text-white transition-colors"></i>
+            </button>
+        </div>
+
+        <!-- Menú móvil (Fuera del div del botón) -->
+        <div id="mobile-menu" 
+             class="hidden transform transition-all duration-300 ease-in-out
+                    opacity-0 -translate-y-10 scale-95
+                    md:hidden absolute top-full left-0 right-0 
+                    bg-gradient-to-b from-gray-900/95 to-gray-800/95 
+                    backdrop-blur-xl border-t border-white/10">
+            <div class="container mx-auto px-6 py-4 space-y-2">
+                <!-- Enlaces móviles -->
+                <a href="/index.html" 
+                   class="block px-4 py-2 rounded-md text-white/90 hover:text-white
+                          bg-gradient-to-r hover:from-purple-500/10 hover:to-blue-500/10
+                          transition-all duration-200">
+                    Inicio
+                </a>
+                <!-- Menú desplegable móvil -->
+                <div class="relative">
+                    <button id="mobile-dropdown-button"
+                            class="w-full flex justify-between items-center px-4 py-2 rounded-md
+                                   text-white/90 hover:text-white 
+                                   bg-gradient-to-r hover:from-purple-500/10 hover:to-blue-500/10
+                                   transition-all duration-200">
+                        <span>Categorías</span>
+                        <svg class="w-5 h-5 transition-transform duration-200" 
+                             id="mobile-dropdown-arrow"
+                             fill="none" 
+                             stroke="currentColor" 
+                             viewBox="0 0 24 24">
+                            <path stroke-linecap="round" 
+                                  stroke-linejoin="round" 
+                                  stroke-width="2" 
+                                  d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    
+                    <!-- Contenido del menú desplegable móvil -->
+                    <div id="mobile-dropdown-menu" 
+                         class="hidden transform transition-all duration-300 ease-in-out
+                                opacity-0 -translate-y-3 scale-95
+                                px-4 py-2 space-y-1">
+                        <a href="#todos" 
+                           class="block px-3 py-2 rounded-md text-white/80
+                                  hover:text-white hover:bg-purple-500/10
+                                  transition-all duration-200">
+                            Todos
+                        </a>
+                        <a href="#programacion" 
+                           class="block px-3 py-2 rounded-md text-white/80
+                                  hover:text-white hover:bg-purple-500/10
+                                  transition-all duration-200">
+                            Programación
+                        </a>
+                        <a href="#diseno" 
+                           class="block px-3 py-2 rounded-md text-white/80
+                                  hover:text-white hover:bg-purple-500/10
+                                  transition-all duration-200">
+                            Diseño
+                        </a>
+                        <a href="#marketing" 
+                           class="block px-3 py-2 rounded-md text-white/80
+                                  hover:text-white hover:bg-purple-500/10
+                                  transition-all duration-200">
+                            Marketing
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Overlay para el menú móvil (FUERA del nav) -->
+<div id="mobile-menu-overlay" 
+     class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm 
+            transition-opacity duration-300 md:hidden z-40">
+</div>
+
 
     <!-- Neon light effects -->
     <div class="fixed top-0 left-0 w-full h-full">
@@ -286,8 +387,15 @@
   <!-- Aquí se insertará el footer ¿CUAL FOOTER -->
   <div id="footer-placeholder"></div>
 
+
+  <!-- JavaScript para la funcionalidad del menú móvil -->
+<script>
+
+
+</script>
   <script src="js/animation.js"></script>
   <script src="js/assets.js"></script>
+  <script src="js/menumovil.js"></script>
     
 </body>
 </html>
