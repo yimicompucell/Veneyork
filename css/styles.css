@@ -53,3 +53,25 @@
     .slide-up {
         animation: slideUp 0.3s ease-in-out forwards;
     }
+
+/* Modales */
+
+.modal-overlay {
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+}
+
+.modal-content {
+    transition: all 0.3s ease-in-out;
+    transform: scale(0.95) translateY(-20px);
+    opacity: 0;
+}
+
+.modal-overlay.active .modal-content {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+}
