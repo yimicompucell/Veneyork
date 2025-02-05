@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso de Ciberseguridad | Todo en Uno Digital</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-blue-900 text-white overflow-x-hidden">
+    
+<!-- Navbar -->
+<nav class="fixed top-0 w-full bg-gradient-to-r from-black/40 to-black/30 backdrop-blur-lg z-50 border-b border-white/5">
+    <div class="container mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+            <!-- Logo con efecto de brillo -->
+            <div class="text-xl font-bold relative group">
+                <span class="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                    Todo en Uno Digital
+                </span>
+                <div class="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-blue-400/20 blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+
+            
+            <!-- Diseño Desktop - NAV -->
+
+          <div id="nav-placeholder"></div>
+
+            <!-- Botón de menú móvil -->
+            <button id="mobile-menu-button" 
+                    class="md:hidden relative group px-3 py-2 rounded-lg 
+                           bg-gradient-to-r from-purple-500/10 to-blue-500/10
+                           hover:from-purple-500/20 hover:to-blue-500/20 
+                           transition-all duration-300">
+                <i class="fas fa-bars text-white/90 group-hover:text-white transition-colors"></i>
+            </button>
+        </div>
+
+        <!-- Menú móvil (Fuera del div del botón) -->
+        <div id="mobile-menu" 
+             class="hidden transform transition-all duration-300 ease-in-out
+                    opacity-0 -translate-y-10 scale-95
+                    md:hidden absolute top-full left-0 right-0 
+                    bg-gradient-to-b from-gray-900/95 to-gray-800/95 
+                    backdrop-blur-xl border-t border-white/10">
+            <div class="container mx-auto px-6 py-4 space-y-2">
+                <!-- Enlaces móviles -->
+                <a href="/index.html" 
+                   class="block px-4 py-2 rounded-md text-white/90 hover:text-white
+                          bg-gradient-to-r hover:from-purple-500/10 hover:to-blue-500/10
+                          transition-all duration-200">
+                    Inicio
+                </a>
+                <!-- Menú desplegable móvil -->
+                <!-- <div class="relative">
+                    <button id="mobile-dropdown-button"
+                            class="w-full flex justify-between items-center px-4 py-2 rounded-md
+                                   text-white/90 hover:text-white 
+                                   bg-gradient-to-r hover:from-purple-500/10 hover:to-blue-500/10
+                                   transition-all duration-200">
+                        <span>Categorías</span>
+                        <svg class="w-5 h-5 transition-transform duration-200" 
+                             id="mobile-dropdown-arrow"
+                             fill="none" 
+                             stroke="currentColor" 
+                             viewBox="0 0 24 24">
+                            <path stroke-linecap="round" 
+                                  stroke-linejoin="round" 
+                                  stroke-width="2" 
+                                  d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button> -->
+                    
+                    <!-- Contenido del menú desplegable móvil -->
+                    <div id="mobile-dropdown-menu" 
+                         class="hidden transform transition-all duration-300 ease-in-out
+                                opacity-0 -translate-y-3 scale-95
+                                px-4 py-2 space-y-1">
+                        <a href="#todos" 
+                           class="block px-3 py-2 rounded-md text-white/80
+                                  hover:text-white hover:bg-purple-500/10
+                                  transition-all duration-200">
+                            Todos
+                        </a>
+                        <a href="#programacion" 
+                           class="block px-3 py-2 rounded-md text-white/80
+                                  hover:text-white hover:bg-purple-500/10
+                                  transition-all duration-200">
+                            Programación
+                        </a>
+                        <a href="#diseno" 
+                           class="block px-3 py-2 rounded-md text-white/80
+                                  hover:text-white hover:bg-purple-500/10
+                                  transition-all duration-200">
+                            Diseño
+                        </a>
+                        <a href="#marketing" 
+                           class="block px-3 py-2 rounded-md text-white/80
+                                  hover:text-white hover:bg-purple-500/10
+                                  transition-all duration-200">
+                            Marketing
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Overlay para el menú móvil (FUERA del nav) -->
+<div id="mobile-menu-overlay" 
+     class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm 
+            transition-opacity duration-300 md:hidden z-40">
+</div>
+
+    <!-- Neon light effects -->
+    <div class="fixed top-0 left-0 w-full h-full">
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500 rounded-full filter blur-[100px] opacity-20"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500 rounded-full filter blur-[100px] opacity-20"></div>
+    </div>
+
+    <section class="relative z-10 pt-24 pb-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <span class="bg-purple-500 text-xs rounded-full px-2 py-1 inline-block mb-4">Mega Oferta</span>
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6 glow">MegaPack de Juegos + Bonus</h1>
+                    <p class="text-purple-200 text-xl mb-8">La biblioteca gaming definitiva con más de 12,000 juegos en un solo lugar</p>
+                    <div class="flex items-center space-x-4 mb-8">
+                        <div class="flex items-center">
+                            <span class="text-yellow-400">⭐</span>
+                            <span class="ml-2">4.9</span>
+                        </div>
+                        <span class="text-gray-400">|</span>
+                        <span>10,000+ descargas</span>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <span class="text-3xl font-bold">S/. 5.00</span>
+                        <a href="https://wa.me/51901730407" target="_blank">
+                            <button class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-full transform transition-all hover:scale-105">
+                                Comprar Ahora
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="bg-white/10 backdrop-blur-lg rounded-xl overflow-hidden">
+                        <img src="https://scontent-lim1-1.xx.fbcdn.net/v/t45.5328-4/454598235_993470142514818_6250917038839648982_n.jpg?stp=dst-jpg_p960x960_tt6&_nc_cat=108&ccb=1-7&_nc_sid=247b10&_nc_ohc=PGeA45rSy6oQ7kNvgEXzw8O&_nc_zt=23&_nc_ht=scontent-lim1-1.xx&_nc_gid=AoOmpjkqRsvn9s-wZkvKuXq&oh=00_AYCmOeY4-pRuTwUorGhRHT_Ju4dx7U1-yyK8NvB06NvcPg&oe=67A8E6E7" alt="Gaming Pack" class="w-full h-full object-cover"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="relative z-10 py-16 bg-gradient-to-b from-transparent to-black/30">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12 glow">Consolas Incluidas</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                <div class="card-hover bg-white/10 backdrop-blur-lg rounded-xl p-6">
+                    <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-4">
+                        🎮
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">PlayStation</h3>
+                    <ul class="space-y-3 text-purple-200 text-sm">
+                        <li>• PS1: 1000 títulos</li>
+                        <li>• PS2: 500 hits</li>
+                        <li>• PS3: 500 bombazos</li>
+                        <li>• PS4: 42 exclusivos</li>
+                        <li>• PSP/VITA: 270 joyas</li>
+                    </ul>
+                </div>
+                
+                <div class="card-hover bg-white/10 backdrop-blur-lg rounded-xl p-6">
+                    <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-4">
+                        🎯
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Nintendo & Xbox</h3>
+                    <ul class="space-y-3 text-purple-200 text-sm">
+                        <li>• Switch: 300 gems</li>
+                        <li>• N64: 500 legendarios</li>
+                        <li>• 3DS: 50 exclusivos</li>
+                        <li>• Xbox 360: 100 hits</li>
+                        <li>• Xbox Clásico: 100 títulos</li>
+                    </ul>
+                </div>
+                
+                <div class="card-hover bg-white/10 backdrop-blur-lg rounded-xl p-6">
+                    <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-4">
+                        🖥️
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">PC & Retro</h3>
+                    <ul class="space-y-3 text-purple-200 text-sm">
+                        <li>• PC: 250 masterpieces</li>
+                        <li>• Game Stick: 10,000 retro</li>
+                        <li>• Dreamcast: 105 clásicos</li>
+                        <li>• Android: 80 APK premium</li>
+                        <li>• Retro Games: 1000+</li>
+                    </ul>
+                </div>
+            </div>
+    
+            <div class="card-hover bg-white/10 backdrop-blur-lg rounded-xl p-8">
+                <h3 class="text-2xl font-semibold mb-6">📦 Contenido Premium</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="text-lg font-semibold mb-3">Contenido Principal</h4>
+                        <ul class="space-y-2 text-purple-200">
+                            <li>✨ Audio Latino Garantizado</li>
+                            <li>✨ 23TB de Contenido Gaming</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold mb-3">Bonus Exclusivos</h4>
+                        <ul class="space-y-2 text-purple-200">
+                            <li>✨ Emuladores Pro Android/PC</li>
+                            <li>✨ Updates Constantes</li>
+                            <li>✨ Acceso Premium</li>
+                            <li>✨ Soporte 24/7</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-6 bg-purple-500/20 rounded-lg p-4">
+                    <p class="text-sm">💾 <strong>Total:</strong> 23TB de contenido gaming premium</p>
+                    <p class="text-sm mt-2">🎁 <strong>Bonus:</strong> Colección completa de ROMs + Emuladores Optimizados</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="relative z-10 py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12 glow">Requisitos</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card-hover bg-white/10 backdrop-blur-lg rounded-xl p-6">
+                    <h3 class="text-xl font-semibold mb-4">Para Descargar</h3>
+                    <ul class="space-y-3 text-purple-200">
+                        <li class="flex items-center">
+                            <span class="mr-2">✓</span>
+                            Conexión a Internet Estable
+                        </li>
+                        <li class="flex items-center">
+                            <span class="mr-2">✓</span>
+                            Espacio en Disco (Mínimo 1TB)
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-hover bg-white/10 backdrop-blur-lg rounded-xl p-6">
+                    <h3 class="text-xl font-semibold mb-4">Para Jugar</h3>
+                    <ul class="space-y-3 text-purple-200">
+                        <li class="flex items-center">
+                            <span class="mr-2">✓</span>
+                            PC/Laptop con 512MB RAM mínimo
+                        </li>
+                        <li class="flex items-center">
+                            <span class="mr-2">✓</span>
+                            Windows XP/7/8/8.1/10/11 recomendado
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="relative z-10 py-16 bg-gradient-to-b from-transparent to-black/30">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-8 glow">¡Revoluciona tu Gaming Hoy!</h2>
+            <a href="https://wa.me/51901730407" target="_blank">
+                <button class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-full transform transition-all hover:scale-105">
+                    Compra por solo S/. 5.00
+                </button>
+            </a>
+        </div>
+    </section>
+
+
+    <!-- Aquí se insertará el footer -->
+    <div id="footer-placeholder"></div>
+
+    <script src="/js/animation.js"></script>
+    <script src="/js/assets.js"></script>
+  <script src="/js/menumovil.js"></script>
+</body>
+</html>
