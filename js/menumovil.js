@@ -1,4 +1,5 @@
-    // Elementos del DOM
+//menumovil.js
+// Elementos del DOM
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
     const mobileDropdownButton = document.getElementById('mobile-dropdown-button');
