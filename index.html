@@ -3,229 +3,619 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo en Uno Digital</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-</head>
-<body class="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-blue-900 text-white overflow-x-hidden pt-8">
-
-<!-- Navbar -->
-<nav class="fixed top-0 w-full bg-gradient-to-r from-black/40 to-black/30 backdrop-blur-lg z-50 border-b border-white/5">
-    <div class="container mx-auto px-6 py-4">
-        <div class="flex items-center justify-between">
-            <!-- Logo con efecto de brillo -->
-            <div class="text-xl font-bold relative group">
-                <span class="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                    Todo en Uno Digital
-                </span>
-                <div class="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-blue-400/20 blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </div>
-
-            <!-- Diseño Desktop - NAV -->
-
-          <div id="nav-placeholder"></div>
-
-            <!-- Botón de menú móvil -->
-            <button id="mobile-menu-button" 
-                    class="md:hidden relative group px-3 py-2 rounded-lg 
-                           bg-gradient-to-r from-purple-500/10 to-blue-500/10
-                           hover:from-purple-500/20 hover:to-blue-500/20 
-                           transition-all duration-300">
-                <i class="fas fa-bars text-white/90 group-hover:text-white transition-colors"></i>
-            </button>
-        </div>
-
-        <!-- Menú móvil (Fuera del div del botón) -->
-        <div id="mobile-menu" 
-             class="hidden transform transition-all duration-300 ease-in-out
-                    opacity-0 -translate-y-10 scale-95
-                    md:hidden absolute top-full left-0 right-0 
-                    bg-gradient-to-b from-gray-900/95 to-gray-800/95 
-                    backdrop-blur-xl border-t border-white/10">
-            <div class="container mx-auto px-6 py-4 space-y-2">
-                <!-- Enlaces móviles -->
-                <a href="/index.html" 
-                   class="block px-4 py-2 rounded-md text-white/90 hover:text-white
-                          bg-gradient-to-r hover:from-purple-500/10 hover:to-blue-500/10
-                          transition-all duration-200">
-                    Inicio
-                </a>
-                <!-- Menú desplegable móvil -->
-                <!-- <div class="relative">
-                    <button id="mobile-dropdown-button"
-                            class="w-full flex justify-between items-center px-4 py-2 rounded-md
-                                   text-white/90 hover:text-white 
-                                   bg-gradient-to-r hover:from-purple-500/10 hover:to-blue-500/10
-                                   transition-all duration-200">
-                        <span>Categorías</span>
-                        <svg class="w-5 h-5 transition-transform duration-200" 
-                             id="mobile-dropdown-arrow"
-                             fill="none" 
-                             stroke="currentColor" 
-                             viewBox="0 0 24 24">
-                            <path stroke-linecap="round" 
-                                  stroke-linejoin="round" 
-                                  stroke-width="2" 
-                                  d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </button> -->
-                    
-                    <!-- Contenido del menú desplegable móvil -->
-                    <div id="mobile-dropdown-menu" 
-                         class="hidden transform transition-all duration-300 ease-in-out
-                                opacity-0 -translate-y-3 scale-95
-                                px-4 py-2 space-y-1">
-                        <a href="#todos" 
-                           class="block px-3 py-2 rounded-md text-white/80
-                                  hover:text-white hover:bg-purple-500/10
-                                  transition-all duration-200">
-                            Todos
-                        </a>
-                        <a href="#programacion" 
-                           class="block px-3 py-2 rounded-md text-white/80
-                                  hover:text-white hover:bg-purple-500/10
-                                  transition-all duration-200">
-                            Programación
-                        </a>
-                        <a href="#diseno" 
-                           class="block px-3 py-2 rounded-md text-white/80
-                                  hover:text-white hover:bg-purple-500/10
-                                  transition-all duration-200">
-                            Diseño
-                        </a>
-                        <a href="#marketing" 
-                           class="block px-3 py-2 rounded-md text-white/80
-                                  hover:text-white hover:bg-purple-500/10
-                                  transition-all duration-200">
-                            Marketing
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</nav>
-
-<!-- Overlay para el menú móvil (FUERA del nav) -->
-<div id="mobile-menu-overlay" 
-     class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm 
-            transition-opacity duration-300 md:hidden z-40">
-</div>
-
-    <!-- Neon light effects -->
-    <div class="fixed top-0 left-0 w-full h-full">
-        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500 rounded-full filter blur-[100px] opacity-20"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500 rounded-full filter blur-[100px] opacity-20"></div>
-    </div>
-
-    <section class="relative z-10 py-16 bg-gradient-to-b from-transparent to-black/30">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center mb-12 glow">Ventas</h2>
+    <title>Veneyork - Experiencia Roblox Inspirada en Venezuela</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Sección Hero - Limpio y Moderno */
+        .hero {
+            padding: 160px 0 100px;
+            background-color: var(--fondo-oscuro);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(178, 34, 34, 0.03) 0%, rgba(65, 105, 225, 0.03) 100%);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 20% 100%);
+        }
+        
+        .contenido-hero {
+            max-width: 700px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 56px;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            color: var(--texto-claro);
+        }
+        
+        .hero h1 span {
+            color: var(--amarillo);
+        }
+        
+        .subtitulo-hero {
+            font-size: 20px;
+            color: var(--texto-gris);
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+        
+        .descripcion-hero {
+            font-size: 18px;
+            color: var(--texto-gris);
+            margin-bottom: 40px;
+            max-width: 600px;
+        }
+        
+        .botones-llamada {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        /* Barra de Estadísticas */
+        .barra-estadisticas {
+            background-color: var(--fondo-tarjeta);
+            padding: 30px 0;
+            border-top: 1px solid var(--color-borde);
+            border-bottom: 1px solid var(--color-borde);
+        }
+        
+        .contenedor-estadisticas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .item-estadistica {
+            text-align: center;
+        }
+        
+        .numero-estadistica {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--amarillo);
+        }
+        
+        .etiqueta-estadistica {
+            font-size: 14px;
+            color: var(--texto-gris);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Sección de Características */
+        .caracteristicas {
+            padding: 100px 0;
+            background-color: var(--fondo-oscuro);
+        }
+        
+        .grid-caracteristicas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .tarjeta-caracteristica {
+            background-color: var(--fondo-tarjeta);
+            border-radius: 10px;
+            padding: 35px 30px;
+            transition: transform 0.3s var(--easing-suave);
+            border: 1px solid var(--color-borde);
+        }
+        
+        .tarjeta-caracteristica:hover {
+            transform: translateY(-8px);
+            border-color: var(--azul-real);
+        }
+        
+        .icono-caracteristica {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            font-size: 24px;
+            color: var(--texto-claro);
+        }
+        
+        .icono-voz {
+            background-color: rgba(178, 34, 34, 0.15);
+            color: var(--rojo-oscuro);
+        }
+        
+        .icono-mapa {
+            background-color: rgba(65, 105, 225, 0.15);
+            color: var(--azul-real);
+        }
+        
+        .icono-vehiculo {
+            background-color: rgba(255, 215, 0, 0.15);
+            color: var(--amarillo);
+        }
+        
+        .icono-avatar {
+            background-color: rgba(178, 34, 34, 0.15);
+            color: var(--rojo-oscuro);
+        }
+        
+        .icono-herramientas {
+            background-color: rgba(65, 105, 225, 0.15);
+            color: var(--azul-real);
+        }
+        
+        .icono-social {
+            background-color: rgba(255, 215, 0, 0.15);
+            color: var(--amarillo);
+        }
+        
+        .tarjeta-caracteristica h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--texto-claro);
+        }
+        
+        .tarjeta-caracteristica p {
+            color: var(--texto-gris);
+            font-size: 15px;
+        }
+        
+        /* Sección de Información del Juego */
+        .info-juego {
+            padding: 100px 0;
+            background-color: var(--fondo-tarjeta);
+        }
+        
+        .contenedor-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            align-items: start;
+        }
+        
+        .caja-info {
+            background-color: var(--fondo-oscuro);
+            border-radius: 10px;
+            padding: 30px;
+            border: 1px solid var(--color-borde);
+        }
+        
+        .caja-info h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--texto-claro);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--color-borde);
+        }
+        
+        .detalle-info {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .etiqueta-info {
+            color: var(--texto-gris);
+            font-weight: 500;
+        }
+        
+        .valor-info {
+            color: var(--texto-claro);
+            font-weight: 600;
+        }
+        
+        .valor-info.destacado {
+            color: var(--amarillo);
+        }
+        
+        /* Sección Discord */
+        .seccion-discord {
+            padding: 80px 0;
+            background-color: var(--fondo-oscuro);
+            text-align: center;
+            border-top: 1px solid var(--color-borde);
+        }
+        
+        .contenedor-discord {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .icono-discord {
+            font-size: 60px;
+            color: #5865F2;
+            margin-bottom: 25px;
+        }
+        
+        .seccion-discord h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: var(--texto-claro);
+        }
+        
+        .seccion-discord p {
+            color: var(--texto-gris);
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+        
+        /* Paleta de Colores - Visualización Sutil */
+        .paleta-colores {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+        
+        .item-color {
+            width: 50px;
+            height: 50px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+            font-weight: 600;
+            transition: transform 0.3s var(--easing-suave);
+        }
+        
+        .item-color:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        /* Responsivo específico para index.html */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 46px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                padding: 180px 0 80px;
+                text-align: center;
+            }
             
-            <!-- Filtros -->
-            <!-- <div class="max-w-6xl mx-auto mb-8">
-                <div class="flex flex-wrap justify-center gap-4">
-                    <button class="px-6 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-colors">
-                        Todos
-                    </button>
-                    <button class="px-6 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white hover:bg-purple-600 transition-colors">
-                        Programación
-                    </button>
-                    <button class="px-6 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white hover:bg-purple-600 transition-colors">
-                        Diseño
-                    </button>
-                    <button class="px-6 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white hover:bg-purple-600 transition-colors">
-                        Marketing
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .subtitulo-hero {
+                font-size: 18px;
+            }
+            
+            .botones-llamada {
+                justify-content: center;
+            }
+            
+            .hero::before {
+                width: 80%;
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 40% 100%);
+            }
+            
+            .titulo-seccion {
+                font-size: 28px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .botones-llamada {
+                flex-direction: column;
+            }
+            
+            .tarjeta-caracteristica, .caja-info {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Encabezado -->
+    <header>
+        <div class="contenedor contenedor-encabezado">
+            <a href="index.html" class="logo">
+                <div class="icono-logo">V</div>
+                <div class="texto-logo">VENEYORK</div>
+            </a>
+            <!-- Navegación Desktop -->
+            <nav class="nav-desktop">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="index.html#caracteristicas">Características</a></li>
+                    <li><a href="index.html#info">Información</a></li>
+                    <li><a href="guia.html">Guía</a></li>
+                    <li><a href="pases.html" class="activo">Pases</a></li>
+                    <li><a href="index.html#comunidad">Comunidad</a></li>
+                </ul>
+                <a href="https://discord.com/invite/Xrmnp7mQf9" target="_blank" class="btn-nav-desktop">
+                    <i class="fab fa-discord"></i> Discord
+                </a>
+            </nav>
+            <!-- Menú móvil -->
+            <button class="menu-hamburguesa" id="menuHamburguesa" aria-label="Menú de navegación">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="overlay-nav" id="overlayNav"></div>
+            <nav class="nav-movil" id="navMovil">
+                <div class="nav-cabecera">
+                    <div class="logo-nav">
+                        <div class="icono-logo">V</div>
+                        <div class="texto-logo">VENEYORK</div>
+                    </div>
+                    <button class="cerrar-menu" id="cerrarMenu" aria-label="Cerrar menú">
+                        <i class="fas fa-times"></i>
                     </button>
                 </div>
-            </div> -->
-    
-<!-- Grid de Cursos -->
-<div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-    <!-- Curso 5 - Excel -->
-    <div class="card-hover bg-white/10 backdrop-blur-lg rounded-xl overflow-hidden">
-        <div class="relative">
-            <img src="https://t7m8e9c8.delivery.rocketcdn.me/wp-content/uploads/2017/11/microsoft-excel-logo.jpg" alt="Curso de Excel" class="w-full h-48 object-cover"/>
-            <span class="absolute top-4 right-4 bg-purple-500 text-xs rounded-full px-2 py-1">
-                Más Vendido
-            </span>
-        </div>
-        <div class="p-6">
-            <div class="flex items-center mb-2">
-                <span class="text-purple-400 text-sm">Ofimática</span>
-                <span class="ml-auto text-sm">⭐ 4.8</span>
-            </div>
-            <h3 class="text-xl font-semibold mb-2">Curso de Excel Completo + Bonus</h3>
-            <p class="text-purple-200 text-sm mb-4">Este curso completo incluye todo lo que necesitas para convertirte en un experto en Excel, con materiales adicionales como plantillas, libros y manuales gratuitos. Aprende funciones, fórmulas, gráficos, Power Pivot, Power BI, VBA y mucho más, a tu propio ritmo y con acceso de por vida. </p>
-            <div class="flex items-center justify-between">
-                <div class="flex flex-col">
-                    <span class="text-sm text-gray-400 line-through">S/. 25.00</span>
-                    <span class="text-2xl font-bold">S/. 5.00</span>
-                </div>    
-                <a href="pages/cursos/excel.html"
-                <button class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-full text-sm">
-                    Comprar
-                </button>
+                <ul>
+                    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="index.html#caracteristicas" class="nav-link"><i class="fas fa-star"></i> Características</a></li>
+                    <li><a href="index.html#info" class="nav-link"><i class="fas fa-info-circle"></i> Información</a></li>
+                    <li><a href="guia.html" class="nav-link"><i class="fas fa-book"></i> Guía</a></li>
+                    <li><a href="pases.html" class="nav-link activo"><i class="fas fa-ticket-alt"></i> Pases</a></li>
+                    <li><a href="index.html#comunidad" class="nav-link"><i class="fas fa-users"></i> Comunidad</a></li>
+                </ul>
+                <a href="https://discord.com/invite/Xrmnp7mQf9" target="_blank" class="btn-nav-movil">
+                    <i class="fab fa-discord"></i> Unirse a Discord
                 </a>
-            </div>
+            </nav>
         </div>
-    </div>
+    </header>
 
-<!-- Curso 2 - Todo en Uno Digital -->         
-<div class="card-hover bg-white/10 backdrop-blur-lg rounded-xl overflow-hidden">             
-    <div class="relative">                 
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHVITMeIVpS0L0vlKLrcV286_4_uuJqPYXnQ&s" alt="Pack Gaming Digital" class="w-full h-48 object-cover"/>                 
-        <span class="absolute top-4 right-4 bg-purple-500 text-xs rounded-full px-2 py-1">                     
-            Mega Oferta                 
-        </span>             
-    </div>             
-    <div class="p-6">                 
-        <div class="flex items-center mb-2">                     
-            <span class="text-purple-400 text-sm">Gaming</span>                     
-            <span class="ml-auto text-sm">⭐ 4.9</span>                 
-        </div>                 
-        <h3 class="text-xl font-semibold mb-2">MegaPack de Juegos + Bonus</h3>                 
-        <p class="text-purple-200 text-sm mb-4">
-            Biblioteca gaming definitiva con más de 12,000 juegos. Incluye títulos para PS1, PS2, PS3, PS4, PC, 
-            Switch, Xbox y más. Audio latino garantizado, soporte VIP 24/7, tutoriales y contenido premium. 
-            23TB de contenido gaming con acceso inmediato.
-        </p>                 
-        <div class="flex items-center justify-between">                     
-            <div class="flex flex-col">
-                <span class="text-sm text-gray-400 line-through">S/. 25.00</span>
-                <span class="text-2xl font-bold">S/. 5.00</span>
-            </div>                     
-            <a href="pages/productos/gaming.html">
-                <button class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-full text-sm transition-colors">                         
-                    Comprar Ahora                    
-                </button>                     
-            </a>                 
-        </div>             
-    </div>         
-</div>
-    
-</div>
-
-    
-            <!-- Botón Ver Más -->
-            <!-- <div class="text-center mt-12">
-                <button class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-full transform transition-all hover:scale-105">
-                    Ver Más Cursos
-                </button>
-            </div> -->
+    <!-- Sección Hero -->
+    <section class="hero" id="inicio">
+        <div class="contenedor">
+            <div class="contenido-hero desvanecer-entrada">
+                <h1>Sumérgete en <span>Veneyork</span></h1>
+                <div class="subtitulo-hero">Una experiencia de juego Roblox inspirada en Venezuela</div>
+                <p class="descripcion-hero">
+                    Explora un mundo social vibrante donde puedes personalizar tu avatar, conducir vehículos únicos,
+                    y conectar con otros jugadores usando nuestro menú de voz exclusivo con efectos geniales.
+                </p>
+                
+                <div class="botones-llamada">
+                    <a href="https://www.roblox.com/es/games/139218725767607/Veneyork" target="_blank" class="btn btn-primario">
+                        <i class="fas fa-play-circle"></i> Jugar en Roblox
+                    </a>
+                    <a href="guia.html" class="btn btn-secundario">
+                        <i class="fas fa-book"></i> Guía del Juego
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 
-  <!-- Aquí se insertará el footer ¿CUAL FOOTER -->
-  <div id="footer-placeholder"></div>
+    <!-- Barra de Estadísticas -->
+    <section class="barra-estadisticas">
+        <div class="contenedor">
+            <div class="contenedor-estadisticas">
+                <div class="item-estadistica desvanecer-entrada">
+                    <div class="numero-estadistica">40.2M+</div>
+                    <div class="etiqueta-estadistica">Visitas</div>
+                </div>
+                <div class="item-estadistica desvanecer-entrada retraso-1">
+                    <div class="numero-estadistica">54,590</div>
+                    <div class="etiqueta-estadistica">Favoritos</div>
+                </div>
+                <div class="item-estadistica desvanecer-entrada retraso-2">
+                    <div class="numero-estadistica">5,616</div>
+                    <div class="etiqueta-estadistica">Jugadores Activos</div>
+                </div>
+                <div class="item-estadistica desvanecer-entrada retraso-3">
+                    <div class="numero-estadistica">50</div>
+                    <div class="etiqueta-estadistica">Tamaño del Servidor</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <script src="/js/animation.js"></script>
-  <script src="/js/assets.js"></script>
-  <script src="/js/menumovil.js"></script>
-    
+    <!-- Sección de Características -->
+    <section class="caracteristicas" id="caracteristicas">
+        <div class="contenedor">
+            <h2 class="titulo-seccion desvanecer-entrada">Características del Juego</h2>
+            <p class="subtitulo-seccion desvanecer-entrada retraso-1">Experimenta todo lo que Veneyork tiene para ofrecer en este espacio social único</p>
+            
+            <div class="grid-caracteristicas">
+                <div class="tarjeta-caracteristica desvanecer-entrada">
+                    <div class="icono-caracteristica icono-voz">
+                        <i class="fas fa-volume-up"></i>
+                    </div>
+                    <h3>Menú de Voz Único</h3>
+                    <p>Usa nuestro menú de voz exclusivo con efectos especiales para comunicarte con otros jugadores de formas creativas.</p>
+                </div>
+                
+                <div class="tarjeta-caracteristica desvanecer-entrada retraso-1">
+                    <div class="icono-caracteristica icono-mapa">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h3>Mapa Expansivo</h3>
+                    <p>Explora un mundo detallado y expansivo inspirado en paisajes y entornos urbanos venezolanos.</p>
+                </div>
+                
+                <div class="tarjeta-caracteristica desvanecer-entrada retraso-2">
+                    <div class="icono-caracteristica icono-vehiculo">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h3>Variedad de Vehículos</h3>
+                    <p>Conduce una amplia variedad de vehículos, desde autos cotidianos hasta vehículos especiales únicos del entorno.</p>
+                </div>
+                
+                <div class="tarjeta-caracteristica desvanecer-entrada">
+                    <div class="icono-caracteristica icono-avatar">
+                        <i class="fas fa-user-edit"></i>
+                    </div>
+                    <h3>Personalización de Avatar</h3>
+                    <p>Personaliza completamente el estilo de tu avatar con cientos de opciones de ropa y accesorios disponibles.</p>
+                </div>
+                
+                <div class="tarjeta-caracteristica desvanecer-entrada retraso-1">
+                    <div class="icono-caracteristica icono-herramientas">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Herramientas para RP</h3>
+                    <p>Equipa toneladas de herramientas para diversión de rol interminable y crea tus propias historias con otros jugadores.</p>
+                </div>
+                
+                <div class="tarjeta-caracteristica desvanecer-entrada retraso-2">
+                    <div class="icono-caracteristica icono-social">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Centro Social</h3>
+                    <p>Conoce nuevas personas y experimenta Venezuela como nunca antes en este entorno social vibrante.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Información del Juego -->
+    <section class="info-juego" id="info">
+        <div class="contenedor">
+            <h2 class="titulo-seccion desvanecer-entrada">Información del Juego</h2>
+            <p class="subtitulo-seccion desvanecer-entrada retraso-1">Todos los detalles sobre la experiencia Roblox Veneyork</p>
+            
+            <div class="contenedor-info">
+                <div class="caja-info desvanecer-entrada">
+                    <h3><i class="fas fa-info-circle"></i> Detalles del Juego</h3>
+                    <div class="detalle-info">
+                        <span class="etiqueta-info">Clasificación:</span>
+                        <span class="valor-info">Moderado • Edad 13+</span>
+                    </div>
+                    <div class="detalle-info">
+                        <span class="etiqueta-info">Género:</span>
+                        <span class="valor-info">Social</span>
+                    </div>
+                    <div class="detalle-info">
+                        <span class="etiqueta-info">Chat de Voz:</span>
+                        <span class="valor-info destacado">Compatible</span>
+                    </div>
+                    <div class="detalle-info">
+                        <span class="etiqueta-info">Cámara:</span>
+                        <span class="valor-info destacado">Compatible</span>
+                    </div>
+                    <div class="detalle-info">
+                        <span class="etiqueta-info">Tamaño del Servidor:</span>
+                        <span class="valor-info">50 Jugadores</span>
+                    </div>
+                </div>
+                
+                <div class="caja-info desvanecer-entrada retraso-1">
+                    <h3><i class="fas fa-calendar-alt"></i> Cronología de Desarrollo</h3>
+                    <div class="detalle-info">
+                        <span class="etiqueta-info">Creado:</span>
+                        <span class="valor-info destacado">21 de Abril, 2025</span>
+                    </div>
+                    <div class="detalle-info">
+                        <span class="etiqueta-info">Última Actualización:</span>
+                        <span class="valor-info destacado">11 de Diciembre, 2025</span>
+                    </div>
+                    <p style="margin-top: 20px; color: var(--texto-gris); font-size: 14px;">
+                        El equipo trabaja continuamente en actualizaciones, nuevas características y mejoras para mejorar tu experiencia en Veneyork.
+                    </p>
+                </div>
+                
+                <div class="caja-info desvanecer-entrada retraso-2">
+                    <h3><i class="fas fa-shield-alt"></i> Seguridad y Comunidad</h3>
+                    <p style="color: var(--texto-gris); margin-bottom: 15px; font-size: 15px;">
+                        Veneyork está diseñado como un entorno seguro y acogedor para jugadores de 13 años en adelante. Nuestro equipo de moderación asegura interacciones positivas para todos.
+                    </p>
+                    <p style="color: var(--texto-gris); font-size: 15px;">
+                        ¡Únete a nuestra comunidad de Discord para conectar con otros jugadores, compartir experiencias y mantenerte actualizado con las últimas noticias!
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Visualización Sutil de Paleta de Colores -->
+            <div class="paleta-colores desvanecer-entrada retraso-3">
+                <h1 class="item-color">Colores diseño >>>>>></h1>
+                <div class="item-color" style="background-color: #FFD700; color: #000;">Amarillo</div>
+                <div class="item-color" style="background-color: #B22222;">Rojo Oscuro</div>
+                <div class="item-color" style="background-color: #FF0000;">Rojo Brillante</div>
+                <div class="item-color" style="background-color: #0000FF;">Azul Brillante</div>
+                <div class="item-color" style="background-color: #4169E1;">Azul Real</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Discord -->
+    <section class="seccion-discord" id="comunidad">
+        <div class="contenedor contenedor-discord">
+            <div class="icono-discord">
+                <i class="fab fa-discord"></i>
+            </div>
+            <h2 class="desvanecer-entrada">Únete a Nuestra Comunidad</h2>
+            <p class="desvanecer-entrada retraso-1">
+                Conéctate con miles de jugadores de Veneyork en Discord. Comparte experiencias, obtén actualizaciones,
+                y encuentra amigos para explorar el juego.
+            </p>
+            <a href="https://discord.com/invite/Xrmnp7mQf9" target="_blank" class="btn btn-primario desvanecer-entrada retraso-2">
+                <i class="fab fa-discord"></i> Unirse al Servidor de Discord
+            </a>
+        </div>
+    </section>
+
+    <!-- Pie de Página -->
+    <footer>
+        <div class="contenedor">
+            <div class="contenido-pie">
+                <div class="pie-acerca-de">
+                    <div class="logo-pie">
+                        <div class="icono-logo">V</div>
+                        <div class="texto-logo">VENEYORK</div>
+                    </div>
+                    <p>Un espacio social de Roblox inspirado en Venezuela donde puedes explorar, personalizar, conducir y socializar en un mundo virtual vibrante.</p>
+                </div>
+                
+                <div class="enlaces-pie">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="index.html#caracteristicas">Características</a></li>
+                        <li><a href="index.html#info">Información</a></li>
+                        <li><a href="guia.html">Guía del Juego</a></li>
+                        <li><a href="https://www.roblox.com/es/games/139218725767607/Veneyork" target="_blank">Jugar en Roblox</a></li>
+                    </ul>
+                </div>
+                
+                <div class="enlaces-pie">
+                    <h3>Comunidad</h3>
+                    <ul>
+                        <li><a href="https://discord.com/invite/Xrmnp7mQf9" target="_blank">Discord</a></li>
+                        <li><a href="https://www.roblox.com/groups/your-group" target="_blank">Grupo de Roblox</a></li>
+                        <li><a href="https://twitter.com/yourprofile" target="_blank">Twitter</a></li>
+                        <li><a href="https://www.youtube.com/yourchannel" target="_blank">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="derechos">
+                <p>&copy; 2025 Experiencia Roblox Veneyork. Todos los derechos reservados. Roblox es una marca registrada de Roblox Corporation.</p>
+                <p style="margin-top: 10px;">Este sitio web es una creación de fans para el juego Roblox Veneyork.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
 </body>
 </html>

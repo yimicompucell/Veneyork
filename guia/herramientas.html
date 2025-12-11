@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Herramientas del Juego Veneyork</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* Sección de Guía */
+        .seccion-guia {
+            padding: 140px 0 100px;
+            background-color: var(--fondo-oscuro);
+        }
+        
+        .encabezado-guia {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .encabezado-guia h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: var(--texto-claro);
+        }
+        
+        .encabezado-guia p {
+            color: var(--texto-gris);
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .categoria-herramientas {
+            margin-bottom: 60px;
+        }
+        
+        .titulo-categoria {
+            font-size: 28px;
+            margin-bottom: 25px;
+            color: var(--amarillo);
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--color-borde);
+        }
+        
+        .grid-herramientas {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .tarjeta-herramienta {
+            background-color: var(--fondo-tarjeta);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid var(--color-borde);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        
+        .tarjeta-herramienta:hover {
+            transform: translateY(-5px);
+            border-color: var(--azul-real);
+        }
+        
+        .encabezado-herramienta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .icono-herramienta {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            background-color: rgba(65, 105, 225, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--azul-real);
+        }
+        
+        .nombre-herramienta {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--texto-claro);
+        }
+        
+        .descripcion-herramienta {
+            color: var(--texto-gris);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .etiqueta-herramienta {
+            display: inline-block;
+            background-color: rgba(178, 34, 34, 0.15);
+            color: var(--rojo-oscuro);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        
+        .etiqueta-especial {
+            background-color: rgba(255, 215, 0, 0.15);
+            color: var(--amarillo);
+        }
+        
+        .etiqueta-utilidad {
+            background-color: rgba(65, 105, 225, 0.15);
+            color: var(--azul-real);
+        }
+        
+        .etiqueta-interactiva {
+            background-color: rgba(255, 0, 0, 0.15);
+            color: var(--rojo-brillante);
+        }
+        
+        /* Botón de Volver al Inicio */
+        .volver-inicio {
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        .btn-volver {
+            background-color: var(--azul-real);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        
+        .btn-volver:hover {
+            background-color: #3258c3;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(65, 105, 225, 0.15);
+        }
+        
+        /* Diseño Responsivo específico para guia.html */
+        @media (max-width: 992px) {
+            .encabezado-guia h1 {
+                font-size: 36px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .seccion-guia {
+                padding: 160px 0 80px;
+            }
+            
+            .encabezado-guia h1 {
+                font-size: 32px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .grid-herramientas {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Encabezado -->
+    <header>
+        <div class="contenedor contenedor-encabezado">
+            <a href="../index.html" class="logo">
+                <div class="icono-logo">V</div>
+                <div class="texto-logo">VENEYORK</div>
+            </a>
+            <!-- Navegación Desktop -->
+            <nav class="nav-desktop">
+                <ul>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="../index.html#caracteristicas">Características</a></li>
+                    <li><a href="../index.html#info">Información</a></li>
+                    <li><a href="../guia.html">Guía</a></li>
+                    <li><a href="../pases.html" class="activo">Pases</a></li>
+                    <li><a href="../index.html#comunidad">Comunidad</a></li>
+                </ul>
+                <a href="https://discord.com/invite/Xrmnp7mQf9" target="_blank" class="btn-nav-desktop">
+                    <i class="fab fa-discord"></i> Discord
+                </a>
+            </nav>
+            <!-- Menú móvil -->
+            <button class="menu-hamburguesa" id="menuHamburguesa" aria-label="Menú de navegación">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="overlay-nav" id="overlayNav"></div>
+            <nav class="nav-movil" id="navMovil">
+                <div class="nav-cabecera">
+                    <div class="logo-nav">
+                        <div class="icono-logo">V</div>
+                        <div class="texto-logo">VENEYORK</div>
+                    </div>
+                    <button class="cerrar-menu" id="cerrarMenu" aria-label="Cerrar menú">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <ul>
+                    <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="../index.html#caracteristicas" class="nav-link"><i class="fas fa-star"></i> Características</a></li>
+                    <li><a href="../index.html#info" class="nav-link"><i class="fas fa-info-circle"></i> Información</a></li>
+                    <li><a href="../guia.html" class="nav-link"><i class="fas fa-book"></i> Guía</a></li>
+                    <li><a href="../pases.html" class="nav-link activo"><i class="fas fa-ticket-alt"></i> Pases</a></li>
+                    <li><a href="../index.html#comunidad" class="nav-link"><i class="fas fa-users"></i> Comunidad</a></li>
+                </ul>
+                <a href="https://discord.com/invite/Xrmnp7mQf9" target="_blank" class="btn-nav-movil">
+                    <i class="fab fa-discord"></i> Unirse a Discord
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Sección de Guía -->
+    <section class="seccion-guia">
+        <div class="contenedor">
+            <div class="encabezado-guia desvanecer-entrada">
+                <h1>Guía de Herramientas del Juego Veneyork</h1>
+                <p>Aprende sobre todas las herramientas disponibles en Veneyork y cómo usarlas para máxima diversión y juego de roles.</p>
+            </div>
+            
+            <div class="categoria-herramientas desvanecer-entrada">
+                <h2 class="titulo-categoria">==== ARMAS ====</h2>
+                <div class="grid-herramientas">
+                    <div class="tarjeta-herramienta">
+                        <div class="encabezado-herramienta">
+                            <div class="icono-herramienta">
+                                <i class="fas fa-gun"></i>
+                            </div>
+                            <div class="nombre-herramienta">Todas las Armas</div>
+                        </div>
+                        <p class="descripcion-herramienta">Todas las armas en el juego están diseñadas únicamente para fines de juego de roles.</p>
+                        <span class="etiqueta-herramienta">ROL</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="categoria-herramientas desvanecer-entrada retraso-1">
+                <h2 class="titulo-categoria">==== VARIOS ====</h2>
+                <div class="grid-herramientas">
+                    <div class="tarjeta-herramienta">
+                        <div class="encabezado-herramienta">
+                            <div class="icono-herramienta">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <div class="nombre-herramienta">Mango</div>
+                        </div>
+                        <p class="descripcion-herramienta">Una fruta tropical para escenarios de juego de roles.</p>
+                        <span class="etiqueta-herramienta">ROL</span>
+                    </div>
+                    
+                    <div class="tarjeta-herramienta">
+                        <div class="encabezado-herramienta">
+                            <div class="icono-herramienta">
+                                <i class="fas fa-hammer"></i>
+                            </div>
+                            <div class="nombre-herramienta">Martillo</div>
+                        </div>
+                        <p class="descripcion-herramienta">Una herramienta para diversas situaciones de juego de roles.</p>
+                        <span class="etiqueta-herramienta">ROL</span>
+                    </div>
+                    
+                    <div class="tarjeta-herramienta">
+                        <div class="encabezado-herramienta">
+                            <div class="icono-herramienta">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div class="nombre-herramienta">Teléfono</div>
+                        </div>
+                        <p class="descripcion-herramienta">Tiene la función de encender y apagar una linterna.</p>
+                        <span class="etiqueta-herramienta etiqueta-utilidad">UTILIDAD</span>
+                    </div>
+                    
+                    <div class="tarjeta-herramienta">
+                        <div class="encabezado-herramienta">
+                            <div class="icono-herramienta">
+                                <i class="fas fa-hand-fist"></i>
+                            </div>
+                            <div class="nombre-herramienta">Guante</div>
+                        </div>
+                        <p class="descripcion-herramienta">Puedes golpear a otros jugadores (solo si el otro jugador tiene interacciones habilitadas).</p>
+                        <span class="etiqueta-herramienta etiqueta-interactiva">INTERACTIVO</span>
+                    </div>
+                    
+                    <div class="tarjeta-herramienta">
+                        <div class="encabezado-herramienta">
+                            <div class="icono-herramienta">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <div class="nombre-herramienta">Sartén</div>
+                        </div>
+                        <p class="descripcion-herramienta">Un utensilio de cocina para escenarios de juego de roles.</p>
+                        <span class="etiqueta-herramienta">ROL</span>
+                    </div>
+                    
+                    <div class="tarjeta-herramienta">
+                        <div class="encabezado-herramienta">
+                            <div class="icono-herramienta">
+                                <i class="fas fa-cake"></i>
+                            </div>
+                            <div class="nombre-herramienta">Pastelito</div>
+                        </div>
+                        <p class="descripcion-herramienta">Un pastelito venezolano es una pequeña masa de harina de trigo, frita y rellena, que se diferencia de la empanada de maíz. Para juego de roles.</p>
+                        <span class="etiqueta-herramienta">ROL</span>
+                    </div>
+                    
+                    <div class="tarjeta-herramienta">
+                        <div class="encabezado-herramienta">
+                            <div class="icono-herramienta">
+                                <i class="fas fa-wine-bottle"></i>
+                            </div>
+                            <div class="nombre-herramienta">Nutrileche</div>
+                        </div>
+                        <p class="descripcion-herramienta">Un producto lácteo nutricional para juego de roles.</p>
+                        <span class="etiqueta-herramienta">ROL</span>
+                    </div>
+                    
+                    <div class="tarjeta-herramienta">
+                        <div class="encabezado-herramienta">
+                            <div class="icono-herramienta">
+                                <i class="fas fa-microphone"></i>
+                            </div>
+                            <div class="nombre-herramienta">Micrófono</div>
+                        </div>
+                        <p class="descripcion-herramienta">Para juego de roles como cantante o locutor.</p>
+                        <span class="etiqueta-herramienta">ROL</span>
+                    </div>
+                    
+                    <div class="tarjeta-herramienta">
+                        <div class="encabezado-herramienta">
+                            <div class="icono-herramienta">
+                                <i class="fas fa-bullhorn"></i>
+                            </div>
+                            <div class="nombre-herramienta">Megáfono</div>
+                        </div>
+                        <p class="descripcion-herramienta">Amplifica tu voz para escenarios de juego de roles.</p>
+                        <span class="etiqueta-herramienta">ROL</span>
+                    </div>
+                    
+                    <div class="tarjeta-herramienta">
+                        <div class="encabezado-herramienta">
+                            <div class="icono-herramienta">
+                                <i class="fas fa-cash-register"></i>
+                            </div>
+                            <div class="nombre-herramienta">Punto de Venta</div>
+                        </div>
+                        <p class="descripcion-herramienta">Te permite realizar pagos móviles desde cualquier lugar. Obtenido con el Pase de Todas las Herramientas (35 Robux).</p>
+                        <span class="etiqueta-herramienta etiqueta-especial">PREMIUM</span>
+                    </div>
+                    
+                    <div class="tarjeta-herramienta">
+                        <div class="encabezado-herramienta">
+                            <div class="icono-herramienta">
+                                <i class="fas fa-basketball"></i>
+                            </div>
+                            <div class="nombre-herramienta">Pelota</div>
+                        </div>
+                        <p class="descripcion-herramienta">Una pelota que puede ser lanzada y con la que se puede jugar.</p>
+                        <span class="etiqueta-herramienta etiqueta-interactiva">INTERACTIVO</span>
+                    </div>
+                    
+                    <div class="tarjeta-herramienta">
+                        <div class="encabezado-herramienta">
+                            <div class="icono-herramienta">
+                                <i class="fas fa-cut"></i>
+                            </div>
+                            <div class="nombre-herramienta">Máquina de Afeitar</div>
+                        </div>
+                        <p class="descripcion-herramienta">(Solo si el otro jugador tiene interacciones habilitadas) Puede cambiar/cortar el cabello del jugador.</p>
+                        <span class="etiqueta-herramienta etiqueta-interactiva">INTERACTIVO</span>
+                    </div>
+                    
+                    <div class="tarjeta-herramienta">
+                        <div class="encabezado-herramienta">
+                            <div class="icono-herramienta">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="nombre-herramienta">Bobina de Aceleración</div>
+                        </div>
+                        <p class="descripcion-herramienta">Una bobina que al equiparla te da super velocidad.</p>
+                        <span class="etiqueta-herramienta etiqueta-especial">MEJORA</span>
+                    </div>
+                    
+                    <div class="tarjeta-herramienta">
+                        <div class="encabezado-herramienta">
+                            <div class="icono-herramienta">
+                                <i class="fas fa-doughnut"></i>
+                            </div>
+                            <div class="nombre-herramienta">Donut</div>
+                        </div>
+                        <p class="descripcion-herramienta">Un dulce para escenarios de juego de roles.</p>
+                        <span class="etiqueta-herramienta">ROL</span>
+                    </div>
+                    
+                    <div class="tarjeta-herramienta">
+                        <div class="encabezado-herramienta">
+                            <div class="icono-herramienta">
+                                <i class="fas fa-hamburger"></i>
+                            </div>
+                            <div class="nombre-herramienta">Hamburguesa</div>
+                        </div>
+                        <p class="descripcion-herramienta">Emite un sonido cuando la comes.</p>
+                        <span class="etiqueta-herramienta etiqueta-utilidad">EFECTO DE SONIDO</span>
+                    </div>
+                    
+                    <div class="tarjeta-herramienta">
+                        <div class="encabezado-herramienta">
+                            <div class="icono-herramienta">
+                                <i class="fas fa-wine-bottle"></i>
+                            </div>
+                            <div class="nombre-herramienta">Botella</div>
+                        </div>
+                        <p class="descripcion-herramienta">Tiene una animación de espuma saliendo de la botella al hacer clic.</p>
+                        <span class="etiqueta-herramienta etiqueta-utilidad">ANIMACIÓN</span>
+                    </div>
+                    
+                    <div class="tarjeta-herramienta">
+                        <div class="encabezado-herramienta">
+                            <div class="icono-herramienta">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div class="nombre-herramienta">Pistola de Dinero (CUALTO)</div>
+                        </div>
+                        <p class="descripcion-herramienta">Al hacer clic, dispara billetes (dinero).</p>
+                        <span class="etiqueta-herramienta etiqueta-especial">DIVERSIÓN</span>
+                    </div>
+                    
+                    <div class="tarjeta-herramienta">
+                        <div class="encabezado-herramienta">
+                            <div class="icono-herramienta">
+                                <i class="fas fa-cloud"></i>
+                            </div>
+                            <div class="nombre-herramienta">Globo</div>
+                        </div>
+                        <p class="descripcion-herramienta">Afecta tu gravedad permitiéndote caer más lento.</p>
+                        <span class="etiqueta-herramienta etiqueta-utilidad">MECÁNICA</span>
+                    </div>
+                    
+                    <div class="tarjeta-herramienta">
+                        <div class="encabezado-herramienta">
+                            <div class="icono-herramienta">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                            <div class="nombre-herramienta">Yesquero</div>
+                        </div>
+                        <p class="descripcion-herramienta">Emite una luz naranja creando la ilusión de fuego.</p>
+                        <span class="etiqueta-herramienta etiqueta-utilidad">EFECTO VISUAL</span>
+                    </div>
+                    
+                    <div class="tarjeta-herramienta">
+                        <div class="encabezado-herramienta">
+                            <div class="icono-herramienta">
+                                <i class="fas fa-question"></i>
+                            </div>
+                            <div class="nombre-herramienta">Ventilador</div>
+                        </div>
+                        <p class="descripcion-herramienta">E UN VENTILADOL.</p>
+                        <span class="etiqueta-herramienta">ROL</span>
+                    </div>
+                    
+                    <div class="tarjeta-herramienta">
+                        <div class="encabezado-herramienta">
+                            <div class="icono-herramienta">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="nombre-herramienta">Mi Jardín</div>
+                        </div>
+                        <p class="descripcion-herramienta">Es un libro de lectura inicial venezolano, diseñado para niños que están aprendiendo a leer para escenarios de juego de roles.</p>
+                        <span class="etiqueta-herramienta">ROL</span>
+                    </div>
+                    
+                    <div class="tarjeta-herramienta">
+                        <div class="encabezado-herramienta">
+                            <div class="icono-herramienta">
+                                <i class="fas fa-shopping-bag"></i>
+                            </div>
+                            <div class="nombre-herramienta">Bolsa</div>
+                        </div>
+                        <p class="descripcion-herramienta">Una bolsa para escenarios de juego de roles.</p>
+                        <span class="etiqueta-herramienta">ROL</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="volver-inicio desvanecer-entrada retraso-2">
+                <a href="../index.html" class="btn-volver">
+                    <i class="fas fa-arrow-left"></i> Volver al Inicio
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pie de Página -->
+    <footer>
+        <div class="contenedor">
+            <div class="contenido-pie">
+                <div class="pie-acerca-de">
+                    <div class="logo-pie">
+                        <div class="icono-logo">V</div>
+                        <div class="texto-logo">VENEYORK</div>
+                    </div>
+                    <p>Un espacio social de Roblox inspirado en Venezuela donde puedes explorar, personalizar, conducir y socializar en un mundo virtual vibrante.</p>
+                </div>
+                
+                <div class="enlaces-pie">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="../index.html#caracteristicas">Características</a></li>
+                        <li><a href="../index.html#info">Información</a></li>
+                        <li><a href="../guia.html">Guía del Juego</a></li>
+                        <li><a href="https://www.roblox.com/es/games/139218725767607/Veneyork" target="_blank">Jugar en Roblox</a></li>
+                    </ul>
+                </div>
+                
+                <div class="enlaces-pie">
+                    <h3>Comunidad</h3>
+                    <ul>
+                        <li><a href="https://discord.com/invite/Xrmnp7mQf9" target="_blank">Discord</a></li>
+                        <li><a href="https://www.roblox.com/groups/your-group" target="_blank">Grupo de Roblox</a></li>
+                        <li><a href="https://twitter.com/yourprofile" target="_blank">Twitter</a></li>
+                        <li><a href="https://www.youtube.com/yourchannel" target="_blank">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="derechos">
+                <p>&copy; 2025 Experiencia Roblox Veneyork. Todos los derechos reservados. Roblox es una marca registrada de Roblox Corporation.</p>
+                <p style="margin-top: 10px;">Este sitio web es una creación de fans para el juego Roblox Veneyork.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+
+    <script>
+        // Animación simple al desplazar
+        document.addEventListener('DOMContentLoaded', function() {
+            // Agregar animación de desvanecimiento a elementos cuando entran en vista
+            const opcionesObservador = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observador = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('desvanecer-entrada');
+                    }
+                });
+            }, opcionesObservador);
+            
+            // Observar elementos
+            document.querySelectorAll('.encabezado-guia, .categoria-herramientas, .tarjeta-herramienta').forEach(el => {
+                observador.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guías de Veneyork - Experiencia Roblox</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .seccion-guia {
+            padding: 140px 0 100px;
+            background-color: var(--fondo-oscuro);
+        }
+        .encabezado-guia {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .encabezado-guia h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: var(--texto-claro);
+        }
+        .encabezado-guia p {
+            color: var(--texto-gris);
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .grid-guia {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .tarjeta-guia {
+            background-color: var(--fondo-tarjeta);
+            border: 1px solid var(--color-borde);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s var(--easing-suave);
+            text-decoration: none;
+            color: inherit;
+        }
+        .tarjeta-guia:hover {
+            transform: translateY(-6px);
+            border-color: var(--azul-real);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .icono-guia {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: rgba(65, 105, 225, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 24px;
+            color: var(--azul-real);
+        }
+        .tarjeta-guia h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: var(--texto-claro);
+        }
+        .tarjeta-guia p {
+            font-size: 14px;
+            color: var(--texto-gris);
+            line-height: 1.5;
+        }
+        /* Botón de Volver */
+        .volver-inicio {
+            text-align: center;
+            margin-top: 60px;
+        }
+        .btn-volver {
+            background-color: var(--azul-real);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        .btn-volver:hover {
+            background-color: #3258c3;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(65, 105, 225, 0.15);
+        }
+
+        @media (max-width: 768px) {
+            .seccion-guia {
+                padding: 160px 0 80px;
+            }
+            .encabezado-guia h1 {
+                font-size: 32px;
+            }
+            .grid-guia {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Encabezado -->
+    <header>
+        <div class="contenedor contenedor-encabezado">
+            <a href="../index.html" class="logo">
+                <div class="icono-logo">V</div>
+                <div class="texto-logo">VENEYORK</div>
+            </a>
+            <!-- Navegación Desktop -->
+            <nav class="nav-desktop">
+                <ul>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="../index.html#caracteristicas">Características</a></li>
+                    <li><a href="../index.html#info">Información</a></li>
+                    <li><a href="guia.html">Guía</a></li>
+                    <li><a href="../index.html#comunidad">Comunidad</a></li>
+                </ul>
+                <a href="https://discord.com/invite/Xrmnp7mQf9" target="_blank" class="btn-nav-desktop">
+                    <i class="fab fa-discord"></i> Discord
+                </a>
+            </nav>
+            <!-- Menú móvil -->
+            <button class="menu-hamburguesa" id="menuHamburguesa" aria-label="Menú de navegación">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="overlay-nav" id="overlayNav"></div>
+            <nav class="nav-movil" id="navMovil">
+                <div class="nav-cabecera">
+                    <div class="logo-nav">
+                        <div class="icono-logo">V</div>
+                        <div class="texto-logo">VENEYORK</div>
+                    </div>
+                    <button class="cerrar-menu" id="cerrarMenu" aria-label="Cerrar menú">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <ul>
+                    <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="../index.html#caracteristicas" class="nav-link"><i class="fas fa-star"></i> Características</a></li>
+                    <li><a href="../index.html#info" class="nav-link"><i class="fas fa-info-circle"></i> Información</a></li>
+                    <li><a href="guia.html" class="nav-link"><i class="fas fa-book"></i> Guía</a></li>
+                    <li><a href="../index.html#comunidad" class="nav-link"><i class="fas fa-users"></i> Comunidad</a></li>
+                </ul>
+                <a href="https://discord.com/invite/Xrmnp7mQf9" target="_blank" class="btn-nav-movil">
+                    <i class="fab fa-discord"></i> Unirse a Discord
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Sección Principal de Guías -->
+    <section class="seccion-guia">
+        <div class="contenedor">
+            <div class="encabezado-guia desvanecer-entrada">
+                <h1>Guías de Veneyork</h1>
+                <p>Explora nuestras guías para dominar todos los aspectos del juego: desde cómo ganar dinero hasta cómo construir tu propia casa o comprar un carro.</p>
+            </div>
+
+            <div class="grid-guia">
+                <!-- Guía: Herramientas -->
+                <a href="guia/herramientas.html" class="tarjeta-guia desvanecer-entrada">
+                    <div class="icono-guia">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Herramientas</h3>
+                    <p>Descubre todas las herramientas disponibles para juego de roles, interacción y utilidad dentro del mundo de Veneyork.</p>
+                </a>
+
+                <!-- Guía: Trabajos -->
+                <a href="guia/trabajos.html" class="tarjeta-guia desvanecer-entrada retraso-1">
+                    <div class="icono-guia" style="background-color: rgba(255, 215, 0, 0.15); color: var(--amarillo);">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>Trabajos</h3>
+                    <p>Aprende cómo conseguir empleo, ganar dinero y subir de rango en los distintos trabajos disponibles en la ciudad.</p>
+                </a>
+
+                <!-- Guía: Construcciones -->
+                <a href="guia/construcciones.html" class="tarjeta-guia desvanecer-entrada retraso-2">
+                    <div class="icono-guia" style="background-color: rgba(178, 34, 34, 0.15); color: var(--rojo-oscuro);">
+                        <i class="fas fa-house"></i>
+                    </div>
+                    <h3>Construcciones</h3>
+                    <p>Guía para construir tu propia casa, personalizarla y entender el sistema de propiedad en Veneyork.</p>
+                </a>
+
+                <!-- Guía: Comprar Carros -->
+                <a href="guia/comprar-carros.html" class="tarjeta-guia desvanecer-entrada">
+                    <div class="icono-guia" style="background-color: rgba(65, 105, 225, 0.15); color: var(--azul-real);">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h3>Comprar Carros</h3>
+                    <p>Conoce los pasos para comprar, personalizar y mantener tu vehículo en el juego.</p>
+                </a>
+
+                <!-- Guía: Economía -->
+                <a href="guia/economia.html" class="tarjeta-guia desvanecer-entrada retraso-1">
+                    <div class="icono-guia" style="background-color: rgba(255, 0, 0, 0.15); color: var(--rojo-brillante);">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <h3>Economía</h3>
+                    <p>Aprende cómo funciona el sistema monetario, cómo ganar dinero rápido y cómo gastarlo sabiamente.</p>
+                </a>
+
+                <!-- Guía: Voz y Comunicación -->
+                <a href="guia/voz.html" class="tarjeta-guia desvanecer-entrada retraso-2">
+                    <div class="icono-guia" style="background-color: rgba(0, 0, 255, 0.15); color: var(--azul-brillante);">
+                        <i class="fas fa-microphone-alt"></i>
+                    </div>
+                    <h3>Voz y Comunicación</h3>
+                    <p>Instrucciones sobre cómo usar el menú de voz, efectos de sonido y comunicarte con otros jugadores.</p>
+                </a>
+            </div>
+
+            <div class="volver-inicio desvanecer-entrada retraso-3">
+                <a href="../index.html" class="btn-volver">
+                    <i class="fas fa-arrow-left"></i> Volver al Inicio
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pie de Página -->
+    <footer>
+        <div class="contenedor">
+            <div class="contenido-pie">
+                <div class="pie-acerca-de">
+                    <div class="logo-pie">
+                        <div class="icono-logo">V</div>
+                        <div class="texto-logo">VENEYORK</div>
+                    </div>
+                    <p>Un espacio social de Roblox inspirado en Venezuela donde puedes explorar, personalizar, conducir y socializar en un mundo virtual vibrante.</p>
+                </div>
+                <div class="enlaces-pie">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="../index.html#caracteristicas">Características</a></li>
+                        <li><a href="../index.html#info">Información</a></li>
+                        <li><a href="guia.html">Guía del Juego</a></li>
+                        <li><a href="https://www.roblox.com/games/139218725767607/Veneyork" target="_blank">Jugar en Roblox</a></li>
+                    </ul>
+                </div>
+                <div class="enlaces-pie">
+                    <h3>Comunidad</h3>
+                    <ul>
+                        <li><a href="https://discord.com/invite/Xrmnp7mQf9" target="_blank">Discord</a></li>
+                        <li><a href="https://www.roblox.com/groups/your-group" target="_blank">Grupo de Roblox</a></li>
+                        <li><a href="https://twitter.com/yourprofile" target="_blank">Twitter</a></li>
+                        <li><a href="https://www.youtube.com/yourchannel" target="_blank">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="derechos">
+                <p>&copy; 2025 Experiencia Roblox Veneyork. Todos los derechos reservados. Roblox es una marca registrada de Roblox Corporation.</p>
+                <p>Este sitio web es una creación de fans para el juego Roblox Veneyork.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // Opcional: mantener animaciones de scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('desvanecer-entrada');
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.tarjeta-guia, .encabezado-guia').forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>

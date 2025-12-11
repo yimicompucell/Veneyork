@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pases Exclusivos de Veneyork - Experiencia Roblox</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .seccion-pases {
+            padding: 140px 0 100px;
+            background-color: var(--fondo-oscuro);
+        }
+        .encabezado-pases {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .encabezado-pases h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: var(--texto-claro);
+        }
+        .encabezado-pases p {
+            color: var(--texto-gris);
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .grid-pases {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .tarjeta-pase {
+            background-color: var(--fondo-tarjeta);
+            border: 1px solid var(--color-borde);
+            border-radius: 10px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s var(--easing-suave);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .tarjeta-pase:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        .tarjeta-pase::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--amarillo), var(--azul-real));
+        }
+        .enchufado::before {
+            background: linear-gradient(90deg, #00ff00, #00cc00);
+        }
+        .rumbero::before {
+            background: linear-gradient(90deg, #ff4444, #cc0000);
+        }
+        .pintura::before {
+            background: linear-gradient(90deg, #ffcc00, #ff9900);
+        }
+        .herramientas::before {
+            background: linear-gradient(90deg, #4169E1, #1e3a8a);
+        }
+        .dj::before {
+            background: linear-gradient(90deg, #9933cc, #660099);
+        }
+        .imagen-pase {
+            width: 100%;
+            height: 180px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            border: 2px solid var(--color-borde);
+        }
+        .imagen-pase img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+        .tarjeta-pase:hover .imagen-pase img {
+            transform: scale(1.05);
+        }
+        .encabezado-tarjeta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .nombre-pase {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--texto-claro);
+        }
+        .precio-pase {
+            background: linear-gradient(45deg, var(--amarillo), #FFAA00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            font-size: 22px;
+        }
+        .enchufado .precio-pase {
+            background: linear-gradient(45deg, #00ff00, #00cc00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .rumbero .precio-pase {
+            background: linear-gradient(45deg, #ff4444, #cc0000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .pintura .precio-pase {
+            background: linear-gradient(45deg, #ffcc00, #ff9900);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .herramientas .precio-pase {
+            background: linear-gradient(45deg, #4169E1, #1e3a8a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .dj .precio-pase {
+            background: linear-gradient(45deg, #9933cc, #660099);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .lista-beneficios {
+            margin: 20px 0;
+            flex-grow: 1;
+        }
+        .lista-beneficios ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .lista-beneficios li {
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--color-borde);
+            color: var(--texto-gris);
+            display: flex;
+            gap: 10px;
+        }
+        .lista-beneficios li:last-child {
+            border-bottom: none;
+        }
+        .lista-beneficios i {
+            color: var(--amarillo);
+            margin-top: 4px;
+        }
+        .enchufado i {
+            color: #00ff00;
+        }
+        .rumbero i {
+            color: #ff4444;
+        }
+        .pintura i {
+            color: #ffcc00;
+        }
+        .herramientas i {
+            color: #4169E1;
+        }
+        .dj i {
+            color: #9933cc;
+        }
+        .btn-comprar {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--amarillo), #FFAA00);
+            color: #000;
+            text-align: center;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            margin-top: 15px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-comprar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(255, 215, 0, 0.3);
+        }
+        .enchufado .btn-comprar {
+            background: linear-gradient(45deg, #00ff00, #00cc00);
+            color: #000;
+        }
+        .rumbero .btn-comprar {
+            background: linear-gradient(45deg, #ff4444, #cc0000);
+            color: white;
+        }
+        .pintura .btn-comprar {
+            background: linear-gradient(45deg, #ffcc00, #ff9900);
+            color: #000;
+        }
+        .herramientas .btn-comprar {
+            background: linear-gradient(45deg, #4169E1, #1e3a8a);
+            color: white;
+        }
+        .dj .btn-comprar {
+            background: linear-gradient(45deg, #9933cc, #660099);
+            color: white;
+        }
+        .nota-robux {
+            font-size: 14px;
+            color: var(--texto-gris);
+            margin-top: 8px;
+            font-style: italic;
+        }
+        .volver-inicio {
+            text-align: center;
+            margin-top: 60px;
+        }
+        .btn-volver {
+            background-color: var(--azul-real);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        .btn-volver:hover {
+            background-color: #3258c3;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(65, 105, 225, 0.15);
+        }
+        @media (max-width: 768px) {
+            .seccion-pases {
+                padding: 160px 0 80px;
+            }
+            .encabezado-pases h1 {
+                font-size: 32px;
+            }
+            .grid-pases {
+                grid-template-columns: 1fr;
+            }
+            .tarjeta-pase {
+                padding: 25px;
+            }
+            .imagen-pase {
+                height: 150px;
+            }
+        }
+        @media (max-width: 576px) {
+            .encabezado-pases h1 {
+                font-size: 28px;
+            }
+            .nombre-pase {
+                font-size: 20px;
+            }
+            .precio-pase {
+                font-size: 18px;
+            }
+            .imagen-pase {
+                height: 130px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Encabezado -->
+    <header>
+        <div class="contenedor contenedor-encabezado">
+            <a href="index.html" class="logo">
+                <div class="icono-logo">V</div>
+                <div class="texto-logo">VENEYORK</div>
+            </a>
+            <!-- Navegación Desktop -->
+            <nav class="nav-desktop">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="index.html#caracteristicas">Características</a></li>
+                    <li><a href="index.html#info">Información</a></li>
+                    <li><a href="guia.html">Guía</a></li>
+                    <li><a href="pases.html" class="activo">Pases</a></li>
+                    <li><a href="index.html#comunidad">Comunidad</a></li>
+                </ul>
+                <a href="https://discord.com/invite/Xrmnp7mQf9" target="_blank" class="btn-nav-desktop">
+                    <i class="fab fa-discord"></i> Discord
+                </a>
+            </nav>
+            <!-- Menú móvil -->
+            <button class="menu-hamburguesa" id="menuHamburguesa" aria-label="Menú de navegación">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="overlay-nav" id="overlayNav"></div>
+            <nav class="nav-movil" id="navMovil">
+                <div class="nav-cabecera">
+                    <div class="logo-nav">
+                        <div class="icono-logo">V</div>
+                        <div class="texto-logo">VENEYORK</div>
+                    </div>
+                    <button class="cerrar-menu" id="cerrarMenu" aria-label="Cerrar menú">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <ul>
+                    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="index.html#caracteristicas" class="nav-link"><i class="fas fa-star"></i> Características</a></li>
+                    <li><a href="index.html#info" class="nav-link"><i class="fas fa-info-circle"></i> Información</a></li>
+                    <li><a href="guia.html" class="nav-link"><i class="fas fa-book"></i> Guía</a></li>
+                    <li><a href="pases.html" class="nav-link activo"><i class="fas fa-ticket-alt"></i> Pases</a></li>
+                    <li><a href="index.html#comunidad" class="nav-link"><i class="fas fa-users"></i> Comunidad</a></li>
+                </ul>
+                <a href="https://discord.com/invite/Xrmnp7mQf9" target="_blank" class="btn-nav-movil">
+                    <i class="fab fa-discord"></i> Unirse a Discord
+                </a>
+            </nav>
+        </div>
+    </header>
+    <!-- Sección Principal de Pases -->
+    <section class="seccion-pases">
+        <div class="contenedor">
+            <div class="encabezado-pases desvanecer-entrada">
+                <h1>Pases Exclusivos de Veneyork</h1>
+                <p>Obtén beneficios exclusivos y mejora tu experiencia en el juego con nuestros pases especiales. Ordenados de mayor a menor valor.</p>
+            </div>
+            <div class="grid-pases">
+                <!-- Pase Enchufado -->
+                <div class="tarjeta-pase enchufado desvanecer-entrada">
+                    <div class="imagen-pase">
+                        <img src="img/pases/Enchufado.webp" alt="Pase Enchufado" loading="lazy">
+                    </div>
+                    <div class="encabezado-tarjeta">
+                        <div class="nombre-pase">Enchufado</div>
+                        <div class="precio-pase">200 Robux</div>
+                    </div>
+                    <div class="lista-beneficios">
+                        <ul>
+                            <li><i class="fas fa-car"></i> Carros Exclusivos del pase</li>
+                            <li><i class="fas fa-coins"></i> Se te da 30 de dinero cada cierto tiempo</li>
+                            <li><i class="fas fa-user-circle"></i> 3 slots extras en los avatares guardados</li>
+                            <li><i class="fas fa-comment"></i> Diseño de mensajes exclusivos (Letras verdes con fondo negro + logotipo de enchufado)</li>
+                        </ul>
+                    </div>
+                    <button class="btn-comprar">
+                        <i class="fas fa-shopping-cart"></i> Comprar Pase
+                    </button>
+                    <div class="nota-robux">* Los Robux se compran en la plataforma de Roblox</div>
+                </div>
+                
+                <!-- Pase Rumbero -->
+                <div class="tarjeta-pase rumbero desvanecer-entrada retraso-1">
+                    <div class="imagen-pase">
+                        <img src="img/pases/Rumbero.webp" alt="Pase Rumbero" loading="lazy">
+                    </div>
+                    <div class="encabezado-tarjeta">
+                        <div class="nombre-pase">Rumbero</div>
+                        <div class="precio-pase">100 Robux</div>
+                    </div>
+                    <div class="lista-beneficios">
+                        <ul>
+                            <li><i class="fas fa-car"></i> Carros exclusivos del pase</li>
+                            <li><i class="fas fa-music"></i> Poder colocar música en los carros</li>
+                        </ul>
+                    </div>
+                    <button class="btn-comprar">
+                        <i class="fas fa-shopping-cart"></i> Comprar Pase
+                    </button>
+                    <div class="nota-robux">* Los Robux se compran en la plataforma de Roblox</div>
+                </div>
+                
+                <!-- Pase Pintura -->
+                <div class="tarjeta-pase pintura desvanecer-entrada retraso-2">
+                    <div class="imagen-pase">
+                        <img src="img/pases/CuboDePintura.webp" alt="Pase Pintura" loading="lazy">
+                    </div>
+                    <div class="encabezado-tarjeta">
+                        <div class="nombre-pase">Pintura</div>
+                        <div class="precio-pase">75 Robux</div>
+                    </div>
+                    <div class="lista-beneficios">
+                        <ul>
+                            <li><i class="fas fa-paint-brush"></i> Pintar tus bloques de construcción</li>
+                        </ul>
+                    </div>
+                    <button class="btn-comprar">
+                        <i class="fas fa-shopping-cart"></i> Comprar Pase
+                    </button>
+                    <div class="nota-robux">* Los Robux se compran en la plataforma de Roblox</div>
+                </div>
+                
+                <!-- Pase Todas las Herramientas -->
+                <div class="tarjeta-pase herramientas desvanecer-entrada">
+                    <div class="imagen-pase">
+                        <img src="img/pases/TodasLasHerramientas.webp" alt="Pase Todas las Herramientas" loading="lazy">
+                    </div>
+                    <div class="encabezado-tarjeta">
+                        <div class="nombre-pase">Todas las Herramientas</div>
+                        <div class="precio-pase">35 Robux</div>
+                    </div>
+                    <div class="lista-beneficios">
+                        <ul>
+                            <li><i class="fas fa-cash-register"></i> Acceso al punto de venta donde podrás realizar pagos móviles desde cualquier lugar</li>
+                        </ul>
+                    </div>
+                    <button class="btn-comprar">
+                        <i class="fas fa-shopping-cart"></i> Comprar Pase
+                    </button>
+                    <div class="nota-robux">* Los Robux se compran en la plataforma de Roblox</div>
+                </div>
+                
+                <!-- Pase DJ Público -->
+                <div class="tarjeta-pase dj desvanecer-entrada retraso-1">
+                    <div class="imagen-pase">
+                        <img src="img/pases/DJPublico.webp" alt="Pase DJ Público" loading="lazy">
+                    </div>
+                    <div class="encabezado-tarjeta">
+                        <div class="nombre-pase">DJ Público</div>
+                        <div class="precio-pase">35 Robux</div>
+                    </div>
+                    <div class="lista-beneficios">
+                        <ul>
+                            <li><i class="fas fa-bullhorn"></i> Colocar música en cualquier lugar público donde haya una corneta</li>
+                        </ul>
+                    </div>
+                    <button class="btn-comprar">
+                        <i class="fas fa-shopping-cart"></i> Comprar Pase
+                    </button>
+                    <div class="nota-robux">* Los Robux se compran en la plataforma de Roblox</div>
+                </div>
+            </div>
+            <div class="volver-inicio desvanecer-entrada retraso-2">
+                <a href="index.html" class="btn-volver">
+                    <i class="fas fa-arrow-left"></i> Volver al Inicio
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- Pie de Página -->
+    <footer>
+        <div class="contenedor">
+            <div class="contenido-pie">
+                <div class="pie-acerca-de">
+                    <div class="logo-pie">
+                        <div class="icono-logo">V</div>
+                        <div class="texto-logo">VENEYORK</div>
+                    </div>
+                    <p>Un espacio social de Roblox inspirado en Venezuela donde puedes explorar, personalizar, conducir y socializar en un mundo virtual vibrante.</p>
+                </div>
+                <div class="enlaces-pie">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="index.html#caracteristicas">Características</a></li>
+                        <li><a href="index.html#info">Información</a></li>
+                        <li><a href="guia.html">Guía del Juego</a></li>
+                        <li><a href="pases.html">Pases Exclusivos</a></li>
+                        <li><a href="https://www.roblox.com/games/139218725767607/Veneyork" target="_blank">Jugar en Roblox</a></li>
+                    </ul>
+                </div>
+                <div class="enlaces-pie">
+                    <h3>Comunidad</h3>
+                    <ul>
+                        <li><a href="https://discord.com/invite/Xrmnp7mQf9" target="_blank">Discord</a></li>
+                        <li><a href="https://www.roblox.com/groups/your-group" target="_blank">Grupo de Roblox</a></li>
+                        <li><a href="https://twitter.com/yourprofile" target="_blank">Twitter</a></li>
+                        <li><a href="https://www.youtube.com/yourchannel" target="_blank">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="derechos">
+                <p>&copy; 2025 Experiencia Roblox Veneyork. Todos los derechos reservados. Roblox es una marca registrada de Roblox Corporation.</p>
+                <p>Este sitio web es una creación de fans para el juego Roblox Veneyork.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animación de las tarjetas al hacer scroll
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('desvanecer-entrada');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.tarjeta-pase, .encabezado-pases').forEach(el => observer.observe(el));
+            
+            // Evento para los botones de compra (simulado)
+            document.querySelectorAll('.btn-comprar').forEach(button => {
+                button.addEventListener('click', function() {
+                    const paseNombre = this.closest('.tarjeta-pase').querySelector('.nombre-pase').textContent;
+                    const pasePrecio = this.closest('.tarjeta-pase').querySelector('.precio-pase').textContent;
+                    
+                    // Mostrar alerta simulada (en producción esto redirigiría a Roblox)
+                    if (confirm(`¿Deseas comprar el pase "${paseNombre}" por ${pasePrecio}?`)) {
+                        alert(`¡Redirigiendo a Roblox para completar la compra de "${paseNombre}"!\n\nRecuerda que necesitas tener suficientes Robux en tu cuenta.`);
+                    }
+                });
+            });
+            
+            // Pre-cargar imágenes para mejor experiencia
+            const imagenes = document.querySelectorAll('.imagen-pase img');
+            imagenes.forEach(img => {
+                const src = img.getAttribute('src');
+                if (src) {
+                    const imgPrecarga = new Image();
+                    imgPrecarga.src = src;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
