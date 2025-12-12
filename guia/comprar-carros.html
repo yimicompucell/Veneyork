@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cómo Comprar Carros en Veneyork</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .seccion-guia {
+            padding: 140px 0 100px;
+            background-color: var(--fondo-oscuro);
+        }
+        .encabezado-guia {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .encabezado-guia h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: var(--texto-claro);
+        }
+        .encabezado-guia p {
+            color: var(--texto-gris);
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .instrucciones {
+            background-color: var(--fondo-tarjeta);
+            border: 1px solid var(--color-borde);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 60px;
+        }
+        .instrucciones h2 {
+            font-size: 28px;
+            color: var(--amarillo);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .pasos {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        .paso {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .paso-titulo {
+            font-size: 20px;
+            color: var(--texto-claro);
+            font-weight: 600;
+        }
+        .paso-descripcion {
+            color: var(--texto-gris);
+            line-height: 1.6;
+        }
+        .imagen-paso {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            border-radius: 8px;
+            border: 1px solid var(--color-borde);
+            background-color: #0a0d12;
+            padding: 10px;
+        }
+        .imagen-paso img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 6px;
+        }
+
+        /* Leyenda de Colores */
+        .leyenda-colores {
+            background-color: var(--fondo-tarjeta);
+            border: 1px solid var(--color-borde);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 60px;
+        }
+        .leyenda-colores h2 {
+            font-size: 24px;
+            color: var(--amarillo);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .lista-colores {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+        .item-color {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            color: var(--texto-gris);
+        }
+        .muestra-color {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            border: 1px solid var(--color-borde);
+        }
+
+        /* Categorías */
+        .categorias-vehiculos {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .btn-categoria {
+            padding: 10px 20px;
+            background-color: var(--fondo-oscuro);
+            border: 1px solid var(--color-borde);
+            color: var(--texto-gris);
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-categoria.activo, .btn-categoria:hover {
+            color: var(--amarillo);
+            border-color: var(--amarillo);
+            background-color: rgba(255, 215, 0, 0.1);
+        }
+
+        /* Lista de vehículos */
+        .grid-vehiculos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+        .tarjeta-vehiculo {
+            background-color: var(--fondo-tarjeta);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid var(--color-borde);
+            transition: transform 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .tarjeta-vehiculo:hover {
+            transform: translateY(-5px);
+            border-color: var(--azul-real);
+        }
+        .fondo-enchufado { background-color: rgba(255, 0, 0, 0.15); border-left: 4px solid #ff0000; }
+        .fondo-rumbero { background-color: rgba(153, 51, 204, 0.15); border-left: 4px solid #9933cc; }
+        .fondo-exclusivo { background-color: rgba(255, 102, 0, 0.15); border-left: 4px solid #ff6600; }
+        .fondo-barato1 { background-color: rgba(0, 255, 255, 0.15); border-left: 4px solid #00ffff; }
+        .fondo-barato2 { background-color: rgba(0, 255, 0, 0.15); border-left: 4px solid #00ff00; }
+        .fondo-barato3 { background-color: rgba(128, 128, 128, 0.15); border-left: 4px solid #808080; }
+
+        .encabezado-vehiculo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        .icono-vehiculo {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            background-color: rgba(65, 105, 225, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--azul-real);
+        }
+        .nombre-vehiculo {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--texto-claro);
+        }
+
+        /* Botón de Volver */
+        .volver-inicio {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .btn-volver {
+            background-color: var(--azul-real);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        .btn-volver:hover {
+            background-color: #3258c3;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(65, 105, 225, 0.15);
+        }
+
+        @media (max-width: 768px) {
+            .seccion-guia { padding: 160px 0 80px; }
+            .encabezado-guia h1 { font-size: 32px; }
+            .categorias-vehiculos { flex-direction: column; align-items: center; }
+        }
+        @media (max-width: 576px) {
+            .grid-vehiculos { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Encabezado -->
+    <header>
+        <div class="contenedor contenedor-encabezado">
+            <a href="../index.html" class="logo">
+                <div class="icono-logo">V</div>
+                <div class="texto-logo">VENEYORK</div>
+            </a>
+            <nav class="nav-desktop">
+                <ul>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="../index.html#caracteristicas">Características</a></li>
+                    <li><a href="../index.html#info">Información</a></li>
+                    <li><a href="../guia.html">Guía</a></li>
+                    <li><a href="../pases.html">Pases</a></li>
+                    <li><a href="../index.html#comunidad">Comunidad</a></li>
+                </ul>
+                <a href="https://discord.com/invite/Xrmnp7mQf9" target="_blank" class="btn-nav-desktop">
+                    <i class="fab fa-discord"></i> Discord
+                </a>
+            </nav>
+            <button class="menu-hamburguesa" id="menuHamburguesa" aria-label="Menú de navegación">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="overlay-nav" id="overlayNav"></div>
+            <nav class="nav-movil" id="navMovil">
+                <div class="nav-cabecera">
+                    <div class="logo-nav">
+                        <div class="icono-logo">V</div>
+                        <div class="texto-logo">VENEYORK</div>
+                    </div>
+                    <button class="cerrar-menu" id="cerrarMenu" aria-label="Cerrar menú">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <ul>
+                    <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="../index.html#caracteristicas" class="nav-link"><i class="fas fa-star"></i> Características</a></li>
+                    <li><a href="../index.html#info" class="nav-link"><i class="fas fa-info-circle"></i> Información</a></li>
+                    <li><a href="../guia.html" class="nav-link"><i class="fas fa-book"></i> Guía</a></li>
+                    <li><a href="../pases.html" class="nav-link"><i class="fas fa-ticket-alt"></i> Pases</a></li>
+                    <li><a href="../index.html#comunidad" class="nav-link"><i class="fas fa-users"></i> Comunidad</a></li>
+                </ul>
+                <a href="https://discord.com/invite/Xrmnp7mQf9" target="_blank" class="btn-nav-movil">
+                    <i class="fab fa-discord"></i> Unirse a Discord
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="seccion-guia">
+        <div class="contenedor">
+            <div class="encabezado-guia desvanecer-entrada">
+                <h1>Cómo Comprar Carros en Veneyork</h1>
+                <p>Aprende a encontrar los spawners de vehículos en el mapa, cómo interactuar con ellos y qué tipos de carros y motocicletas están disponibles.</p>
+            </div>
+
+            <!-- Instrucciones paso a paso -->
+            <div class="instrucciones desvanecer-entrada">
+                <h2>¿Dónde y cómo comprar vehículos?</h2>
+                <div class="pasos">
+                    <div class="paso">
+                        <div class="paso-titulo">Paso 1: Busca un teléfono CANTV en el mapa</div>
+                        <p>En distintas zonas de Veneyork encontrarás objetos que simulan teléfonos públicos de CANTV. Estos están marcados con un efecto visual naranja (similar a fuego) en la parte inferior.</p>
+                        <div class="imagen-paso">
+                            <img src="img/guia/carros/1.png" alt="Teléfono CANTV con efecto naranja" loading="lazy">
+                        </div>
+                    </div>
+                    <div class="paso">
+                        <div class="paso-titulo">Paso 2: Interactúa con el spawner</div>
+                        <p>Acércate al teléfono y presiona el botón de interacción. Se abrirá un menú con la lista de vehículos disponibles.</p>
+                        <div class="imagen-paso">
+                            <img src="img/guia/carros/2.png" alt="Menú de vehículos al interactuar" loading="lazy">
+                        </div>
+                    </div>
+                    <div class="paso">
+                        <div class="paso-titulo">Paso 3: Selecciona entre Vehículos o Motocicletas</div>
+                        <p>En la parte superior del menú puedes cambiar entre <strong>Vehículos</strong> y <strong>Motocicletas</strong> para ver las opciones disponibles en cada categoría.</p>
+                        <div class="imagen-paso">
+                            <img src="img/guia/carros/3.png" alt="Alternar entre vehículos y motos" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leyenda de colores -->
+            <div class="leyenda-colores desvanecer-entrada">
+                <h2>Vehiculos por Categoria</h2>
+                <div class="lista-colores">
+                    <div class="item-color">
+                        <div class="muestra-color" style="background-color: #ff0000;"></div>
+                        <span>Vehículo del Pase Enchufado (200 Robux)</span>
+                    </div>
+                    <div class="item-color">
+                        <div class="muestra-color" style="background-color: #9933cc;"></div>
+                        <span>Vehículo del Pase Rumbero (100 Robux)</span>
+                    </div>
+                    <div class="item-color">
+                        <div class="muestra-color" style="background-color: #ff6600;"></div>
+                        <span>Exclusivo por precio (sin pase requerido)</span>
+                    </div>
+                    <div class="item-color">
+                        <div class="muestra-color" style="background-color: #00ffff;"></div>
+                        <span>Precio intermedio</span>
+                    </div>
+                    <div class="item-color">
+                        <div class="muestra-color" style="background-color: #00ff00;"></div>
+                        <span>Precio económico</span>
+                    </div>
+                    <div class="item-color">
+                        <div class="muestra-color" style="background-color: #808080;"></div>
+                        <span>Precio muy económico</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categorías -->
+            <div class="categorias-vehiculos desvanecer-entrada">
+                <button class="btn-categoria activo" data-categoria="vehiculos">Vehículos</button>
+                <button class="btn-categoria" data-categoria="motocicletas">Motocicletas</button>
+            </div>
+
+            <!-- Lista de vehículos (con colores reales y sin descripción) -->
+            <div class="grid-vehiculos desvanecer-entrada" id="lista-vehiculos">
+                                <!-- Fila 1 -->
+                <div class="tarjeta-vehiculo fondo-enchufado">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">El Rusticón</div>
+                    </div>
+                </div>
+                <div class="tarjeta-vehiculo fondo-enchufado">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Corredor de juguete: Tobobobo 4</div>
+                    </div>
+                </div>
+                <div class="tarjeta-vehiculo fondo-enchufado">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Toyobobo Camry</div>
+                    </div>
+                </div>
+                <div class="tarjeta-vehiculo fondo-enchufado">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Funcionario de Toyobobo</div>
+                    </div>
+                </div>
+
+                <!-- Fila 2 -->
+                <div class="tarjeta-vehiculo fondo-enchufado">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Juguetobobo Hilox</div>
+                    </div>
+                </div>
+                <div class="tarjeta-vehiculo fondo-enchufado">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Toyobobo Limitado 5WD</div>
+                    </div>
+                </div>
+                <div class="tarjeta-vehiculo fondo-enchufado">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Toyobobo Perolla</div>
+                    </div>
+                </div>
+                <div class="tarjeta-vehiculo fondo-enchufado">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Toyobobo Prado</div>
+                    </div>
+                </div>
+
+                <!-- Fila 3 -->
+                <div class="tarjeta-vehiculo fondo-rumbero">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Chevetico</div>
+                    </div>
+                </div>
+                <div class="tarjeta-vehiculo fondo-rumbero">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Corsita</div>
+                    </div>
+                </div>
+                <div class="tarjeta-vehiculo fondo-rumbero">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Malibusito Rumbero</div>
+                    </div>
+                </div>
+                <div class="tarjeta-vehiculo fondo-exclusivo">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">MMG V63</div>
+                    </div>
+                </div>
+
+                <!-- Fila 4 -->
+                <div class="tarjeta-vehiculo fondo-exclusivo">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Toyobobo Grrrr</div>
+                    </div>
+                </div>
+                <div class="tarjeta-vehiculo fondo-exclusivo">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Toyobobo Sífrina</div>
+                    </div>
+                </div>
+                <div class="tarjeta-vehiculo fondo-exclusivo">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Escribir ruido</div>
+                    </div>
+                </div>
+                <div class="tarjeta-vehiculo fondo-barato1">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">CareDiablo</div>
+                    </div>
+                </div>
+
+                <!-- Fila 5 -->
+                <div class="tarjeta-vehiculo fondo-barato1">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Tahoe</div>
+                    </div>
+                </div>
+                <div class="tarjeta-vehiculo fondo-barato1">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">vochido</div>
+                    </div>
+                </div>
+                <div class="tarjeta-vehiculo fondo-barato2">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Chayanne</div>
+                    </div>
+                </div>
+                <div class="tarjeta-vehiculo fondo-barato2">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Mustang</div>
+                    </div>
+                </div>
+
+                <!-- Fila 6 -->
+                <div class="tarjeta-vehiculo fondo-barato2">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Toyobobo Autana</div>
+                    </div>
+                </div>
+                <div class="tarjeta-vehiculo fondo-barato2">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Crucero de juguete Toyobobo</div>
+                    </div>
+                </div>
+                <div class="tarjeta-vehiculo fondo-barato2">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Toyobobo Machito</div>
+                    </div>
+                </div>
+                <div class="tarjeta-vehiculo fondo-barato3">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Chevere Aveo</div>
+                    </div>
+                </div>
+
+                <!-- Fila 7 -->
+                <div class="tarjeta-vehiculo fondo-barato3">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Chevere Opra</div>
+                    </div>
+                </div>
+                <div class="tarjeta-vehiculo fondo-barato3">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Cielito</div>
+                    </div>
+                </div>
+                <div class="tarjeta-vehiculo fondo-barato3">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Fita uno</div>
+                    </div>
+                </div>
+                <div class="tarjeta-vehiculo fondo-barato3">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Lancha GLX</div>
+                    </div>
+                </div>
+
+                <!-- Fila 8 -->
+                <div class="tarjeta-vehiculo fondo-barato3">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Malibusito</div>
+                    </div>
+                </div>
+                <div class="tarjeta-vehiculo fondo-barato3">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-car"></i></div>
+                        <div class="nombre-vehiculo">Toyobobo Perollita</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lista de motocicletas (oculta por defecto) -->
+            <div class="grid-vehiculos desvanecer-entrada" id="lista-motocicletas" style="display: none;">
+                <!-- Fila 1 -->
+                <div class="tarjeta-vehiculo fondo-exclusivo">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-motorcycle"></i></div>
+                        <div class="nombre-vehiculo">KLR</div>
+                    </div>
+                </div>
+                <div class="tarjeta-vehiculo fondo-barato2">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-motorcycle"></i></div>
+                        <div class="nombre-vehiculo">Noticias SBR</div>
+                    </div>
+                </div>
+                <!-- Fila 2 -->
+                <div class="tarjeta-vehiculo fondo-barato3">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-motorcycle"></i></div>
+                        <div class="nombre-vehiculo">BRF</div>
+                    </div>
+                </div>
+                <div class="tarjeta-vehiculo fondo-barato3">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-motorcycle"></i></div>
+                        <div class="nombre-vehiculo">KAVAK</div>
+                    </div>
+                </div>
+                <!-- Fila 3 -->
+                <div class="tarjeta-vehiculo fondo-barato3">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-motorcycle"></i></div>
+                        <div class="nombre-vehiculo">Sudaky DR</div>
+                    </div>
+                </div>
+                <div class="tarjeta-vehiculo fondo-barato3">
+                    <div class="encabezado-vehiculo">
+                        <div class="icono-vehiculo"><i class="fas fa-motorcycle"></i></div>
+                        <div class="nombre-vehiculo">Tigrito</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="volver-inicio desvanecer-entrada">
+                <a href="../guia.html" class="btn-volver">
+                    <i class="fas fa-arrow-left"></i> Volver a la Guía
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="contenedor">
+            <div class="contenido-pie">
+                <div class="pie-acerca-de">
+                    <div class="logo-pie">
+                        <div class="icono-logo">V</div>
+                        <div class="texto-logo">VENEYORK</div>
+                    </div>
+                    <p>Un espacio social de Roblox inspirado en Venezuela donde puedes explorar, personalizar, conducir y socializar en un mundo virtual vibrante.</p>
+                </div>
+                <div class="enlaces-pie">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="../index.html#caracteristicas">Características</a></li>
+                        <li><a href="../index.html#info">Información</a></li>
+                        <li><a href="../guia.html">Guía del Juego</a></li>
+                        <li><a href="https://www.roblox.com/games/139218725767607/Veneyork" target="_blank">Jugar en Roblox</a></li>
+                    </ul>
+                </div>
+                <div class="enlaces-pie">
+                    <h3>Comunidad</h3>
+                    <ul>
+                        <li><a href="https://discord.com/invite/Xrmnp7mQf9" target="_blank">Discord</a></li>
+                        <li><a href="#">Grupo de Roblox</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="derechos">
+                <p>&copy; 2025 Experiencia Roblox Veneyork. Todos los derechos reservados.</p>
+                <p>Este sitio web es una creación de fans para el juego Roblox Veneyork.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('desvanecer-entrada');
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll(
+                '.encabezado-guia, .instrucciones, .leyenda-colores, .grid-vehiculos, .tarjeta-vehiculo'
+            ).forEach(el => observer.observe(el));
+
+            // Cambiar categorías (Vehículos / Motocicletas)
+            const botones = document.querySelectorAll('.btn-categoria');
+            const listaVehiculos = document.getElementById('lista-vehiculos');
+            const listaMotocicletas = document.getElementById('lista-motocicletas');
+
+            botones.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    botones.forEach(b => b.classList.remove('activo'));
+                    btn.classList.add('activo');
+
+                    if (btn.dataset.categoria === 'vehiculos') {
+                        listaVehiculos.style.display = 'grid';
+                        listaMotocicletas.style.display = 'none';
+                    } else {
+                        listaVehiculos.style.display = 'none';
+                        listaMotocicletas.style.display = 'grid';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
