@@ -12,6 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function abrirMenu() {
         if (isMenuOpen) return;
+
+        // Scroll suave al inicio antes de abrir (opcional pero mejora UX)
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
         body.classList.add('menu-abierto');
         overlayNav.classList.add('activo');
         navMovil.classList.add('activo');

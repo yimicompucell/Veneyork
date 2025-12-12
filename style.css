@@ -188,6 +188,7 @@ header {
     transition: all var(--duracion-animacion) var(--easing-suave);
     backdrop-filter: blur(0);
     -webkit-backdrop-filter: blur(0);
+    pointer-events: none; /* ← Importante */
 }
 
 .overlay-nav.activo {
@@ -195,6 +196,7 @@ header {
     background-color: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
+    pointer-events: auto; /* ← Ahora captura clics */
 }
 
 .nav-movil {
