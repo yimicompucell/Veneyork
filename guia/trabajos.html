@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trabajos en Veneyork - Guía</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .seccion-trabajos {
+            padding: 140px 0 100px;
+            background-color: var(--fondo-oscuro);
+        }
+        .encabezado-trabajos {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .encabezado-trabajos h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: var(--texto-claro);
+        }
+        .encabezado-trabajos p {
+            color: var(--texto-gris);
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .grid-trabajos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .tarjeta-trabajo {
+            background-color: var(--fondo-tarjeta);
+            border: 1px solid var(--color-borde);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s var(--easing-suave);
+        }
+        .tarjeta-trabajo:hover {
+            transform: translateY(-6px);
+            border-color: var(--azul-real);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .icono-trabajo {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: rgba(65, 105, 225, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 24px;
+            color: var(--azul-real);
+        }
+        .tarjeta-trabajo h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: var(--texto-claro);
+        }
+        .tarjeta-trabajo p {
+            font-size: 14px;
+            color: var(--texto-gris);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        .btn-detalle {
+            background-color: var(--azul-real);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        .btn-detalle:hover {
+            background-color: #3258c3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(65, 105, 225, 0.15);
+        }
+        .volver-guia {
+            text-align: center;
+            margin-top: 60px;
+        }
+        .btn-volver {
+            background-color: var(--azul-real);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        .btn-volver:hover {
+            background-color: #3258c3;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(65, 105, 225, 0.15);
+        }
+        @media (max-width: 768px) {
+            .seccion-trabajos {
+                padding: 160px 0 80px;
+            }
+            .encabezado-trabajos h1 {
+                font-size: 32px;
+            }
+            .grid-trabajos {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Encabezado -->
+    <header>
+        <div class="contenedor contenedor-encabezado">
+            <a href="../index.html" class="logo">
+                <div class="icono-logo">V</div>
+                <div class="texto-logo">VENEYORK</div>
+            </a>
+            <nav class="nav-desktop">
+                <ul>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="../index.html#caracteristicas">Características</a></li>
+                    <li><a href="../index.html#info">Información</a></li>
+                    <li><a href="../guia.html">Guía</a></li>
+                    <li><a href="../pases.html">Pases</a></li>
+                    <li><a href="../index.html#comunidad">Comunidad</a></li>
+                </ul>
+                <a href="https://discord.com/invite/Xrmnp7mQf9" target="_blank" class="btn-nav-desktop">
+                    <i class="fab fa-discord"></i> Discord
+                </a>
+            </nav>
+            <button class="menu-hamburguesa" id="menuHamburguesa" aria-label="Menú de navegación">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="overlay-nav" id="overlayNav"></div>
+            <nav class="nav-movil" id="navMovil">
+                <div class="nav-cabecera">
+                    <div class="logo-nav">
+                        <div class="icono-logo">V</div>
+                        <div class="texto-logo">VENEYORK</div>
+                    </div>
+                    <button class="cerrar-menu" id="cerrarMenu" aria-label="Cerrar menú">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <ul>
+                    <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="../index.html#caracteristicas" class="nav-link"><i class="fas fa-star"></i> Características</a></li>
+                    <li><a href="../index.html#info" class="nav-link"><i class="fas fa-info-circle"></i> Información</a></li>
+                    <li><a href="../guia.html" class="nav-link"><i class="fas fa-book"></i> Guía</a></li>
+                    <li><a href="../pases.html" class="nav-link"><i class="fas fa-ticket-alt"></i> Pases</a></li>
+                    <li><a href="../index.html#comunidad" class="nav-link"><i class="fas fa-users"></i> Comunidad</a></li>
+                </ul>
+                <a href="https://discord.com/invite/Xrmnp7mQf9" target="_blank" class="btn-nav-movil">
+                    <i class="fab fa-discord"></i> Unirse a Discord
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Sección Principal -->
+    <section class="seccion-trabajos">
+        <div class="contenedor">
+            <div class="encabezado-trabajos desvanecer-entrada">
+                <h1>Trabajos en Veneyork</h1>
+                <p>Participa en la economía del juego trabajando en distintas actividades. Gana dinero, interactúa con otros jugadores y desarrolla tu personaje.</p>
+            </div>
+            <div class="grid-trabajos">
+                <!-- Farmanada -->
+                <a href="#" class="tarjeta-trabajo desvanecer-entrada enlace-en-desarrollo">
+                    <div class="icono-trabajo" style="background-color: rgba(0, 200, 0, 0.15); color: #4CAF50;">
+                        <i class="fas fa-capsules"></i>
+                    </div>
+                    <h3>Farmanada</h3>
+                    <p>Limpia parches de suciedad que aparecen en el piso y mantén la ciudad limpia a cambio de dinero.</p>
+                    <span class="btn-detalle">
+                        <i class="fas fa-info-circle"></i> Ver detalles
+                    </span>
+                </a>
+
+                <!-- Arturos -->
+                <a href="#" class="tarjeta-trabajo desvanecer-entrada retraso-1 enlace-en-desarrollo">
+                    <div class="icono-trabajo" style="background-color: rgba(255, 150, 0, 0.15); color: #FF9800;">
+                        <i class="fas fa-drumstick-bite"></i>
+                    </div>
+                    <h3>Arturos</h3>
+                    <p>Realiza entregas a domicilio o limpia parches de suciedad para ganar recompensas diarias.</p>
+                    <span class="btn-detalle">
+                        <i class="fas fa-info-circle"></i> Ver detalles
+                    </span>
+                </a>
+
+                <!-- Taxi (Uber) -->
+                <a href="#" class="tarjeta-trabajo desvanecer-entrada retraso-2 enlace-en-desarrollo">
+                    <div class="icono-trabajo" style="background-color: rgba(65, 105, 225, 0.15); color: var(--azul-real);">
+                        <i class="fas fa-taxi"></i>
+                    </div>
+                    <h3>Taxi (Uber)</h3>
+                    <p>Recoge pasajeros en un punto A y llévalos a su destino en el punto B para ganar dinero.</p>
+                    <span class="btn-detalle">
+                        <i class="fas fa-info-circle"></i> Ver detalles
+                    </span>
+                </a>
+            </div>
+            <div class="volver-guia desvanecer-entrada retraso-3">
+                <a href="../guia.html" class="btn-volver">
+                    <i class="fas fa-arrow-left"></i> Volver a la Guía
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pie de página -->
+    <footer>
+        <div class="contenedor">
+            <div class="contenido-pie">
+                <div class="pie-acerca-de">
+                    <div class="logo-pie">
+                        <div class="icono-logo">V</div>
+                        <div class="texto-logo">VENEYORK</div>
+                    </div>
+                    <p>Un espacio social de Roblox inspirado en Venezuela donde puedes explorar, personalizar, conducir y socializar en un mundo virtual vibrante.</p>
+                </div>
+                <div class="enlaces-pie">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="../index.html#caracteristicas">Características</a></li>
+                        <li><a href="../index.html#info">Información</a></li>
+                        <li><a href="../guia.html">Guía del Juego</a></li>
+                        <li><a href="https://www.roblox.com/games/139218725767607/Veneyork" target="_blank">Jugar en Roblox</a></li>
+                    </ul>
+                </div>
+                <div class="enlaces-pie">
+                    <h3>Comunidad</h3>
+                    <ul>
+                        <li><a href="https://discord.com/invite/Xrmnp7mQf9" target="_blank">Discord</a></li>
+                        <li><a href="#">Grupo de Roblox</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="derechos">
+                <p>&copy; 2025 Experiencia Roblox Veneyork. Todos los derechos reservados.</p>
+                <p>Este sitio web es una creación de fans para el juego Roblox Veneyork.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal "En Desarrollo" -->
+    <div id="modalDesarrollo" class="modal-desarrollo">
+        <div class="modal-contenido">
+            <button id="cerrarModal" class="cerrar-modal">&times;</button>
+            <div class="icono-modal">
+                <i class="fas fa-tools"></i>
+            </div>
+            <h3>¡Pronto disponible!</h3>
+            <p>Esta sección está actualmente en desarrollo y estará disponible muy pronto. ¡Gracias por tu paciencia!</p>
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+        // Reutiliza el mismo estilo de modal de guia.html
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('modalDesarrollo');
+            const cerrarBtn = document.getElementById('cerrarModal');
+            const enlacesDesarrollo = document.querySelectorAll('.enlace-en-desarrollo');
+
+            enlacesDesarrollo.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    modal.style.display = 'flex';
+                    modal.querySelector('.modal-contenido').classList.remove('animacion-salida');
+                });
+            });
+
+            function cerrarModalConAnimacion() {
+                const contenido = modal.querySelector('.modal-contenido');
+                contenido.classList.add('animacion-salida');
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                    contenido.classList.remove('animacion-salida');
+                }, 300);
+            }
+
+            cerrarBtn.addEventListener('click', cerrarModalConAnimacion);
+            window.addEventListener('click', e => e.target === modal && cerrarModalConAnimacion());
+            document.addEventListener('keydown', e => e.key === 'Escape' && modal.style.display === 'flex' && cerrarModalConAnimacion());
+        });
+    </script>
+    <!-- Estilos del modal (copiados de guia.html) -->
+    <style>
+        .modal-desarrollo {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+        .modal-contenido {
+            background-color: var(--fondo-tarjeta);
+            border: 1px solid var(--color-borde);
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            animation: desvanecerEntrada 0.4s var(--easing-suave) forwards;
+        }
+        .cerrar-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--texto-gris);
+            font-size: 28px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .cerrar-modal:hover {
+            color: var(--rojo-brillante);
+        }
+        .icono-modal {
+            width: 70px;
+            height: 70px;
+            background-color: rgba(255, 215, 0, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 28px;
+            color: var(--amarillo);
+        }
+        .modal-contenido h3 {
+            font-size: 24px;
+            color: var(--texto-claro);
+            margin-bottom: 15px;
+        }
+        .modal-contenido p {
+            color: var(--texto-gris);
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        @keyframes desvanecerSalida {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(20px); }
+        }
+        .modal-contenido.animacion-salida {
+            animation: desvanecerSalida 0.3s var(--easing-suave) forwards;
+        }
+    </style>
+</body>
+</html>

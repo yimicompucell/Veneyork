@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trabajar en Farmanada - Veneyork</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .seccion-guia {
+            padding: 140px 0 100px;
+            background-color: var(--fondo-oscuro);
+        }
+        .encabezado-guia {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .encabezado-guia h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: var(--texto-claro);
+        }
+        .encabezado-guia p {
+            color: var(--texto-gris);
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .instrucciones {
+            background-color: var(--fondo-tarjeta);
+            border: 1px solid var(--color-borde);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 60px;
+        }
+        .instrucciones h2 {
+            font-size: 28px;
+            color: var(--amarillo);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .pasos {
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+        }
+        .paso {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .paso-titulo {
+            font-size: 20px;
+            color: var(--texto-claro);
+            font-weight: 600;
+        }
+        .paso-descripcion {
+            color: var(--texto-gris);
+            line-height: 1.6;
+        }
+        .imagen-paso {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            border-radius: 8px;
+            border: 1px solid var(--color-borde);
+            background-color: #0a0d12;
+            padding: 10px;
+        }
+        .imagen-paso img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 6px;
+        }
+        .volver-guia {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .btn-volver {
+            background-color: var(--azul-real);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        .btn-volver:hover {
+            background-color: #3258c3;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(65, 105, 225, 0.15);
+        }
+        @media (max-width: 768px) {
+            .seccion-guia { padding: 160px 0 80px; }
+            .encabezado-guia h1 { font-size: 32px; }
+        }
+        @media (max-width: 576px) {
+            .imagen-paso { padding: 5px; }
+            .instrucciones { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Encabezado -->
+    <header>
+        <div class="contenedor contenedor-encabezado">
+            <a href="../index.html" class="logo">
+                <div class="icono-logo">V</div>
+                <div class="texto-logo">VENEYORK</div>
+            </a>
+            <nav class="nav-desktop">
+                <ul>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="../index.html#caracteristicas">Características</a></li>
+                    <li><a href="../index.html#info">Información</a></li>
+                    <li><a href="../guia.html">Guía</a></li>
+                    <li><a href="../pases.html">Pases</a></li>
+                    <li><a href="../index.html#comunidad">Comunidad</a></li>
+                </ul>
+                <a href="https://discord.com/invite/Xrmnp7mQf9" target="_blank" class="btn-nav-desktop">
+                    <i class="fab fa-discord"></i> Discord
+                </a>
+            </nav>
+            <button class="menu-hamburguesa" id="menuHamburguesa" aria-label="Menú de navegación">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="overlay-nav" id="overlayNav"></div>
+            <nav class="nav-movil" id="navMovil">
+                <div class="nav-cabecera">
+                    <div class="logo-nav">
+                        <div class="icono-logo">V</div>
+                        <div class="texto-logo">VENEYORK</div>
+                    </div>
+                    <button class="cerrar-menu" id="cerrarMenu" aria-label="Cerrar menú">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <ul>
+                    <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="../index.html#caracteristicas" class="nav-link"><i class="fas fa-star"></i> Características</a></li>
+                    <li><a href="../index.html#info" class="nav-link"><i class="fas fa-info-circle"></i> Información</a></li>
+                    <li><a href="../guia.html" class="nav-link"><i class="fas fa-book"></i> Guía</a></li>
+                    <li><a href="../pases.html" class="nav-link"><i class="fas fa-ticket-alt"></i> Pases</a></li>
+                    <li><a href="../index.html#comunidad" class="nav-link"><i class="fas fa-users"></i> Comunidad</a></li>
+                </ul>
+                <a href="https://discord.com/invite/Xrmnp7mQf9" target="_blank" class="btn-nav-movil">
+                    <i class="fab fa-discord"></i> Unirse a Discord
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <section class="seccion-guia">
+        <div class="contenedor">
+            <div class="encabezado-guia desvanecer-entrada">
+                <h1>Trabajar en Farmanada</h1>
+                <p>Limpia los parches de suciedad que aparecen en el piso y gana dinero mientras mantienes Veneyork limpio.</p>
+            </div>
+
+            <div class="instrucciones desvanecer-entrada">
+                <h2>Pasos para comenzar a trabajar</h2>
+                <div class="pasos">
+                    <!-- Paso 1 -->
+                    <div class="paso">
+                        <div class="paso-titulo">Paso 1: Busca una tienda Farmanada</div>
+                        <p>Hay dos tiendas Farmanada en todo el mapa: una en <strong>Burrinas</strong> y otra en la <strong>Plaza Central</strong>.</p>
+                        <div class="imagen-paso">
+                            <img src="img/guia/farmanada/1.png" alt="Ubicación de la tienda Farmanada" loading="lazy">
+                        </div>
+                    </div>
+
+                    <!-- Paso 2 -->
+                    <div class="paso">
+                        <div class="paso-titulo">Paso 2: Ingresa al comercio y busca el carrito</div>
+                        <p>Una vez dentro, busca el <strong>carrito de limpieza</strong> (como el de la imagen) y acércate a él.</p>
+                        <div class="imagen-paso">
+                            <img src="img/guia/farmanada/2.png" alt="Carrito de limpieza en el interior de Farmanada" loading="lazy">
+                        </div>
+                    </div>
+
+                    <!-- Paso 3 -->
+                    <div class="paso">
+                        <div class="paso-titulo">Paso 3: Interactúa con el carrito</div>
+                        <p>Al interactuar con el carrito, <strong>obtendrás automáticamente el trabajo</strong>. Se te entregará una <strong>escoba</strong> y se te colocará una <strong>franela de Farmanada</strong> en tu avatar.</p>
+                    </div>
+
+                    <!-- Paso 4 -->
+                    <div class="paso">
+                        <div class="paso-titulo">Paso 4: Busca los parches de suciedad</div>
+                        <p>Al salir del comercio, verás en la acera <strong>parches de suciedad</strong> (como en la imagen). Acércate a ellos.</p>
+                        <div class="imagen-paso">
+                            <img src="img/guia/farmanada/3.png" alt="Parches de suciedad en el piso" loading="lazy">
+                        </div>
+                    </div>
+
+                    <!-- Paso 5 -->
+                    <div class="paso">
+                        <div class="paso-titulo">Paso 5: Limpia los parches</div>
+                        <p>Colócate encima del parche para comenzar la limpieza. En pantalla aparecerán <strong>círculos con cantidades de dinero</strong> como <strong>$3, $4, $5</strong>.</p>
+                        <div class="imagen-paso">
+                            <img src="img/guia/farmanada/4.png" alt="Círculos con dinero durante la limpieza" loading="lazy">
+                        </div>
+                        <p><strong>¡Consejo!</strong> Si tocas los círculos rápidamente, recibirás un <strong>bonus adicional</strong> de dinero.</p>
+                    </div>
+
+                    <!-- Paso 6 -->
+                    <div class="paso">
+                        <div class="paso-titulo">Paso 6: Dejar el trabajo</div>
+                        <p>Si deseas dejar de trabajar, simplemente <strong>sal del comercio Farmanada</strong>. Tu escoba y franela desaparecerán automáticamente.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="volver-guia desvanecer-entrada retraso-3">
+                <a href="../guia.html" class="btn-volver">
+                    <i class="fas fa-arrow-left"></i> Volver a la Guía
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pie de página -->
+    <footer>
+        <div class="contenedor">
+            <div class="contenido-pie">
+                <div class="pie-acerca-de">
+                    <div class="logo-pie">
+                        <div class="icono-logo">V</div>
+                        <div class="texto-logo">VENEYORK</div>
+                    </div>
+                    <p>Un espacio social de Roblox inspirado en Venezuela donde puedes explorar, personalizar, conducir y socializar en un mundo virtual vibrante.</p>
+                </div>
+                <div class="enlaces-pie">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="../index.html#caracteristicas">Características</a></li>
+                        <li><a href="../index.html#info">Información</a></li>
+                        <li><a href="../guia.html">Guía del Juego</a></li>
+                        <li><a href="https://www.roblox.com/games/139218725767607/Veneyork" target="_blank">Jugar en Roblox</a></li>
+                    </ul>
+                </div>
+                <div class="enlaces-pie">
+                    <h3>Comunidad</h3>
+                    <ul>
+                        <li><a href="https://discord.com/invite/Xrmnp7mQf9" target="_blank">Discord</a></li>
+                        <li><a href="#">Grupo de Roblox</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="derechos">
+                <p>&copy; 2025 Experiencia Roblox Veneyork. Todos los derechos reservados.</p>
+                <p>Este sitio web es una creación de fans para el juego Roblox Veneyork.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('desvanecer-entrada');
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll(
+                '.encabezado-guia, .instrucciones, .paso, .imagen-paso'
+            ).forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
