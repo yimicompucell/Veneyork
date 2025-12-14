@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trabajar en Farmanada - Veneyork</title>
+    <title>Trabajar en Arturos - Veneyork</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
@@ -27,14 +27,69 @@
             max-width: 700px;
             margin: 0 auto;
         }
-        .instrucciones {
+        .ubicacion-comercio {
+            background-color: var(--fondo-tarjeta);
+            border: 1px solid var(--color-borde);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .ubicacion-comercio h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: var(--amarillo);
+        }
+        .imagen-comercio {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            border-radius: 8px;
+            border: 1px solid var(--color-borde);
+            background-color: #0a0d12;
+            padding: 10px;
+        }
+        .imagen-comercio img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 6px;
+        }
+        /* Pestañas */
+        .tabs-trabajo {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .btn-tab {
+            padding: 12px 30px;
+            background-color: var(--fondo-oscuro);
+            border: 1px solid var(--color-borde);
+            color: var(--texto-gris);
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-tab.activo, .btn-tab:hover {
+            color: var(--amarillo);
+            border-color: var(--amarillo);
+            background-color: rgba(255, 215, 0, 0.1);
+        }
+        /* Contenido de trabajos */
+        .contenido-trabajo {
             background-color: var(--fondo-tarjeta);
             border: 1px solid var(--color-borde);
             border-radius: 10px;
             padding: 30px;
             margin-bottom: 60px;
+            display: none;
         }
-        .instrucciones h2 {
+        .contenido-trabajo.activo {
+            display: block;
+        }
+        .contenido-trabajo h2 {
             font-size: 28px;
             color: var(--amarillo);
             margin-bottom: 20px;
@@ -74,6 +129,23 @@
             display: block;
             border-radius: 6px;
         }
+        .nota-aviso {
+            background-color: rgba(255, 215, 0, 0.1);
+            border-left: 4px solid var(--amarillo);
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 0 8px 8px 0;
+            color: var(--amarillo);
+            font-weight: 500;
+        }
+        .link-guia {
+            color: var(--azul-real);
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        .link-guia:hover {
+            color: #3258c3;
+        }
         .volver-guia {
             text-align: center;
             margin-top: 40px;
@@ -99,10 +171,11 @@
         @media (max-width: 768px) {
             .seccion-guia { padding: 160px 0 80px; }
             .encabezado-guia h1 { font-size: 32px; }
+            .tabs-trabajo { flex-direction: column; align-items: center; }
         }
         @media (max-width: 576px) {
-            .imagen-paso { padding: 5px; }
-            .instrucciones { padding: 20px; }
+            .imagen-paso, .imagen-comercio { padding: 5px; }
+            .contenido-trabajo, .ubicacion-comercio { padding: 20px; }
         }
     </style>
 </head>
@@ -160,60 +233,99 @@
     <section class="seccion-guia">
         <div class="contenedor">
             <div class="encabezado-guia desvanecer-entrada">
-                <h1>Trabajar en Farmanada</h1>
-                <p>Limpia los parches de suciedad que aparecen en el piso y gana dinero mientras mantienes Veneyork limpio.</p>
+                <h1>Trabajar en Arturos</h1>
+                <p>En Arturos puedes elegir entre dos trabajos: realizar entregas a domicilio o mantener el local limpio. ¡Ambos te recompensan con dinero!</p>
             </div>
 
-            <div class="instrucciones desvanecer-entrada">
-                <h2>Pasos para comenzar a trabajar</h2>
+            <!-- Ubicación del comercio -->
+            <div class="ubicacion-comercio desvanecer-entrada">
+                <h2>Ubicación del comercio</h2>
+                <p>Busca la tienda de <strong>Arturos</strong> en la <strong>Plaza Central</strong>.</p>
+                <div class="imagen-comercio">
+                    <img src="img/guia/arturos/1.png" alt="Ubicación de Arturos en la Plaza Central" loading="lazy">
+                </div>
+            </div>
+
+            <!-- Pestañas de trabajo -->
+            <div class="tabs-trabajo desvanecer-entrada">
+                <button class="btn-tab activo" data-trabajo="delivery">Delivery</button>
+                <button class="btn-tab" data-trabajo="limpieza">Limpieza</button>
+            </div>
+
+            <!-- Trabajo: Delivery -->
+            <div id="delivery" class="contenido-trabajo activo desvanecer-entrada">
+                <h2>Trabajo de Delivery</h2>
                 <div class="pasos">
-                    <!-- Paso 1 -->
                     <div class="paso">
-                        <div class="paso-titulo">Paso 1: Busca una tienda Farmanada</div>
-                        <p>Hay dos tiendas Farmanada en todo el mapa: una en <strong>Burrinas</strong> y otra en la <strong>Plaza Central</strong>.</p>
+                        <div class="paso-titulo">Paso 1: Entra al local y busca el marcador verde</div>
+                        <p>Una vez dentro de Arturos, busca un efecto visual verde en el suelo. Allí verás un texto interactivo que dice <strong>“Entregar”</strong>.</p>
                         <div class="imagen-paso">
-                            <img src="img/guia/farmanada/1.png" alt="Ubicación de la tienda Farmanada" loading="lazy">
+                            <img src="img/guia/arturos/delivery/1.png" alt="Efecto verde y texto 'Entregar' en Arturos" loading="lazy">
                         </div>
                     </div>
-
-                    <!-- Paso 2 -->
                     <div class="paso">
-                        <div class="paso-titulo">Paso 2: Ingresa al comercio y busca el carrito</div>
-                        <p>Una vez dentro, busca el <strong>carrito de limpieza</strong> (como el de la imagen) y acércate a él.</p>
+                        <div class="paso-titulo">Paso 2: Interactúa para aceptar el trabajo</div>
+                        <p>Al interactuar, se te colocará automáticamente una <strong>mochila de delivery</strong> y un <strong>muslo de pollo</strong> como ítem de entrega.</p>
                         <div class="imagen-paso">
-                            <img src="img/guia/farmanada/2.png" alt="Carrito de limpieza en el interior de Farmanada" loading="lazy">
+                            <img src="img/guia/arturos/delivery/2.png" alt="Mochila de delivery y muslo de pollo equipados" loading="lazy">
                         </div>
                     </div>
+                    <div class="paso">
+                        <div class="paso-titulo">Paso 3: Ve al destino indicado</div>
+                        <p>Sigue la <strong>flecha roja</strong> en tu pantalla hasta el lugar donde debes entregar el pedido.</p>
+                    </div>
+                    <div class="paso">
+                        <div class="paso-titulo">Paso 4: Entrega al NPC</div>
+                        <p>Interactúa con el NPC para completar la entrega. Recibirás tu pago correspondiente.</p>
+                        <div class="imagen-paso">
+                            <img src="img/guia/arturos/delivery/3.png" alt="Entrega al NPC y pago recibido" loading="lazy">
+                        </div>
+                    </div>
+                    <div class="paso">
+                        <div class="paso-titulo">Notas importantes</div>
+                        <div class="nota-aviso">
+                            <strong>Nota 1:</strong> Debes regresar a Arturos para recoger otro pedido de delivery.<br>
+                            <strong>Nota 2:</strong> Si deseas dejar este trabajo, debes <strong>regenerar</strong> (salir y volver a entrar al servidor).
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                    <!-- Paso 3 -->
+            <!-- Trabajo: Limpieza -->
+            <div id="limpieza" class="contenido-trabajo desvanecer-entrada">
+                <h2>Trabajo de Limpieza</h2>
+                <div class="pasos">
+                    <div class="paso">
+                        <div class="paso-titulo">Paso 1: Ingresa al comercio</div>
+                        <p>Entra a la tienda de Arturos en la Plaza Central.</p>
+                    </div>
+                    <div class="paso">
+                        <div class="paso-titulo">Paso 2: Busca el carrito de limpieza</div>
+                        <p>Una vez dentro, localiza el <strong>carrito de limpieza</strong> (similar al de Farmanada).</p>
+                        <div class="imagen-paso">
+                            <img src="img/guia/arturos/limpieza/1.png" alt="Carrito de limpieza en Arturos" loading="lazy">
+                        </div>
+                    </div>
                     <div class="paso">
                         <div class="paso-titulo">Paso 3: Interactúa con el carrito</div>
-                        <p>Al interactuar con el carrito, <strong>obtendrás automáticamente el trabajo</strong>. Se te entregará una <strong>escoba</strong> y se te colocará una <strong>franela de Farmanada</strong> en tu avatar.</p>
+                        <p>Al interactuar, obtendrás automáticamente el trabajo. Se te entregará una <strong>escoba</strong> y se te colocará una <strong>franela de Arturos</strong> en tu avatar.</p>
                     </div>
-
-                    <!-- Paso 4 -->
                     <div class="paso">
                         <div class="paso-titulo">Paso 4: Busca los parches de suciedad</div>
-                        <p>Dentro del del comercio, verás <strong>parches de suciedad</strong> (como en la imagen). Acércate a ellos.</p>
-                        <div class="imagen-paso">
-                            <img src="img/guia/farmanada/3.png" alt="Parches de suciedad en el piso" loading="lazy">
-                        </div>
+                        <p>Dentro del comercio verás <strong>parches de suciedad</strong> en el suelo. Acércate a ellos.</p>
                     </div>
-
-                    <!-- Paso 5 -->
                     <div class="paso">
                         <div class="paso-titulo">Paso 5: Limpia los parches</div>
-                        <p>Colócate encima del parche para comenzar la limpieza. En pantalla aparecerán <strong>círculos con cantidades de dinero</strong> como <strong>$3, $4, $5</strong>.</p>
+                        <p>Colócate encima del parche para iniciar la limpieza. Aparecerán <strong>círculos con dinero ($3, $4, $5)</strong> en pantalla.</p>
                         <div class="imagen-paso">
-                            <img src="img/guia/farmanada/4.png" alt="Círculos con dinero durante la limpieza" loading="lazy">
+                            <img src="img/guia/arturos/limpieza/2.png" alt="Círculos con dinero durante la limpieza" loading="lazy">
                         </div>
                         <p><strong>¡Consejo!</strong> Si tocas los círculos rápidamente, recibirás un <strong>bonus adicional</strong> de dinero.</p>
                     </div>
-
-                    <!-- Paso 6 -->
                     <div class="paso">
                         <div class="paso-titulo">Paso 6: Dejar el trabajo</div>
-                        <p>Si deseas dejar de trabajar, simplemente <strong>sal del comercio Farmanada</strong>. Tu escoba y franela desaparecerán automáticamente.</p>
+                        <p>Si deseas dejar de trabajar, simplemente <strong>sal del comercio Arturos</strong>. Tu escoba y franela desaparecerán automáticamente.</p>
+                        <p>Este trabajo es muy similar al de <a href="farmanada.html" class="link-guia">Farmanada</a>.</p>
                     </div>
                 </div>
             </div>
@@ -267,6 +379,7 @@
     <script src="../script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Animaciones iniciales
             const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -275,8 +388,20 @@
                 });
             }, { threshold: 0.1 });
             document.querySelectorAll(
-                '.encabezado-guia, .instrucciones, .paso, .imagen-paso'
+                '.encabezado-guia, .ubicacion-comercio, .contenido-trabajo, .imagen-paso'
             ).forEach(el => observer.observe(el));
+
+            // Cambiar pestañas
+            const tabs = document.querySelectorAll('.btn-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const trabajo = tab.dataset.trabajo;
+                    tabs.forEach(t => t.classList.remove('activo'));
+                    tab.classList.add('activo');
+                    document.querySelectorAll('.contenido-trabajo').forEach(c => c.classList.remove('activo'));
+                    document.getElementById(trabajo).classList.add('activo');
+                });
+            });
         });
     </script>
 </body>

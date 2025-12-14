@@ -3,94 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trabajos en Veneyork - Guía</title>
+    <title>Delivery (ArepaMóvil) - Veneyork</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
     <style>
-        .seccion-trabajos {
+        .seccion-guia {
             padding: 140px 0 100px;
             background-color: var(--fondo-oscuro);
         }
-        .encabezado-trabajos {
+        .encabezado-guia {
             text-align: center;
             margin-bottom: 50px;
         }
-        .encabezado-trabajos h1 {
+        .encabezado-guia h1 {
             font-size: 48px;
             margin-bottom: 15px;
             color: var(--texto-claro);
         }
-        .encabezado-trabajos p {
+        .encabezado-guia p {
             color: var(--texto-gris);
             font-size: 18px;
             max-width: 700px;
             margin: 0 auto;
         }
-        .grid-trabajos {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        .tarjeta-trabajo {
+        .ubicacion-comercio {
             background-color: var(--fondo-tarjeta);
             border: 1px solid var(--color-borde);
             border-radius: 10px;
             padding: 25px;
+            margin-bottom: 40px;
             text-align: center;
-            transition: all 0.3s var(--easing-suave);
         }
-        .tarjeta-trabajo:hover {
-            transform: translateY(-6px);
-            border-color: var(--azul-real);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        .icono-trabajo {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
-            background: rgba(65, 105, 225, 0.15);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
+        .ubicacion-comercio h2 {
             font-size: 24px;
-            color: var(--azul-real);
+            margin-bottom: 15px;
+            color: var(--amarillo);
         }
-        .tarjeta-trabajo h3 {
-            font-size: 20px;
-            margin-bottom: 12px;
-            color: var(--texto-claro);
+        .imagen-comercio {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            border-radius: 8px;
+            border: 1px solid var(--color-borde);
+            background-color: #0a0d12;
+            padding: 10px;
         }
-        .tarjeta-trabajo p {
-            font-size: 14px;
-            color: var(--texto-gris);
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-        .btn-detalle {
-            background-color: var(--azul-real);
-            color: white;
-            padding: 10px 20px;
+        .imagen-comercio img {
+            width: 100%;
+            height: auto;
+            display: block;
             border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s;
         }
-        .btn-detalle:hover {
-            background-color: #3258c3;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(65, 105, 225, 0.15);
+        .instrucciones {
+            background-color: var(--fondo-tarjeta);
+            border: 1px solid var(--color-borde);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 60px;
+        }
+        .instrucciones h2 {
+            font-size: 28px;
+            color: var(--amarillo);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .pasos {
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+        }
+        .paso {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .paso-titulo {
+            font-size: 20px;
+            color: var(--texto-claro);
+            font-weight: 600;
+        }
+        .paso-descripcion {
+            color: var(--texto-gris);
+            line-height: 1.6;
+        }
+        .imagen-paso {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            border-radius: 8px;
+            border: 1px solid var(--color-borde);
+            background-color: #0a0d12;
+            padding: 10px;
+        }
+        .imagen-paso img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 6px;
+        }
+        .nota-aviso {
+            background-color: rgba(255, 215, 0, 0.1);
+            border-left: 4px solid var(--amarillo);
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 0 8px 8px 0;
+            color: var(--amarillo);
+            font-weight: 500;
+        }
+        .link-guia {
+            color: var(--azul-real);
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        .link-guia:hover {
+            color: #3258c3;
         }
         .volver-guia {
             text-align: center;
-            margin-top: 60px;
+            margin-top: 40px;
         }
         .btn-volver {
             background-color: var(--azul-real);
@@ -111,15 +142,12 @@
             box-shadow: 0 10px 20px rgba(65, 105, 225, 0.15);
         }
         @media (max-width: 768px) {
-            .seccion-trabajos {
-                padding: 160px 0 80px;
-            }
-            .encabezado-trabajos h1 {
-                font-size: 32px;
-            }
-            .grid-trabajos {
-                grid-template-columns: 1fr;
-            }
+            .seccion-guia { padding: 160px 0 80px; }
+            .encabezado-guia h1 { font-size: 32px; }
+        }
+        @media (max-width: 576px) {
+            .imagen-paso, .imagen-comercio { padding: 5px; }
+            .instrucciones, .ubicacion-comercio { padding: 20px; }
         }
     </style>
 </head>
@@ -173,61 +201,68 @@
         </div>
     </header>
 
-    <!-- Sección Principal -->
-    <section class="seccion-trabajos">
+    <!-- Contenido Principal -->
+    <section class="seccion-guia">
         <div class="contenedor">
-            <div class="encabezado-trabajos desvanecer-entrada">
-                <h1>Trabajos en Veneyork</h1>
-                <p>Participa en la economía del juego trabajando en distintas actividades. Gana dinero, interactúa con otros jugadores y desarrolla tu personaje.</p>
+            <div class="encabezado-guia desvanecer-entrada">
+                <h1>Delivery (ArepaMóvil)</h1>
+                <p>Conduce tu ArepaMóvil y realiza entregas a domicilio para ganar dinero rápido en Veneyork. Este trabajo es muy similar al delivery de <a href="arturos.html" class="link-guia">Arturos</a>.</p>
             </div>
-            <div class="grid-trabajos">
-                <!-- Farmanada -->
-                <a href="farmanada.html" class="tarjeta-trabajo desvanecer-entrada">
-                    <div class="icono-trabajo" style="background-color: rgba(0, 200, 0, 0.15); color: #4CAF50;">
-                        <i class="fas fa-capsules"></i>
-                    </div>
-                    <h3>Farmanada</h3>
-                    <p>Limpia parches de suciedad que aparecen en el piso y mantén la ciudad limpia a cambio de dinero.</p>
-                    <span class="btn-detalle">
-                        <i class="fas fa-info-circle"></i> Ver detalles
-                    </span>
-                </a>
 
-                <!-- Arturos -->
-                <a href="arturos.html" class="tarjeta-trabajo desvanecer-entrada retraso-1">
-                    <div class="icono-trabajo" style="background-color: rgba(255, 150, 0, 0.15); color: #FF9800;">
-                        <i class="fas fa-drumstick-bite"></i>
-                    </div>
-                    <h3>Arturos</h3>
-                    <p>Realiza entregas a domicilio o limpia parches de suciedad para ganar dinero.</p>
-                    <span class="btn-detalle">
-                        <i class="fas fa-info-circle"></i> Ver detalles
-                    </span>
-                </a>
-
-                <!-- Taxi (Uber) -->
-                <a href="uber.html" class="tarjeta-trabajo desvanecer-entrada retraso-2">
-                    <div class="icono-trabajo" style="background-color: rgba(65, 105, 225, 0.15); color: var(--azul-real);">
-                        <i class="fas fa-taxi"></i>
-                    </div>
-                    <h3>Taxi (Uber)</h3>
-                    <p>Recoge pasajeros en un punto A y llévalos a su destino en el punto B para ganar dinero.</p>
-                    <span class="btn-detalle">
-                        <i class="fas fa-info-circle"></i> Ver detalles
-                    </span>
-                </a>
-                <!-- Delivery (ArepaMóvil) -->
-                <a href="arepamovil.html" class="tarjeta-trabajo desvanecer-entrada retraso-3">
-                    <div class="icono-trabajo" style="background-color: rgba(255, 200, 0, 0.15); color: #FFC107;">
-                        <i class="fas fa-utensils"></i>
-                    </div>
-                    <h3>Delivery (ArepaMóvil)</h3>
-                    <p>Delivery de deliciosas arepas a domicilio para ganar dinero en Veneyork.</p>
-                    <span class="btn-detalle">
-                        <i class="fas fa-info-circle"></i> Ver detalles
-                    </span>
-                </a>
+            <!-- Ubicación del ArepaMóvil -->
+            <div class="ubicacion-comercio desvanecer-entrada">
+                <h2>Ubicación del ArepaMóvil</h2>
+                <p>Busca el carro de <strong>ArepaMóvil</strong> cerca de la <strong>finca en Burrinas</strong>.</p>
+                <div class="imagen-comercio">
+                    <img src="img/guia/arepamovil/1.png" alt="Ubicación del ArepaMóvil en Burrinas" loading="lazy">
+                </div>
             </div>
+
+            <!-- Instrucciones paso a paso -->
+            <div class="instrucciones desvanecer-entrada">
+                <h2>Pasos para comenzar a trabajar</h2>
+                <div class="pasos">
+                    <!-- Paso 1 -->
+                    <div class="paso">
+                        <div class="paso-titulo">Paso 1: Localiza el carro y el marcador verde</div>
+                        <p>Una vez localizado el carro de ArepaMóvil, busca un <strong>efecto visual verde</strong> en el suelo. Allí verás un texto interactivo que dice <strong>“Entregar”</strong>.</p>
+                    </div>
+
+                    <!-- Paso 2 -->
+                    <div class="paso">
+                        <div class="paso-titulo">Paso 2: Interactúa para aceptar el trabajo</div>
+                        <p>Al interactuar, se te colocará automáticamente una <strong>mochila de delivery</strong> y una <strong>arepa</strong> como ítem de entrega.</p>
+                    </div>
+
+                    <!-- Paso 3 -->
+                    <div class="paso">
+                        <div class="paso-titulo">Paso 3: Ve al destino indicado</div>
+                        <p>Sigue la <strong>flecha roja</strong> en tu pantalla hasta el lugar donde debes entregar el pedido.</p>
+                        <div class="imagen-paso">
+                            <img src="img/guia/arepamovil/2.png" alt="Flecha roja indicando el destino del delivery" loading="lazy">
+                        </div>
+                    </div>
+
+                    <!-- Paso 4 -->
+                    <div class="paso">
+                        <div class="paso-titulo">Paso 4: Entrega al NPC</div>
+                        <p>Interactúa con el NPC para completar la entrega. Recibirás tu pago correspondiente.</p>
+                        <div class="imagen-paso">
+                            <img src="img/guia/arepamovil/3.png" alt="Entrega al NPC y pago recibido" loading="lazy">
+                        </div>
+                    </div>
+
+                    <!-- Nota importante -->
+                    <div class="paso">
+                        <div class="paso-titulo">Notas importantes</div>
+                        <div class="nota-aviso">
+                            <strong>•</strong> Debes regresar al ArepaMóvil para recoger otro pedido.<br>
+                            <strong>•</strong> Si deseas dejar este trabajo, debes <strong>regenerar</strong>.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="volver-guia desvanecer-entrada retraso-3">
                 <a href="../guia.html" class="btn-volver">
                     <i class="fas fa-arrow-left"></i> Volver a la Guía
@@ -274,18 +309,20 @@
         </div>
     </footer>
 
-    <!-- Modal "En Desarrollo" -->
-    <div id="modalDesarrollo" class="modal-desarrollo">
-        <div class="modal-contenido">
-            <button id="cerrarModal" class="cerrar-modal">&times;</button>
-            <div class="icono-modal">
-                <i class="fas fa-tools"></i>
-            </div>
-            <h3>¡Pronto disponible!</h3>
-            <p>Esta sección está actualmente en desarrollo y estará disponible muy pronto. ¡Gracias por tu paciencia!</p>
-        </div>
-    </div>
-
     <script src="../script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('desvanecer-entrada');
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll(
+                '.encabezado-guia, .ubicacion-comercio, .instrucciones, .imagen-paso'
+            ).forEach(el => observer.observe(el));
+        });
+    </script>
 </body>
 </html>

@@ -3,94 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trabajos en Veneyork - Guía</title>
+    <title>Trabajar como Uber en Veneyork</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
     <style>
-        .seccion-trabajos {
+        .seccion-guia {
             padding: 140px 0 100px;
             background-color: var(--fondo-oscuro);
         }
-        .encabezado-trabajos {
+        .encabezado-guia {
             text-align: center;
             margin-bottom: 50px;
         }
-        .encabezado-trabajos h1 {
+        .encabezado-guia h1 {
             font-size: 48px;
             margin-bottom: 15px;
             color: var(--texto-claro);
         }
-        .encabezado-trabajos p {
+        .encabezado-guia p {
             color: var(--texto-gris);
             font-size: 18px;
             max-width: 700px;
             margin: 0 auto;
         }
-        .grid-trabajos {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        .tarjeta-trabajo {
+        .instrucciones {
             background-color: var(--fondo-tarjeta);
             border: 1px solid var(--color-borde);
             border-radius: 10px;
-            padding: 25px;
-            text-align: center;
-            transition: all 0.3s var(--easing-suave);
+            padding: 30px;
+            margin-bottom: 60px;
         }
-        .tarjeta-trabajo:hover {
-            transform: translateY(-6px);
-            border-color: var(--azul-real);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        .icono-trabajo {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
-            background: rgba(65, 105, 225, 0.15);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 24px;
-            color: var(--azul-real);
-        }
-        .tarjeta-trabajo h3 {
-            font-size: 20px;
-            margin-bottom: 12px;
-            color: var(--texto-claro);
-        }
-        .tarjeta-trabajo p {
-            font-size: 14px;
-            color: var(--texto-gris);
-            line-height: 1.5;
+        .instrucciones h2 {
+            font-size: 28px;
+            color: var(--amarillo);
             margin-bottom: 20px;
+            text-align: center;
         }
-        .btn-detalle {
-            background-color: var(--azul-real);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 6px;
-            text-decoration: none;
+        .pasos {
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+        }
+        .paso {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .paso-titulo {
+            font-size: 20px;
+            color: var(--texto-claro);
             font-weight: 600;
-            font-size: 14px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s;
         }
-        .btn-detalle:hover {
-            background-color: #3258c3;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(65, 105, 225, 0.15);
+        .paso-descripcion {
+            color: var(--texto-gris);
+            line-height: 1.6;
+        }
+        .imagen-paso {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            border-radius: 8px;
+            border: 1px solid var(--color-borde);
+            background-color: #0a0d12;
+            padding: 10px;
+        }
+        .imagen-paso img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 6px;
+        }
+        .nota-aviso {
+            background-color: rgba(255, 215, 0, 0.1);
+            border-left: 4px solid var(--amarillo);
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 0 8px 8px 0;
+            color: var(--amarillo);
+            font-weight: 500;
+        }
+        .link-guia {
+            color: var(--azul-real);
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        .link-guia:hover {
+            color: #3258c3;
         }
         .volver-guia {
             text-align: center;
-            margin-top: 60px;
+            margin-top: 40px;
         }
         .btn-volver {
             background-color: var(--azul-real);
@@ -111,15 +114,12 @@
             box-shadow: 0 10px 20px rgba(65, 105, 225, 0.15);
         }
         @media (max-width: 768px) {
-            .seccion-trabajos {
-                padding: 160px 0 80px;
-            }
-            .encabezado-trabajos h1 {
-                font-size: 32px;
-            }
-            .grid-trabajos {
-                grid-template-columns: 1fr;
-            }
+            .seccion-guia { padding: 160px 0 80px; }
+            .encabezado-guia h1 { font-size: 32px; }
+        }
+        @media (max-width: 576px) {
+            .imagen-paso { padding: 5px; }
+            .instrucciones { padding: 20px; }
         }
     </style>
 </head>
@@ -173,61 +173,83 @@
         </div>
     </header>
 
-    <!-- Sección Principal -->
-    <section class="seccion-trabajos">
+    <!-- Contenido Principal -->
+    <section class="seccion-guia">
         <div class="contenedor">
-            <div class="encabezado-trabajos desvanecer-entrada">
-                <h1>Trabajos en Veneyork</h1>
-                <p>Participa en la economía del juego trabajando en distintas actividades. Gana dinero, interactúa con otros jugadores y desarrolla tu personaje.</p>
+            <div class="encabezado-guia desvanecer-entrada">
+                <h1>Trabajar como Uber en Veneyork</h1>
+                <p>Conviértete en conductor de taxi y gana dinero llevando pasajeros a sus destinos. ¡Una forma divertida de interactuar y explorar el mapa!</p>
             </div>
-            <div class="grid-trabajos">
-                <!-- Farmanada -->
-                <a href="farmanada.html" class="tarjeta-trabajo desvanecer-entrada">
-                    <div class="icono-trabajo" style="background-color: rgba(0, 200, 0, 0.15); color: #4CAF50;">
-                        <i class="fas fa-capsules"></i>
-                    </div>
-                    <h3>Farmanada</h3>
-                    <p>Limpia parches de suciedad que aparecen en el piso y mantén la ciudad limpia a cambio de dinero.</p>
-                    <span class="btn-detalle">
-                        <i class="fas fa-info-circle"></i> Ver detalles
-                    </span>
-                </a>
 
-                <!-- Arturos -->
-                <a href="arturos.html" class="tarjeta-trabajo desvanecer-entrada retraso-1">
-                    <div class="icono-trabajo" style="background-color: rgba(255, 150, 0, 0.15); color: #FF9800;">
-                        <i class="fas fa-drumstick-bite"></i>
+            <div class="instrucciones desvanecer-entrada">
+                <h2>Pasos para comenzar a trabajar como Uber</h2>
+                <div class="pasos">
+                    <!-- Paso 1 -->
+                    <div class="paso">
+                        <div class="paso-titulo">Paso 1: Dirígete al estacionamiento de Farmanada en la Plaza Central</div>
+                        <p>Busca el estacionamiento ubicado en Farmanada, dentro de la <strong>Plaza Central</strong>. Allí verás un carro con un indicador luminoso como en la imagen.</p>
+                        <div class="imagen-paso">
+                            <img src="img/guia/uber/1.png" alt="Indicador de trabajo en el estacionamiento" loading="lazy">
+                        </div>
                     </div>
-                    <h3>Arturos</h3>
-                    <p>Realiza entregas a domicilio o limpia parches de suciedad para ganar dinero.</p>
-                    <span class="btn-detalle">
-                        <i class="fas fa-info-circle"></i> Ver detalles
-                    </span>
-                </a>
 
-                <!-- Taxi (Uber) -->
-                <a href="uber.html" class="tarjeta-trabajo desvanecer-entrada retraso-2">
-                    <div class="icono-trabajo" style="background-color: rgba(65, 105, 225, 0.15); color: var(--azul-real);">
-                        <i class="fas fa-taxi"></i>
+                    <!-- Paso 2 -->
+                    <div class="paso">
+                        <div class="paso-titulo">Paso 2: Usa tu propio carro y párate en el marcador</div>
+                        <p>Para activar el trabajo, debes tener cualquier carro y <strong>pararte justo sobre el marcador</strong> que aparece en el suelo junto al vehículo indicado.</p>
+                        <div class="nota-aviso">
+                            ¿No sabes cómo comprar un carro? <a href="comprar-carros.html" class="link-guia">Consulta nuestra guía aquí</a>.
+                        </div>
                     </div>
-                    <h3>Taxi (Uber)</h3>
-                    <p>Recoge pasajeros en un punto A y llévalos a su destino en el punto B para ganar dinero.</p>
-                    <span class="btn-detalle">
-                        <i class="fas fa-info-circle"></i> Ver detalles
-                    </span>
-                </a>
-                <!-- Delivery (ArepaMóvil) -->
-                <a href="arepamovil.html" class="tarjeta-trabajo desvanecer-entrada retraso-3">
-                    <div class="icono-trabajo" style="background-color: rgba(255, 200, 0, 0.15); color: #FFC107;">
-                        <i class="fas fa-utensils"></i>
+
+                    <!-- Paso 3 -->
+                    <div class="paso">
+                        <div class="paso-titulo">Paso 3: Acepta el trabajo</div>
+                        <p>Al pararte en el marcador, aparecerá un mensaje como este:</p>
+                        <div class="imagen-paso">
+                            <img src="img/guia/uber/2.png" alt="Mensaje de confirmación del trabajo" loading="lazy">
+                        </div>
+                        <p>Traducido dice: <em>“Tardery trabajo — ¿Trabajar como conductor de taxi para Tardery?”</em>. Selecciona <strong>Aceptar</strong>.</p>
                     </div>
-                    <h3>Delivery (ArepaMóvil)</h3>
-                    <p>Delivery de deliciosas arepas a domicilio para ganar dinero en Veneyork.</p>
-                    <span class="btn-detalle">
-                        <i class="fas fa-info-circle"></i> Ver detalles
-                    </span>
-                </a>
+
+                    <!-- Paso 4 -->
+                    <div class="paso">
+                        <div class="paso-titulo">Paso 4: Busca al pasajero</div>
+                        <p>Recibirás un mensaje indicándote que debes ir a recoger a tu primer pasajero.</p>
+                        <div class="imagen-paso">
+                            <img src="img/guia/uber/3.png" alt="Mensaje: Busca a tu pasajero" loading="lazy">
+                        </div>
+                        <p>Sigue la <strong>flecha roja</strong> en tu pantalla para localizarlo.</p>
+                        <div class="imagen-paso">
+                            <img src="img/guia/uber/4.png" alt="Flecha roja que indica dirección" loading="lazy">
+                        </div>
+                        <p>Una vez que llegues, el pasajero se subirá automáticamente a tu carro.</p>
+                    </div>
+
+                    <!-- Paso 5 -->
+                    <div class="paso">
+                        <div class="paso-titulo">Paso 5: Lleva al pasajero a su destino</div>
+                        <p>Te aparecerá un nuevo mensaje:</p>
+                        <div class="imagen-paso">
+                            <img src="img/guia/uber/5.png" alt="Mensaje: Lleva al pasajero al destino" loading="lazy">
+                        </div>
+                        <p>Traducido: <em>“Dirígete al Destino — Lleva a tu pasajero a la ubicación marcada.”</em></p>
+                        <p>De nuevo, sigue la <strong>flecha roja</strong> hasta el destino. Al llegar, el pasajero se bajará solo y recibirás tu pago.</p>
+                    </div>
+
+                    <!-- Advertencia importante -->
+                    <div class="paso">
+                        <div class="paso-titulo">¡Atención importante!</div>
+                        <p class="paso-descripcion">
+                            Si te bajas de tu carro mientras tienes un pasajero a bordo, <strong>perderás automáticamente el trabajo</strong> y deberás regresar al estacionamiento para conseguirlo de nuevo.
+                        </p>
+                        <div class="nota-aviso">
+                            ¡Mantente dentro del vehículo hasta que el pasajero se baje!
+                        </div>
+                    </div>
+                </div>
             </div>
+
             <div class="volver-guia desvanecer-entrada retraso-3">
                 <a href="../guia.html" class="btn-volver">
                     <i class="fas fa-arrow-left"></i> Volver a la Guía
@@ -274,18 +296,20 @@
         </div>
     </footer>
 
-    <!-- Modal "En Desarrollo" -->
-    <div id="modalDesarrollo" class="modal-desarrollo">
-        <div class="modal-contenido">
-            <button id="cerrarModal" class="cerrar-modal">&times;</button>
-            <div class="icono-modal">
-                <i class="fas fa-tools"></i>
-            </div>
-            <h3>¡Pronto disponible!</h3>
-            <p>Esta sección está actualmente en desarrollo y estará disponible muy pronto. ¡Gracias por tu paciencia!</p>
-        </div>
-    </div>
-
     <script src="../script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('desvanecer-entrada');
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll(
+                '.encabezado-guia, .instrucciones, .paso, .imagen-paso'
+            ).forEach(el => observer.observe(el));
+        });
+    </script>
 </body>
 </html>
